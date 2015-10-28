@@ -1,0 +1,176 @@
+body{
+    background-image: url("moln.jpg");
+}
+
+div.header{
+    margin-top: 20px;
+    background-color: White;
+    border:1px solid white;
+    border-radius: 30px 30px 0 0;
+}
+
+div.header img{
+    display: block;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+h1 {
+    color: #444444;
+    text-align: center;
+
+}
+
+a {
+    font-family: Verdana, Arial;
+
+}
+
+p {
+    font-family: Verdana, Arial;
+}
+
+div.container{
+    max-width: 900px;
+    margin: auto;
+}
+
+div.infotext {
+    width: 70%;
+    text-align: center;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 5%;
+
+}
+
+div.sektioner{
+    background-color: White;
+}
+
+div.nav{
+    background-color: #929292;
+    width: 100%;
+}
+
+div.nav ul{
+    margin: 0;
+    padding: 0;
+
+}
+
+div.nav ul li{
+    list-style: none;
+    float: right;
+}
+
+div.nav ul li a{
+    color: black;
+    font-size: 12px;
+    display: block;
+    padding:  10px;
+    border-left: 1px solid black;
+    text-decoration: none;
+}
+
+div.nav ul li a:hover{
+    background-color: #858585;
+}
+
+div.sektion{
+    width: 47%;
+    background-color: white;
+    float: left;
+    margin-left: 1%;
+    margin-right: 3%;
+}
+
+div.sektion h3{
+    margin: 0;
+}
+
+div.sektion p{
+    margin-top: 0;
+    margin-bottom: 30px;
+    display: inline-block;
+    vertical-align: top;
+
+}
+
+div.sektioncentrera {
+    display:block;
+    text-align: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+
+div.sektion input {
+    height: 150px;
+    width: 300px;
+    cursor:pointer;
+    padding:5px 25px; 
+    background:#7c94bf;
+    border:1px solid #636363;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 4px rgba(0,0,0, .75);
+    color:#f3f3f3;
+    font-size:1.1em;
+    margin-bottom: 30px;
+}
+
+div.sektion input:hover {
+    background-color: #6b83ae;
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
+.mindre{
+    width: 80%;
+}
+
+
+div.sektion img{
+    width: 100%;
+    height: auto;
+    padding-top: 1%;
+}
+
+div.sektion2{
+    margin-right: 1%;
+}
+
+div.footer{
+    width: 100%;
+    background-color: #929292; 
+    border-radius: 0 0 30px 30px;
+}
+
+div.footer table{
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    text-align: center;
+}
+
+div.footer table p{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+div.footer table a{
+    color: black;
+}
+
+div.footer table a:hover{
+    font-weight: bold;
+}
+
+
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear:  both; }
+.clearfix {*zoom: 1; }

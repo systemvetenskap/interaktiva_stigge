@@ -1,0 +1,44 @@
+body {
+}
+
+div.container{
+    max-width: 450px;
+    min-width: 350px;
+}
+
+div.sektion{
+    width: 98%;
+    float: none;
+}
+
+div.header img{
+    max-width: 70%;
+}
+
+div.sektionkontakt{
+    margin-left: 1%;
+    max-width: 97%;    
+    padding-left: 2px;
+    margin-bottom: 2px;
+    padding:5px 5px; 
+}
+
+div.sektioncentrera {
+    display:block;
+    text-align: center;
+    padding-left: 2%;
+    padding-right: 2%
+}
+
+div.infotext {
+    font-size: 12px;
+    width: 95%;
+    text-align: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 5%;
+}
+
+div.sektion input {
+height: 40px;
+}

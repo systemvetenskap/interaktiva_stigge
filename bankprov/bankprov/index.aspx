@@ -22,7 +22,7 @@
                     <li><a href="#">Logga ut</a></li>
                 </ul>
             </div>
-
+           
             <form id ="form1" runat="server">
                 <div class="sektioner clearfix">
                     <h1>Kompetensportal</h1>
