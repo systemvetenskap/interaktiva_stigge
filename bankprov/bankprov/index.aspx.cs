@@ -47,7 +47,7 @@ namespace bankprov
         }
         public static bool arlinsensierad(int fk_person_id)
         {
-            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require; Trust Server Certificate=true";
+            string connectionString = "Server=webblabb.miun.se;Port=5432;Database=pgmvaru_g1;User Id=pgmvaru_g1;Password=enhjuling;SSL=true";
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             bool linsensierad = false;
             try
@@ -91,6 +91,23 @@ namespace bankprov
 
 
         }
+
+        protected void ButtonPersonal_Click(object sender, EventArgs e)
+        {
+            string anvandare = TextBoxanvandare.Text;
+            int person_id = 0;
+            person_id = GetPersonId(anvandare);
+            string provtip;
+            if (arlinsensierad(person_id) == true)
+            {
+                //öppna sidan för kunskapsprov
+                provtip = "kunskapsprov";
+            }
+            else
+            {
+                //öppna sidan för linsensiering
+                provtip = "lisensiering";
+            }
     }
 }
 
