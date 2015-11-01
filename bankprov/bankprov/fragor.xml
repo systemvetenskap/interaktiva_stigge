@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<prov>
+  <fraga id="1">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>    
+    <svarsalternativ id="a">En terrängversion</svarsalternativ>
+    <svarsalternativ id="b">En sportversion</svarsalternativ>
+    <svarsalternativ id="c">En cabrioletversion</svarsalternativ>
+    <svarsalternativ id="d">En dieselversion</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="2">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Hur många hästkrafter har nya Volvo XC90 T5?</fragestallning>
+    <svarsalternativ id="a">1000</svarsalternativ>
+    <svarsalternativ id="b">278</svarsalternativ>
+    <svarsalternativ id="c">10000</svarsalternativ>
+    <svarsalternativ id="d">14*10^5</svarsalternativ>
+    <info></info>
+  </fraga>
+  
+    <fraga id="3">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vilka färger finns INTE Volvo C30 i?</fragestallning>    
+    <svarsalternativ id="a">Svart metallic</svarsalternativ>
+    <svarsalternativ id="b">Blå metallic</svarsalternativ>
+    <svarsalternativ id="c">Bert Åke Varg</svarsalternativ>
+    <svarsalternativ id="d">Hej Svejs</svarsalternativ>
+    <info>Denna fråga har två korrekta svarsalternativ som båda måste markeras.</info>
+  </fraga>
+
+  <fraga id="4">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vilken bil brukade Helgonet köra?</fragestallning>
+    <svarsalternativ id="a">Toyota Corolla Verso 1.8</svarsalternativ>
+    <svarsalternativ id="b">McLaren P1</svarsalternativ>
+    <svarsalternativ id="c">Vovlvo P1800</svarsalternativ>
+    <svarsalternativ id="d">Volvo C30 Polestar</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="5">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vad är det sista du bör göra på kvällen?</fragestallning>
+    <svarsalternativ id="a">Borsta tänderna</svarsalternativ>
+    <svarsalternativ id="b">Ge frugan en godnattkyss</svarsalternativ>
+    <svarsalternativ id="c">Släcka Lampan</svarsalternativ>
+    <svarsalternativ id="d">Ta en raggarrunda på stan</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="6">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Går en Volvo 740 automatiskt fortare om du installerar en baslåda?</fragestallning>
+    <svarsalternativ id="a">Ja</svarsalternativ>
+    <svarsalternativ id="b">Absolut</svarsalternativ>
+    <svarsalternativ id="c">Definitivt</svarsalternativ>
+    <svarsalternativ id="d">Har påven en lustig hatt?</svarsalternativ>
+    <info>Denna fråga har 4 korrekta svarsalternativ som alla måste markeras</info>
+  </fraga>
+
+  <fraga id="7">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Sossekontainer eller moderatbandy?</fragestallning>
+    <svarsalternativ id="a">Sossekontainer</svarsalternativ>
+    <svarsalternativ id="b">Moderatbandy</svarsalternativ>
+    <svarsalternativ id="c">Vanlig bandy</svarsalternativ>
+    <svarsalternativ id="d">Detta svarsalternativ är fel</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="8">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
+    <svarsalternativ id="a">En terrängversion</svarsalternativ>
+    <svarsalternativ id="b">En sportversion</svarsalternativ>
+    <svarsalternativ id="c">En cabrioletversion</svarsalternativ>
+    <svarsalternativ id="d">En dieselversion</svarsalternativ>
+    <info></info>
+  </fraga>
+
+
+  <fraga id="9">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Vem gjorde världens första trippelcork på skidor?</fragestallning>
+    <svarsalternativ id="a">Sammy Carlsson</svarsalternativ>
+    <svarsalternativ id="b">Bobby Brown</svarsalternativ>
+    <svarsalternativ id="c">PWhite</svarsalternativ>
+    <svarsalternativ id="d">Jon Brogan</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="10">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Vilka av dessa är smeknamn på Tom Wallish?</fragestallning>
+    <svarsalternativ id="a">Tammy Talltee</svarsalternativ>
+    <svarsalternativ id="b">The Pretzel Man</svarsalternativ>
+    <svarsalternativ id="c">Guacamole</svarsalternativ>
+    <svarsalternativ id="d">Todd Walnutz</svarsalternativ>
+    <info>Två av dessa alternativ är korrekta och båda måste markeras</info>
+  </fraga>
+
+  <fraga id="11">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Vilket år vann LSM superunknown?</fragestallning>
+    <svarsalternativ id="a">2014</svarsalternativ>
+    <svarsalternativ id="b">2009</svarsalternativ>
+    <svarsalternativ id="c">2012</svarsalternativ>
+    <svarsalternativ id="d">2010</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="12">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Vad hette den allra första TwinTip-skidan?</fragestallning>
+    <svarsalternativ id="a">Armada ar7</svarsalternativ>
+    <svarsalternativ id="b">Rossignol S3</svarsalternativ>
+    <svarsalternativ id="c">Surface Blanks</svarsalternativ>
+    <svarsalternativ id="d">Salomon 1080</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="13">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Hur många grader är minst en så kallad "Future spin"</fragestallning>
+    <svarsalternativ id="a">1080</svarsalternativ>
+    <svarsalternativ id="b">1260</svarsalternativ>
+    <svarsalternativ id="c">1440</svarsalternativ>
+    <svarsalternativ id="d">1620</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="14">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Har Level 1 tappat det?</fragestallning>
+    <svarsalternativ id="a">Nej</svarsalternativ>
+    <svarsalternativ id="b">Ja</svarsalternativ>
+    <svarsalternativ id="c">Var är PWhite?</svarsalternativ>
+    <svarsalternativ id="d">Oklart</svarsalternativ>
+    <info>Denna fråga har två korrekta svarsalternativ som båda måste markeras</info>
+  </fraga>
+
+  <fraga id="15">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Vad började Line tillverka innan de började göra skidor?</fragestallning>
+    <svarsalternativ id="a">Stavar</svarsalternativ>
+    <svarsalternativ id="b">Skiboards/Snowblades</svarsalternativ>
+    <svarsalternativ id="c">Snowboards</svarsalternativ>
+    <svarsalternativ id="d">Bindningar</svarsalternativ>
+    <info></info>
+  </fraga>
+  
+  <fraga id="16">
+    <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
+    <fragestallning>Vilken är enligt konsensus världens bästa skidfilm?</fragestallning>
+    <svarsalternativ id="a">Teddy Bear Crisis</svarsalternativ>
+    <svarsalternativ id="b">Session 1242</svarsalternativ>
+    <svarsalternativ id="c">Mutiny</svarsalternativ>
+    <svarsalternativ id="d">Long Story Short</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="17">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vad heter Bamses fru?</fragestallning>
+    <svarsalternativ id="a">Skalman</svarsalternativ>
+    <svarsalternativ id="b">Lilleskutt</svarsalternativ>
+    <svarsalternativ id="c">Rune Andreasson</svarsalternativ>
+    <svarsalternativ id="d">Brummelisa</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="18">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vad heter skaparen av Bamse?</fragestallning>
+    <svarsalternativ id="a">Rune Andréason</svarsalternativ>
+    <svarsalternativ id="b">Rune Andréasson</svarsalternativ>
+    <svarsalternativ id="b">Rune Andreasson</svarsalternativ>
+    <svarsalternativ id="b">Rune Andreason</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="19">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vilken typ av djur är Skalman?</fragestallning>
+    <svarsalternativ id="a">Häst</svarsalternativ>
+    <svarsalternativ id="b">Flodhäst</svarsalternativ>
+    <svarsalternativ id="c">Sköldpadda</svarsalternativ>
+    <svarsalternativ id="d">Sjöhäst</svarsalternativ>
+    <info></info>
+  </fraga>
+
+  <fraga id="20">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vad kallas Skalmans klocka som ringer vid oerhört olägliga tillfällen?</fragestallning>
+    <svarsalternativ id="a">Friskis och Svettis klocka</svarsalternativ>
+    <svarsalternativ id="b">Mat och sov klocka</svarsalternativ>
+    <svarsalternativ id="c">Rune Andreasson</svarsalternativ>
+    <svarsalternativ id="d">Brummelisa</svarsalternativ>
+    <info></info>
+  </fraga>
+  
+  <fraga id="21">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vad är det Bamse äter för att bli stark?</fragestallning>
+    <svarsalternativ id="a">Spenat</svarsalternativ>
+    <svarsalternativ id="b">Proteinpulver</svarsalternativ>
+    <svarsalternativ id="c">Köttbullar</svarsalternativ>
+    <svarsalternativ id="d">Dunderhonung</svarsalternativ>
+    <info>Denna fråga har tre korrekta svar som all amåste markeras</info>
+  </fraga>
+  
+  <fraga id="22">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vilket djur är vargen?</fragestallning>
+    <svarsalternativ id="a">Kanin</svarsalternativ>
+    <svarsalternativ id="b">Säl</svarsalternativ>
+    <svarsalternativ id="c">Räka</svarsalternativ>
+    <svarsalternativ id="d">Varg</svarsalternativ>
+    <info></info>
+  </fraga>
+  
+  <fraga id="23">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vilken maträtt är farmors specialitet?</fragestallning>
+    <svarsalternativ id="a">Köttbullar</svarsalternativ>
+    <svarsalternativ id="b">Pannbiffar</svarsalternativ>
+    <svarsalternativ id="c">Pannkakor</svarsalternativ>
+    <svarsalternativ id="d">Cheesburgare</svarsalternativ>
+    <info></info>
+  </fraga>
+  
+  <fraga id="24">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Hur många barn har Bamse?</fragestallning>
+    <svarsalternativ id="a">1</svarsalternativ>
+    <svarsalternativ id="b">2</svarsalternativ>
+    <svarsalternativ id="c">3</svarsalternativ>
+    <svarsalternativ id="d">4</svarsalternativ>
+    <info></info>
+  </fraga>
+  
+  <fraga id="25">
+    <kategori>Etik och regelverk.</kategori>
+    <fragestallning>Vad är Bamse?</fragestallning>
+    <svarsalternativ id="a">Världens skönaste komiker</svarsalternativ>
+    <svarsalternativ id="b">Världens starkaste björn</svarsalternativ>
+    <svarsalternativ id="c">Världens rikaste man</svarsalternativ>
+    <svarsalternativ id="d">Världens svettigaste cyklist</svarsalternativ>
+    <info></info>
+  </fraga>
+
+</prov>
