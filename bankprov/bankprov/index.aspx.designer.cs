@@ -22,39 +22,57 @@ namespace bankprov {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// ButtonPersonal control.
+        /// LabelKompetensportal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonPersonal;
+        protected global::System.Web.UI.WebControls.Label LabelKompetensportal;
         
         /// <summary>
-        /// Buttonanvandare control.
+        /// btnGorProv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Buttonanvandare;
+        protected global::System.Web.UI.WebControls.Button btnGorProv;
         
         /// <summary>
-        /// TextBoxanvandare control.
+        /// LabelEjInloggad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxanvandare;
+        protected global::System.Web.UI.WebControls.Label LabelEjInloggad;
         
         /// <summary>
-        /// ButtonProvledare control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonProvledare;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
+        
+        /// <summary>
+        /// btnSeResultat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSeResultat;
+        
+        /// <summary>
+        /// btnSeResultatAnstallda control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSeResultatAnstallda;
     }
 }

@@ -27,21 +27,29 @@
                 <div class="sektioner clearfix">
                     <h1>Kompetensportal</h1>
                     <div class="infotext">
-                        <p>Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden.</p>               
+                             <asp:Label ID="LabelKompetensportal" runat="server" Text="Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden."></asp:Label>                                 
                     </div>
                     <div class="sektion">
                         <div class="sektioncentrera">
-                           <asp:Button ID="ButtonPersonal" runat="server" Text="Personal" />
-                            <asp:Button ID="Buttonanvandare" runat="server" OnClick="Buttonanvandare_Click" Text="OK" />
+                            <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" autopostback="true" onclick="btnGorProv_Click" />
+                            <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
+                            <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+
                         </div>
                     </div>
         
-                    <div class="sektion sektion2">
-                        <div class="sektioncentrera">
-                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="96px"></asp:TextBox>
-                            <asp:Button ID="ButtonProvledare" runat="server" Text="Provledare" />
+                    <div class="sektion">
+                        <div class="sektioncentrera">                            
+                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" />
                         </div>
                     </div>
+
+                    <div class="sektion">
+                        <div class="sektioncentrera">                            
+                            <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" />
+                        </div>
+                    </div>
+
                 </div>
              </form>
 
@@ -51,9 +59,9 @@
                         <td>
                             <p>
                                 JE-Banken
-                                <br>
+                                <br />
                                 Rikemansgatan 4b
-                                <br>
+                                <br />
                                 54 678 Östersund
                             </p>
                         </td>
