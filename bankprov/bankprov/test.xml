@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prov>
+  <fraga id="1">
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
+    <svarsalternativ id="a">En terrängversion</svarsalternativ>
+    <svarsalternativ id="b">En sportversion</svarsalternativ>
+    <svarsalternativ id="c">En cabrioletversion</svarsalternativ>
+    <svarsalternativ id="d">En dieselversion</svarsalternativ>
+    <info></info>
+  </fraga>
+</prov>

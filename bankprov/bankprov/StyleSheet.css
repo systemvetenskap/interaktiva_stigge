@@ -78,7 +78,7 @@ div.nav ul li a:hover{
 }
 
 div.sektion{
-    width: 47%;
+    width: 95%;
     background-color: white;
     float: left;
     margin-left: 1%;
@@ -106,16 +106,16 @@ div.sektioncentrera {
 
 
 div.sektion input {
-    height: 150px;
-    width: 300px;
+    height: 60px;
+    width: 500px;
     cursor:pointer;
     padding:5px 25px; 
     background:#7c94bf;
     border:1px solid #636363;
     border-radius: 30px;
-    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
-    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
-    box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, 0);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, 0);
+    box-shadow: 0 0 4px rgba(0,0,0, 0);
     color:#f3f3f3;
     font-size:1.1em;
     margin-bottom: 30px;

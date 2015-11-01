@@ -31,7 +31,7 @@
                     </div>
                     <div class="sektion">
                         <div class="sektioncentrera">
-                            <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" autopostback="true" onclick="btnGorProv_Click" />
+                            <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
                             <asp:GridView ID="GridView1" runat="server"></asp:GridView>
 
