@@ -32,13 +32,14 @@
                     <div class="sektion">
                         <div class="sektioncentrera">
                            <asp:Button ID="ButtonPersonal" runat="server" Text="Personal" OnClick="ButtonPersonal_Click" />
-                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="96px"></asp:TextBox>
+                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="94px"></asp:TextBox>
                         </div>
                     </div>
         
                     <div class="sektion sektion2">
                         <div class="sektioncentrera">
                             <asp:Button ID="ButtonProvledare" runat="server" Text="Provledare" OnClick="ButtonProvledare_Click" />
+                            <asp:TextBox ID="TextBoxprovledare" runat="server" Height="16px" Width="94px"></asp:TextBox>
                         </div>
                     </div>
                 </div>
