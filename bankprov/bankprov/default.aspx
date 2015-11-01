@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="bankprov.index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="bankprov.index" %>
 
 <!DOCTYPE html>
 
@@ -31,14 +31,25 @@
                     </div>
                     <div class="sektion">
                         <div class="sektioncentrera">
+                            <h3><asp:Literal ID="LiteralKategori" runat="server"></asp:Literal></h3>
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
-                            <asp:GridView ID="GridView1" runat="server"></asp:GridView>
-
                         </div>
                     </div>
         
-                    <div class="sektion">
+                    <div class="sektion sektionfraga">
+                        <div class="fraga">
+                            <asp:Literal ID="LiteralFraga" runat="server"></asp:Literal>
+                        </div>
+                        <div class="svarsalternativ">
+                            
+                            <asp:RadioButton ID="RadioButtonA" runat="server" GroupName="radio" /><asp:Label ID="LabelA" runat="server" Text="Label"></asp:Label>
+                            <asp:RadioButton ID="RadioButtonB" runat="server" GroupName="radio" /><asp:Label ID="LabelB" runat="server" Text="Label"></asp:Label>
+                            <br />
+                            <asp:RadioButton ID="RadioButtonC" runat="server" GroupName="radio" /><asp:Label ID="LabelC" runat="server" Text="Label"></asp:Label>
+                            <asp:RadioButton ID="RadioButtonD" runat="server" GroupName="radio" /><asp:Label ID="LabelD" runat="server" Text="Label"></asp:Label>
+                        </div>
+                        <div class="info"></div>
                         <div class="sektioncentrera">                            
                             <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" />
                         </div>
