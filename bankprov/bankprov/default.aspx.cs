@@ -17,7 +17,7 @@ namespace bankprov
     {
         public string anv = "jahy1400";
         public bool provledare = true;
-
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,13 +32,13 @@ namespace bankprov
             //RadioButtonB.Visible = false;
             //RadioButtonC.Visible = false;
             //RadioButtonD.Visible = false;
-
+                        
 
         }
 
         public void arlinsensierad()
         {
-            if (anv == "jahy1400" && provledare == true)
+           if (anv == "jahy1400" && provledare == true)
             {
                 btnGorProv.Visible = true;
                 btnSeResultat.Visible = true;
@@ -49,27 +49,27 @@ namespace bankprov
 
             }
 
-            else if (anv == "jahy1400" && provledare == false)
-            {
-                btnGorProv.Visible = true;
-                btnSeResultat.Visible = true;
-                btnSeResultatAnstallda.Visible = false;
-                LabelEjInloggad.Visible = false;
-                btnLamnain.Visible = false;
+           else if (anv == "jahy1400" && provledare == false)
+           {
+               btnGorProv.Visible = true;
+               btnSeResultat.Visible = true;
+               btnSeResultatAnstallda.Visible = false;
+               LabelEjInloggad.Visible = false;
+               btnLamnain.Visible = false;
 
 
-            }
+           }
 
-            else
-            {
-                btnGorProv.Visible = false;
-                btnSeResultat.Visible = false;
-                btnSeResultatAnstallda.Visible = false;
-                LabelEjInloggad.Visible = true;
-                LabelEjInloggad.Text = "Du måste vara inloggad för att använda kompetensportalen";
-                btnLamnain.Visible = false;
+           else
+           {
+               btnGorProv.Visible = false;
+               btnSeResultat.Visible = false;
+               btnSeResultatAnstallda.Visible = false;
+               LabelEjInloggad.Visible = true;
+               LabelEjInloggad.Text = "Du måste vara inloggad för att använda kompetensportalen";
+               btnLamnain.Visible = false;
 
-            }
+           }
 
         }
 
@@ -94,7 +94,7 @@ namespace bankprov
             //RadioButtonB.Visible = true;
             //RadioButtonC.Visible = true;
             //RadioButtonD.Visible = true;
-
+            
 
         }
 
@@ -129,7 +129,7 @@ namespace bankprov
             }
         }
 
-
+        
 
 
     }

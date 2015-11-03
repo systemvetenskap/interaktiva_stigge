@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prov>
+  <fraga>
+    <nr>1</nr>
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
+    <svarsalternativa>En terrängversion</svarsalternativa>
+    <info></info>
+  </fraga>
+
+  <fraga>
+    <nr>2</nr>
+    <kategori>Produkter och hantering av kundens affärer</kategori>
+    <fragestallning>Hur många hästkrafter har nya Volvo XC90 T5?</fragestallning>
+    <svarsalternativb>278</svarsalternativb>
+    <info></info>
+  </fraga>
+</prov>
