@@ -46,13 +46,18 @@
                             <p><%# Eval("fragestallning") %></p>                             
                             <table>
                                 <tr>
-                                    <td><asp:RadioButton ID="RadioButtonA" runat="server" GroupName="radio" /><asp:Label ID="LabelA" runat="server"><%#Eval ("svarsalternativa") %></asp:Label></td>
-                                    <td><asp:RadioButton ID="RadioButtonB" runat="server" GroupName="radio" /><asp:Label ID="LabelB" runat="server"><%#Eval ("svarsalternativb") %></asp:Label></td>
+                                    <td><asp:CheckBox ID="CheckBoxA" runat="server" /><asp:Label ID="LabelA" runat="server"><%#Eval ("svarsalternativa") %></asp:Label></td>
+                                    <td><asp:CheckBox ID="CheckBoxB" runat="server" /><asp:Label ID="LabelB" runat="server"><%#Eval ("svarsalternativb") %></asp:Label></td>
                                 </tr>
-                                    <tr>
-                                        <td><asp:RadioButton ID="RadioButtonC" runat="server" GroupName="radio" /><asp:Label ID="LabelC" runat="server"><%#Eval ("svarsalternativc") %></asp:Label></td>                            
-                                        <td><asp:RadioButton ID="RadioButtonD" runat="server" GroupName="radio" /><asp:Label ID="LabelD" runat="server"><%#Eval ("svarsalternativd") %></asp:Label></td>
-                                    </tr>
+                                 <tr>
+                                    <td><asp:CheckBox ID="CheckBoxC" runat="server" /><asp:Label ID="LabelC" runat="server"><%#Eval ("svarsalternativc") %></asp:Label></td>                            
+                                    <td><asp:CheckBox ID="CheckBoxD" runat="server" /><asp:Label ID="LabelD" runat="server"><%#Eval ("svarsalternativd") %></asp:Label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:Label ID="LabelInfo" runat="server"><%#Eval ("Info") %></asp:Label>
+                                    </td>
+                                </tr>
                             </table>
                         </ItemTemplate>
 
@@ -70,7 +75,7 @@
                         <div class="info"></div>
                         <div class="sektioncentrera sektionprovlamnain">                            
                             <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" />
-                            <asp:Button ID="btnLamnain" runat="server" Text="Lämna in" />
+                            <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />
 
                         </div>
                     </div>

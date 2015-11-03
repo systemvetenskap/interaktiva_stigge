@@ -15,6 +15,7 @@ namespace bankprov
 {
     public partial class index : System.Web.UI.Page
     {
+        prov laddatprov;
         public string anv = "jahy1400";
         public bool provledare = true;
         
@@ -105,31 +106,68 @@ namespace bankprov
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
             object obj = deserializer.Deserialize(reader);
-            prov XmlData = (prov)obj;
+            prov laddatprov = (prov)obj;
             reader.Close();
 
 
 
-            Repeater1.DataSource = XmlData.fragelista;
+            Repeater1.DataSource = laddatprov.fragelista;
             Repeater1.DataBind();
 
         }
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
+            HittaSvar();
+        }
+
+        public void HittaSvar()
+        {
+            List <fraga> gjortprov = new List<fraga>();
+            int i = 0;
+            int j = 0;
+
             foreach (RepeaterItem item in Repeater1.Items)
             {
-                // Checking the item is a data item
+                i++;
+
+                fraga fragaobj = new fraga();
+                fragaobj.fragestallning = laddatprov.fragelista[i].fragestallning;
+
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
-                    var rdbList = item.FindControl("RadioButtonList1") as RadioButtonList;
-                    // Get the selected value
-                    string selected = rdbList.SelectedValue;
+                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA");
+                    if (checkBoxA.Checked == true)
+                    {
+                        fragaobj.svarsalternativa = laddatprov.fragelista[i].svarsalternativa;
+                    }
+
+                    var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
+                    if (checkBoxB.Checked == true)
+                    {
+                        fragaobj.svarsalternativb = laddatprov.fragelista[i].svarsalternativb;
+                    }
+
+                    var checkBoxC = (CheckBox)item.FindControl("CheckBoxC");
+                    if (checkBoxC.Checked == true)
+                    {
+                        fragaobj.svarsalternativc = laddatprov.fragelista[i].svarsalternativc;
+                    }
+
+                    var checkBoxD = (CheckBox)item.FindControl("CheckBoxD");
+                    if (checkBoxD.Checked == true)
+                    {
+                        fragaobj.svarsalternativd = laddatprov.fragelista[i].svarsalternativd;
+                    }
                 }
+                gjortprov.Add(fragaobj);
             }
         }
 
-        
+        public void HamtaFacit()
+        {
+            
+        }
 
 
     }
