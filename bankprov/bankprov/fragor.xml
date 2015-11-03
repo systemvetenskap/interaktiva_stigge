@@ -3,21 +3,46 @@
 <prov>
   <fraga id="1">
     <kategori>Produkter och hantering av kundens affärer</kategori>
-    <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>    
-    <svarsalternativ id="a">En terrängversion</svarsalternativ>
-    <svarsalternativ id="b">En sportversion</svarsalternativ>
-    <svarsalternativ id="c">En cabrioletversion</svarsalternativ>
-    <svarsalternativ id="d">En dieselversion</svarsalternativ>
+    <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
+    <svar id="a">
+      <svarsalternativ>En terrängversion</svarsalternativ>
+      <facit>true</facit>
+    </svar>
+    <svar id="b">
+      <svarsalternativ>En sportversion</svarsalternativ>
+      <facit>false</facit>  
+    </svar>
+    <svar id="c">
+      <svarsalternativ>En cabrioletversion</svarsalternativ>
+      <facit>false</facit>
+    </svar>
+    <svar id="d">
+      <svarsalternativ>En dieselversion</svarsalternativ>
+      <facit>false</facit>
+    </svar>
     <info></info>
   </fraga>
+
 
   <fraga id="2">
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Hur många hästkrafter har nya Volvo XC90 T5?</fragestallning>
-    <svarsalternativ id="a">1000</svarsalternativ>
-    <svarsalternativ id="b">278</svarsalternativ>
-    <svarsalternativ id="c">10000</svarsalternativ>
-    <svarsalternativ id="d">14*10^5</svarsalternativ>
+    <svar id="a">
+      <svarsalternativ>1000</svarsalternativ>
+      <facit>false</facit>
+    </svar>
+    <svar id="b">
+      <svarsalternativ id="b">278</svarsalternativ>
+      <facit>true</facit>
+    </svar>
+    <svar id="c">
+      <svarsalternativ id="c">10000</svarsalternativ>
+      <facit>false</facit>
+    </svar>
+    <svar id="d">
+      <svarsalternativ id="d">14*10^5</svarsalternativ>
+      <facit>false</facit>
+    </svar>
     <info></info>
   </fraga>
   

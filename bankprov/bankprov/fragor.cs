@@ -22,6 +22,10 @@ namespace bankprov
         public string svarsalternativb { get; set; }
         public string svarsalternativc { get; set; }
         public string svarsalternativd { get; set; }
+        public bool facitA { get; set; }
+        public bool facitB { get; set; }
+        public bool facitC { get; set; }
+        public bool facitD { get; set; }
         public string info { get; set; }
 
     }
