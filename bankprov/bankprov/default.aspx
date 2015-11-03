@@ -39,9 +39,11 @@
                     </div>
 
                     <asp:Repeater ID="Repeater1" runat="server">
+
                         <HeaderTemplate></HeaderTemplate>
+
                         <ItemTemplate>
-                            <p><%# Eval("fragestallning") %></p> 
+                            <p><%# Eval("fragestallning") %></p>                             
                             <table>
                                 <tr>
                                     <td><asp:RadioButton ID="RadioButtonA" runat="server" GroupName="radio" /><asp:Label ID="LabelA" runat="server"><%#Eval ("svarsalternativa") %></asp:Label></td>
@@ -53,7 +55,9 @@
                                     </tr>
                             </table>
                         </ItemTemplate>
+
                         <FooterTemplate></FooterTemplate>
+
                     </asp:Repeater>
 
         

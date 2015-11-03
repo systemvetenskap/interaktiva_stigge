@@ -100,38 +100,6 @@ namespace bankprov
 
         public void HamtaFragor()
         {
-        //    DataTable dt = new DataTable();
-        //    dt.Columns.Add("Kategori");
-        //    dt.Columns.Add("Frågestallning");
-        //    dt.Columns.Add("Svarsalternativ a");
-        //    dt.Columns.Add("Svarsalternativ b");
-        //    dt.Columns.Add("Svarsalternativ c");
-        //    dt.Columns.Add("Svarsalternativ d");
-        //    dt.Columns.Add("Info d");
-
-        //    dt.Rows.Add();
-
-        //    string xml = Server.MapPath("test.xml");
-
-        //    XmlDocument doc = new XmlDocument();
-        //    doc.Load(xml);
-
-        //    XmlNodeList aktiekurser = doc.SelectNodes("prov/fraga");
-
-        //    foreach (XmlNode nod in aktiekurser)
-        //    {
-        //        dt.Rows.Add(nod["kategori"].InnerText, nod["fragestallning"].InnerText, nod["svarsalternativa"].InnerText, nod["svarsalternativb"].InnerText, nod["svarsalternativc"].InnerText, nod["svarsalternativd"].InnerText, nod["info"].InnerText);
-                
-        //    }
-        //    LiteralKategori.Text = dt.Rows[1][0].ToString();
-        //    LiteralFraga.Text = dt.Rows[1][1].ToString();
-        //    LabelA.Text = dt.Rows[1][2].ToString();
-        //    LabelB.Text = dt.Rows[1][3].ToString();
-        //    LabelC.Text = dt.Rows[1][4].ToString();
-        //    LabelD.Text = dt.Rows[1][5].ToString();
-
-
-
             string xml = Server.MapPath("test.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
@@ -140,15 +108,28 @@ namespace bankprov
             prov XmlData = (prov)obj;
             reader.Close();
 
+
+
             Repeater1.DataSource = XmlData.fragelista;
-            Repeater1.DataBind();           
+            Repeater1.DataBind();
+
         }
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
-
+            foreach (RepeaterItem item in Repeater1.Items)
+            {
+                // Checking the item is a data item
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var rdbList = item.FindControl("RadioButtonList1") as RadioButtonList;
+                    // Get the selected value
+                    string selected = rdbList.SelectedValue;
+                }
+            }
         }
 
+        
 
 
     }
