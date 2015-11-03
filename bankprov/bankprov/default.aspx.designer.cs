@@ -31,15 +31,6 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelKompetensportal;
         
         /// <summary>
-        /// LiteralKategori control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralKategori;
-        
-        /// <summary>
         /// btnGorProv control.
         /// </summary>
         /// <remarks>
@@ -58,85 +49,13 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelEjInloggad;
         
         /// <summary>
-        /// LiteralFraga control.
+        /// Repeater1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralFraga;
-        
-        /// <summary>
-        /// RadioButtonA control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButtonA;
-        
-        /// <summary>
-        /// LabelA control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelA;
-        
-        /// <summary>
-        /// RadioButtonB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButtonB;
-        
-        /// <summary>
-        /// LabelB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelB;
-        
-        /// <summary>
-        /// RadioButtonC control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButtonC;
-        
-        /// <summary>
-        /// LabelC control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelC;
-        
-        /// <summary>
-        /// RadioButtonD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButtonD;
-        
-        /// <summary>
-        /// LabelD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelD;
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
         
         /// <summary>
         /// btnSeResultat control.
@@ -146,6 +65,15 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSeResultat;
+        
+        /// <summary>
+        /// btnLamnain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLamnain;
         
         /// <summary>
         /// btnSeResultatAnstallda control.

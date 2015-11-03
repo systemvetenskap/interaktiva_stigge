@@ -29,29 +29,45 @@
                     <div class="infotext">
                              <asp:Label ID="LabelKompetensportal" runat="server" Text="Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden."></asp:Label>                                 
                     </div>
+
+
                     <div class="sektion">
                         <div class="sektioncentrera">
-                            <h3><asp:Literal ID="LiteralKategori" runat="server"></asp:Literal></h3>
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
                         </div>
                     </div>
+
+                    <asp:Repeater ID="Repeater1" runat="server">
+                        <HeaderTemplate></HeaderTemplate>
+                        <ItemTemplate>
+                            <p><%# Eval("fragestallning") %></p> 
+                            <table>
+                                <tr>
+                                    <td><asp:RadioButton ID="RadioButtonA" runat="server" GroupName="radio" /><asp:Label ID="LabelA" runat="server"><%#Eval ("svarsalternativa") %></asp:Label></td>
+                                    <td><asp:RadioButton ID="RadioButtonB" runat="server" GroupName="radio" /><asp:Label ID="LabelB" runat="server"><%#Eval ("svarsalternativb") %></asp:Label></td>
+                                </tr>
+                                    <tr>
+                                        <td><asp:RadioButton ID="RadioButtonC" runat="server" GroupName="radio" /><asp:Label ID="LabelC" runat="server"><%#Eval ("svarsalternativc") %></asp:Label></td>                            
+                                        <td><asp:RadioButton ID="RadioButtonD" runat="server" GroupName="radio" /><asp:Label ID="LabelD" runat="server"><%#Eval ("svarsalternativd") %></asp:Label></td>
+                                    </tr>
+                            </table>
+                        </ItemTemplate>
+                        <FooterTemplate></FooterTemplate>
+                    </asp:Repeater>
+
         
-                    <div class="sektion sektionfraga">
-                        <div class="fraga">
-                            <asp:Literal ID="LiteralFraga" runat="server"></asp:Literal>
-                        </div>
+                    <div class="sektion">
+                        
                         <div class="svarsalternativ">
-                            
-                            <asp:RadioButton ID="RadioButtonA" runat="server" GroupName="radio" /><asp:Label ID="LabelA" runat="server" Text="Label"></asp:Label>
-                            <asp:RadioButton ID="RadioButtonB" runat="server" GroupName="radio" /><asp:Label ID="LabelB" runat="server" Text="Label"></asp:Label>
-                            <br />
-                            <asp:RadioButton ID="RadioButtonC" runat="server" GroupName="radio" /><asp:Label ID="LabelC" runat="server" Text="Label"></asp:Label>
-                            <asp:RadioButton ID="RadioButtonD" runat="server" GroupName="radio" /><asp:Label ID="LabelD" runat="server" Text="Label"></asp:Label>
+                           
+
                         </div>
                         <div class="info"></div>
-                        <div class="sektioncentrera">                            
+                        <div class="sektioncentrera sektionprovlamnain">                            
                             <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" />
+                            <asp:Button ID="btnLamnain" runat="server" Text="Lämna in" />
+
                         </div>
                     </div>
 

@@ -5,9 +5,6 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
     <svarsalternativa>En terrängversion</svarsalternativa>
-    <svarsalternativb>En sportversion</svarsalternativb>
-    <svarsalternativc>En cabrioletversion</svarsalternativc>
-    <svarsalternativd>En dieselversion</svarsalternativd>
     <info></info>
   </fraga>
 
@@ -15,10 +12,7 @@
     <nr>2</nr>
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Hur många hästkrafter har nya Volvo XC90 T5?</fragestallning>
-    <svarsalternativa>1000</svarsalternativa>
     <svarsalternativb>278</svarsalternativb>
-    <svarsalternativc>10000</svarsalternativc>
-    <svarsalternativd>14*10^5</svarsalternativd>
     <info></info>
   </fraga>
 </prov>
