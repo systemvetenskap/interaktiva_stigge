@@ -181,7 +181,7 @@ namespace bankprov
 
         public void RattaProv(List<fraga> gjortprov)
         {
-            string xml = Server.MapPath("facit.xml");
+            string xml = Server.MapPath("facittest.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);

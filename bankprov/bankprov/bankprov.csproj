@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="facit.xml" />
+    <Content Include="facittest.xml" />
     <Content Include="fragor.xml">
       <SubType>Designer</SubType>
     </Content>
