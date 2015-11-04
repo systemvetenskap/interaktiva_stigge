@@ -5,7 +5,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
     <svarsalternativa>En terrängversion</svarsalternativa>
-    <info></info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -13,7 +13,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Hur många hästkrafter har nya Volvo XC90 T5?</fragestallning>
     <svarsalternativb>278</svarsalternativb>
-    <info></info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -22,6 +22,6 @@
     <fragestallning>Har Level 1 tappat det?</fragestallning>
     <svarsalternativb>Ja</svarsalternativb>
     <svarsalternativc>Var är PWhite?</svarsalternativc>
-    <info>Denna fråga har TVÅ korrekta svarsalternativ som båda måste markeras</info>
+    <info>2</info>
   </fraga>
 </prov>

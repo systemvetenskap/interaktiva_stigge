@@ -136,12 +136,15 @@ namespace bankprov
         public void HittaSvar(prov provet)
         {
             List <fraga> gjortprov = new List<fraga>();
+            int checkboxkontroll;
+
             int i = -1;
             int j = 0;
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
             {
                 i++;
+                checkboxkontroll = 0;
 
                 fraga fragaobj = new fraga();
                 fragaobj.nr = i;
@@ -151,26 +154,34 @@ namespace bankprov
                     if (checkBoxA.Checked == true)
                     {
                         fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
+                        checkboxkontroll++;
                     }
 
                     var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
                     if (checkBoxB.Checked == true)
                     {
                         fragaobj.svarsalternativb = provet.fragelista[i].svarsalternativb;
+                        checkboxkontroll++;
+
                     }
 
                     var checkBoxC = (CheckBox)item.FindControl("CheckBoxC");
                     if (checkBoxC.Checked == true)
                     {
                         fragaobj.svarsalternativc = provet.fragelista[i].svarsalternativc;
+                        checkboxkontroll++;
+
                     }
 
                     var checkBoxD = (CheckBox)item.FindControl("CheckBoxD");
                     if (checkBoxD.Checked == true)
                     {
                         fragaobj.svarsalternativd = provet.fragelista[i].svarsalternativd;
+                        checkboxkontroll++;
+
                     }
                 }
+                fragaobj.info = checkboxkontroll.ToString(); 
                 gjortprov.Add(fragaobj); // lägger till svaret i en lista
             }
 
@@ -181,7 +192,7 @@ namespace bankprov
 
         public void RattaProv(List<fraga> gjortprov)
         {
-            string xml = Server.MapPath("facit.xml");
+            string xml = Server.MapPath("facittest.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -191,30 +202,86 @@ namespace bankprov
 
             int i = -1;
             int resultat = 0;
+            int flersvarsfraga = 0;
 
             foreach (object objekt in gjortprov)
             {   
                 i++;
 
-                if (gjortprov[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov[i].svarsalternativa != null)
-                    {   
-                    resultat++;
+                if (gjortprov[i].info != facit.fragelista[i].info)
+                {
+                    //För många eller för få alternativ kryssade. Skickar vidare till nästa fråga
+                }
+
+                else
+                {                
+                    if (gjortprov[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov[i].svarsalternativa != null)
+                    {
+                        if (Convert.ToInt32(facit.fragelista[i].info) == 1)
+                        {
+                            resultat++;
+                        }
+
+                        else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
+                        {
+                            flersvarsfraga++;
+                        }
                     }
 
-                if (gjortprov[i].svarsalternativb == facit.fragelista[i].svarsalternativb && gjortprov[i].svarsalternativb != null)
-                    {   
-                    resultat++;
+                    if (gjortprov[i].svarsalternativb == facit.fragelista[i].svarsalternativb && gjortprov[i].svarsalternativb != null)
+                    {
+                        if (Convert.ToInt32(facit.fragelista[i].info) == 1)
+                        {
+                            resultat++;
+                        }
+    
+                        else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
+                        {
+                            flersvarsfraga++;
+                        }
+
+                        if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
+                        {
+                            resultat++;
+                        }
                     }
 
-                if (gjortprov[i].svarsalternativc == facit.fragelista[i].svarsalternativc && gjortprov[i].svarsalternativc != null)
-                    {   
-                    resultat++;
+                    if (gjortprov[i].svarsalternativc == facit.fragelista[i].svarsalternativc && gjortprov[i].svarsalternativc != null)
+                    {
+                        if (Convert.ToInt32(facit.fragelista[i].info) == 1)
+                        {
+                            resultat++;
+                        }
+
+                        else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
+                        {
+                            flersvarsfraga++;
+                        }
+
+                        if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
+                        {
+                            resultat++;
+                        }
                     }
 
-                if (gjortprov[i].svarsalternativd == facit.fragelista[i].svarsalternativd && gjortprov[i].svarsalternativd != null)
-                    {   
-                    resultat++;
+                    if (gjortprov[i].svarsalternativd == facit.fragelista[i].svarsalternativd && gjortprov[i].svarsalternativd != null)
+                    {
+                        if (Convert.ToInt32(facit.fragelista[i].info) == 1)
+                        {
+                            resultat++;
+                        }
+
+                        else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
+                        {
+                            flersvarsfraga++;
+                        }
+
+                        if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
+                        {
+                            resultat++;
+                        }
                     }
+                }
             }
 
             LabelEjInloggad.Visible = true;
