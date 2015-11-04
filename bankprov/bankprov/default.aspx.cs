@@ -15,6 +15,7 @@ namespace bankprov
 {
     public partial class index : System.Web.UI.Page
     {
+        
         public string anv = "jahy1400";
         public bool provledare = true;
         
@@ -31,9 +32,7 @@ namespace bankprov
             //RadioButtonA.Visible = false;
             //RadioButtonB.Visible = false;
             //RadioButtonC.Visible = false;
-            //RadioButtonD.Visible = false;
-                        
-
+            //RadioButtonD.Visible = false;                        
         }
 
         public void arlinsensierad()
@@ -105,33 +104,136 @@ namespace bankprov
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
             object obj = deserializer.Deserialize(reader);
-            prov XmlData = (prov)obj;
+            prov laddatprov = (prov)obj;
             reader.Close();
 
-
-
-            Repeater1.DataSource = XmlData.fragelista;
+            Repeater1.DataSource = laddatprov.fragelista;
             Repeater1.DataBind();
-
         }
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
-            foreach (RepeaterItem item in Repeater1.Items)
-            {
-                // Checking the item is a data item
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
-                {
-                    var rdbList = item.FindControl("RadioButtonList1") as RadioButtonList;
-                    // Get the selected value
-                    string selected = rdbList.SelectedValue;
-                }
-            }
+            prov provet = new prov();
+
+            provet = HamtaFragor2();
+            HittaSvar(provet);
         }
 
+        public prov HamtaFragor2()
+        {
+            string xml = Server.MapPath("test.xml");
+
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+            TextReader reader = new StreamReader(xml);
+            object obj = deserializer.Deserialize(reader);
+            prov laddatprov = (prov)obj;
+            reader.Close();
+
+            return laddatprov;
+
+        }
+
+        public void HittaSvar(prov provet)
+        {
+            List <fraga> gjortprov = new List<fraga>();
+            int i = -1;
+            int j = 0;
+
+            foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
+            {
+                i++;
+
+                fraga fragaobj = new fraga();
+                fragaobj.nr = i;
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                {
+                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA"); 
+                    if (checkBoxA.Checked == true)
+                    {
+                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
+                    }
+
+                    var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
+                    if (checkBoxB.Checked == true)
+                    {
+                        fragaobj.svarsalternativb = provet.fragelista[i].svarsalternativb;
+                    }
+
+                    var checkBoxC = (CheckBox)item.FindControl("CheckBoxC");
+                    if (checkBoxC.Checked == true)
+                    {
+                        fragaobj.svarsalternativc = provet.fragelista[i].svarsalternativc;
+                    }
+
+                    var checkBoxD = (CheckBox)item.FindControl("CheckBoxD");
+                    if (checkBoxD.Checked == true)
+                    {
+                        fragaobj.svarsalternativd = provet.fragelista[i].svarsalternativd;
+                    }
+                }
+                gjortprov.Add(fragaobj); // lägger till svaret i en lista
+            }
+
+            RattaProv(gjortprov);
+
+            SerializaSvar(gjortprov); // ropar på serializern
+        }
+
+        public void RattaProv(List<fraga> gjortprov)
+        {
+            string xml = Server.MapPath("facit.xml");
+
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+            TextReader reader = new StreamReader(xml);
+            object obj = deserializer.Deserialize(reader);
+            prov facit = (prov)obj;
+            reader.Close();
+
+            int i = -1;
+            int resultat = 0;
+
+            foreach (object objekt in gjortprov)
+            {   
+                i++;
+
+                if (gjortprov[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov[i].svarsalternativa != null)
+                    {   
+                    resultat++;
+                    }
+
+                if (gjortprov[i].svarsalternativb == facit.fragelista[i].svarsalternativb && gjortprov[i].svarsalternativb != null)
+                    {   
+                    resultat++;
+                    }
+
+                if (gjortprov[i].svarsalternativc == facit.fragelista[i].svarsalternativc && gjortprov[i].svarsalternativc != null)
+                    {   
+                    resultat++;
+                    }
+
+                if (gjortprov[i].svarsalternativd == facit.fragelista[i].svarsalternativd && gjortprov[i].svarsalternativd != null)
+                    {   
+                    resultat++;
+                    }
+            }
+
+            LabelEjInloggad.Visible = true;
+            LabelEjInloggad.Text = "Du fick " + resultat + "rätt";
+
+        }
+
+        public void SerializaSvar(List<fraga> svar)
+        {
+            string directory = Server.MapPath("svar.xml");
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<fraga>));
+            using (TextWriter writer = new StreamWriter(directory))
+
+            {
+                serializer.Serialize(writer, svar);
+            }
+        }
         
-
-
     }
 }
 
