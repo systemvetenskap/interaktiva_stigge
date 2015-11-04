@@ -8,7 +8,7 @@
     <svarsalternativb>En sportversion</svarsalternativb>
     <svarsalternativc>En cabrioletversion</svarsalternativc>
     <svarsalternativd>En dieselversion</svarsalternativd>
-    <info></info>
+    <info>Denna fråga har ETT korrekt svarsalternativ</info>
   </fraga>
 
   <fraga>
@@ -19,6 +19,6 @@
     <svarsalternativb>278</svarsalternativb>
     <svarsalternativc>10000</svarsalternativc>
     <svarsalternativd>14*10^5</svarsalternativd>
-    <info></info>
+    <info>Denna fråga har ETT korrekt svarsalternativ</info>
   </fraga>
 </prov>
