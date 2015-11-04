@@ -4,22 +4,12 @@
   <fraga id="1">
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
-    <svar id="a">
-      <svarsalternativ>En terrängversion</svarsalternativ>
-      <facit>true</facit>
-    </svar>
-    <svar id="b">
-      <svarsalternativ>En sportversion</svarsalternativ>
-      <facit>false</facit>  
-    </svar>
-    <svar id="c">
-      <svarsalternativ>En cabrioletversion</svarsalternativ>
-      <facit>false</facit>
-    </svar>
-    <svar id="d">
-      <svarsalternativ>En dieselversion</svarsalternativ>
-      <facit>false</facit>
-    </svar>
+    <svarsalternativ id="a">En terrängversion</svarsalternativ>
+    <svarsalternativ id="b">En sportversion</svarsalternativ>
+    <svarsalternativ id="c">En cabrioletversion</svarsalternativ>
+    <svarsalternativ id="d">En dieselversion</svarsalternativ>
+    <antalrätt>1</antalrätt>
+    <facit id="1">a</facit>
     <info></info>
   </fraga>
 
