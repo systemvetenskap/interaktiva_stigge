@@ -174,14 +174,14 @@ namespace bankprov
                 gjortprov.Add(fragaobj); // lägger till svaret i en lista
             }
 
+            SerializaSvar(gjortprov); // ropar på serializern
             RattaProv(gjortprov);
 
-            SerializaSvar(gjortprov); // ropar på serializern
         }
 
         public void RattaProv(List<fraga> gjortprov)
         {
-            string xml = Server.MapPath("facittest.xml");
+            string xml = Server.MapPath("facit.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
