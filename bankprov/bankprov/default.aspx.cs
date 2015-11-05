@@ -215,6 +215,9 @@ namespace bankprov
             int i = -1;
             int resultat = 0;
             int flersvarsfraga;
+            int produkterochhanteringavkundensaffärer = 0;
+            int ekonominationalekonomifinansiellekonomiochprivatekonomi = 0;
+            int etikochregelverk = 0;
 
             foreach (object objekt in gjortprov)
             {
@@ -232,12 +235,44 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {                                
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
 
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
                         {
-                            flersvarsfraga++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
 
@@ -245,7 +280,23 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
     
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
@@ -255,7 +306,23 @@ namespace bankprov
 
                         if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
 
@@ -263,7 +330,23 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
 
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
@@ -273,7 +356,23 @@ namespace bankprov
 
                         if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
 
@@ -281,7 +380,23 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
 
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
@@ -291,12 +406,28 @@ namespace bankprov
 
                         if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
                         {
-                            resultat++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
                 }
             }
-            VisaSvar(facit);
+            VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
         }
 
         public void SerializaSvar(List<fraga> svar)
@@ -319,7 +450,7 @@ namespace bankprov
             btnSeResultatAnstallda.Visible = false;
         }
 
-        public void VisaSvar(prov facit)
+        public void VisaSvar(prov facit, int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk)
         {
             int i = -1;
 
@@ -353,6 +484,17 @@ namespace bankprov
                     }
                 }
 
+            }
+
+            // funkar ej men det löser sig under helgen
+            if (resultat >= 0.7 * 25 && produkterochhanteringavkundensaffärer >= 0.6 * 8 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * 8 && etikochregelverk >= 0.6 * 9)
+            {
+                LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
+            }
+
+            else
+            {
+                LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
             }
         }
         
