@@ -132,26 +132,50 @@ div.sektion input:hover {
     box-shadow: 0 0 1px rgba(0,0,0, .75);
 }
 
-div.fraga {
-    margin: 10px;
-    font-weight: bold;
+div.poster {
+    font-family: Verdana, Arial;
+    border: 2px solid #929292;
+    border-radius: 30px;
+    min-width: 75%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+div.fraga table {
+    width: 100%;
+    text-align: center;
+}
+
+div.fraga p {
+    margin-bottom: 0;
 }
 
 div.svarsalternativ {
-    margin: 2px;
+    padding-top: 10px;
 }
 
-div.svarsalternativ input {
-    height: initial;
-    width: auto;
-    padding: 0;
-    margin: 0;
+div.svarsalternativ table {
+    width: 80%;
+    margin-left: 15%;
 }
 
-div.svarsalternativ input:hover{
-    -webkit-box-shadow: 0 0 1px rgba(0,0,0,0);
-    -moz-box-shadow: 0 0 1px rgba(0,0,0,0);
-    box-shadow: 0 0 1px rgba(0,0,0,0);
+div.fraga span{
+    font-size: 11px;
+}
+
+.korrektsvar{
+    color: green;
+}
+
+.felsvar{
+    color: red;
+}
+
+div.svarsalternativ td {
+    width: 50%;
+    text-align: left;
 }
 
 .mindre{

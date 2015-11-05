@@ -5,7 +5,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Vad är Volvo XC70 till Volvo V70?</fragestallning>
     <svarsalternativa>En terrängversion</svarsalternativa>
-    <info></info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -13,7 +13,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Hur många hästkrafter har nya Volvo XC90 T5?</fragestallning>
     <svarsalternativb>278</svarsalternativb>
-    <info></info>
+    <info>1</info>
   </fraga>
   
 <fraga>
@@ -22,15 +22,15 @@
     <fragestallning>Vilka färger finns INTE Volvo C30 i?</fragestallning>    
     <svarsalternativc>Bert Åke Varg</svarsalternativc>
     <svarsalternativd>Hej Svejs</svarsalternativd>
-    <info>Denna fråga har TVÅ korrekta svarsalternativ som båda måste markeras.</info>
+    <info>2</info>
   </fraga>
 
   <fraga>
     <nr>4</nr>
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Vilken bil brukade Helgonet köra?</fragestallning>
-    <svarsalternativc>Vovlvo P1800</svarsalternativc>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <svarsalternativc>Volvo P1800</svarsalternativc>
+    <info>1</info>
 </fraga>
 
   <fraga>
@@ -38,7 +38,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Vad är det sista du bör göra på kvällen?</fragestallning>
     <svarsalternativd>Ta en raggarrunda på stan</svarsalternativd>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -49,7 +49,7 @@
     <svarsalternativb>Absolut</svarsalternativb>
     <svarsalternativc>Definitivt</svarsalternativc>
     <svarsalternativd>Har påven en lustig hatt?</svarsalternativd>
-    <info>Denna fråga har FYRA korrekta svarsalternativ som alla måste markeras</info>
+    <info>4</info>
   </fraga>
 
   <fraga>
@@ -57,7 +57,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Sossekontainer eller moderatbandy?</fragestallning>
     <svarsalternativc>Vanlig bandy</svarsalternativc>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -65,7 +65,7 @@
     <kategori>Produkter och hantering av kundens affärer</kategori>
     <fragestallning>Volvo 780 var ritad av designfirman Bertone. Vilken av dessa bilar har de EJ ritat?</fragestallning>
     <svarsalternativc>Ferrari 250 GT California</svarsalternativc>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
 
@@ -74,7 +74,7 @@
     <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
     <fragestallning>Vem gjorde världens första trippelcork på skidor?</fragestallning>
     <svarsalternativa>Sammy Carlsson</svarsalternativa>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -83,7 +83,7 @@
     <fragestallning>Vilka av dessa är smeknamn på Tom Wallish?</fragestallning>
     <svarsalternativb>The Pretzel Man</svarsalternativb>
     <svarsalternativd>Todd Walnutz</svarsalternativd>
-    <info>Denna fråga har TVÅ korrekta svarsalternativ och båda måste markeras</info>
+    <info>2</info>
   </fraga>
 
   <fraga>
@@ -91,7 +91,7 @@
     <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
     <fragestallning>Vilket år vann LSM superunknown?</fragestallning>
     <svarsalternativc>2012</svarsalternativc>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -99,7 +99,7 @@
     <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
     <fragestallning>Vad hette den allra första TwinTip-skidan?</fragestallning>
     <svarsalternativd>Salomon 1080</svarsalternativd>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -107,7 +107,7 @@
     <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
     <fragestallning>Hur många grader är minst en så kallad "Future spin"</fragestallning>
     <svarsalternativc>1440</svarsalternativc>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -116,7 +116,7 @@
     <fragestallning>Har Level 1 tappat det?</fragestallning>
     <svarsalternativb>Ja</svarsalternativb>
     <svarsalternativc>Var är PWhite?</svarsalternativc>
-    <info>Denna fråga har TVÅ korrekta svarsalternativ som båda måste markeras</info>
+    <info>2</info>
   </fraga>
 
   <fraga>
@@ -124,7 +124,7 @@
     <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
     <fragestallning>Vad började Line tillverka innan de började göra skidor?</fragestallning>
     <svarsalternativb>Skiboards/Snowblades</svarsalternativb>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
   
   <fraga>
@@ -132,7 +132,7 @@
     <kategori>Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi</kategori>
     <fragestallning>Vilken är enligt rådande konsensus världens bästa skidfilm?</fragestallning>
     <svarsalternativb>Session 1242</svarsalternativb>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -140,7 +140,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vad heter Bamses fru?</fragestallning>
     <svarsalternativd>Brummelisa</svarsalternativd>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -148,7 +148,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vad heter skaparen av Bamse?</fragestallning>
     <svarsalternativa>Rune Andréason</svarsalternativa>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -156,7 +156,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vilken typ av djur är Skalman?</fragestallning>
     <svarsalternativc>Sköldpadda</svarsalternativc>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
   <fraga>
@@ -164,7 +164,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vad kallas Skalmans klocka som ringer vid oerhört olägliga tillfällen?</fragestallning>
     <svarsalternativb>Mat och sov klocka</svarsalternativb>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
   
   <fraga>
@@ -174,7 +174,7 @@
     <svarsalternativb>Proteinpulver</svarsalternativb>
     <svarsalternativc>Köttbullar</svarsalternativc>
     <svarsalternativd>Dunderhonung</svarsalternativd>
-    <info>Denna fråga har TRE korrekta svar som alla amåste markeras</info>
+    <info>3</info>
   </fraga>
   
   <fraga>
@@ -182,7 +182,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vilket djur är Vargen?</fragestallning>
     <svarsalternativd>Varg</svarsalternativd>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
   
   <fraga>
@@ -190,7 +190,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vilken maträtt är farmors specialitet?</fragestallning>
     <svarsalternativa>Köttbullar</svarsalternativa>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
   
   <fraga>
@@ -198,7 +198,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Hur många barn har Bamse?</fragestallning>
     <svarsalternativd>4</svarsalternativd>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
   
   <fraga>
@@ -206,7 +206,7 @@
     <kategori>Etik och regelverk.</kategori>
     <fragestallning>Vad är Bamse?</fragestallning>
     <svarsalternativb>Världens starkaste björn</svarsalternativb>
-    <info>Denna fråga har ETT korrekt svarsalternativ</info>
+    <info>1</info>
   </fraga>
 
 </prov>

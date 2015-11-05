@@ -40,7 +40,7 @@
     <fragestallning>Vilken bil brukade Helgonet köra?</fragestallning>
     <svarsalternativa>Toyota Corolla Verso 1.8</svarsalternativa>
     <svarsalternativb>McLaren P1</svarsalternativb>
-    <svarsalternativc>Vovlvo P1800</svarsalternativc>
+    <svarsalternativc>Volvo P1800</svarsalternativc>
     <svarsalternativd>Volvo C30 Polestar</svarsalternativd>
     <info>Denna fråga har ETT korrekt svarsalternativ</info>
 </fraga>
@@ -109,7 +109,7 @@
     <svarsalternativb>The Pretzel Man</svarsalternativb>
     <svarsalternativc>Guacamole</svarsalternativc>
     <svarsalternativd>Todd Walnutz</svarsalternativd>
-    <info>Denna fråga har ETT korrekt svarsalternativ båda måste markeras</info>
+    <info>Denna fråga har TVÅ korrekta svarsalternativ båda måste markeras</info>
   </fraga>
 
   <fraga>

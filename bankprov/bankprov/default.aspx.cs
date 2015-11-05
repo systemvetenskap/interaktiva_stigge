@@ -117,6 +117,7 @@ namespace bankprov
 
             provet = HamtaFragor2();
             HittaSvar(provet);
+            DoljKontroller();
         }
 
         public prov HamtaFragor2()
@@ -154,6 +155,9 @@ namespace bankprov
                     {
                         fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
                         checkboxkontroll++;
+
+                        var LabelA = (Label)item.FindControl("LabelA"); // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
+                        LabelA.CssClass = "felsvar";
                     }
 
                     var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
@@ -161,6 +165,9 @@ namespace bankprov
                     {
                         fragaobj.svarsalternativb = provet.fragelista[i].svarsalternativb;
                         checkboxkontroll++;
+
+                        var LabelB = (Label)item.FindControl("LabelB");
+                        LabelB.CssClass = "felsvar";
 
                     }
 
@@ -170,6 +177,9 @@ namespace bankprov
                         fragaobj.svarsalternativc = provet.fragelista[i].svarsalternativc;
                         checkboxkontroll++;
 
+                        var LabelC = (Label)item.FindControl("LabelC");
+                        LabelC.CssClass = "felsvar";
+
                     }
 
                     var checkBoxD = (CheckBox)item.FindControl("CheckBoxD");
@@ -177,6 +187,9 @@ namespace bankprov
                     {
                         fragaobj.svarsalternativd = provet.fragelista[i].svarsalternativd;
                         checkboxkontroll++;
+
+                        var LabelD = (Label)item.FindControl("LabelD");
+                        LabelD.CssClass = "felsvar";
 
                     }
                 }
@@ -283,10 +296,7 @@ namespace bankprov
                     }
                 }
             }
-
-            LabelEjInloggad.Visible = true;
-            LabelEjInloggad.Text = "Du fick " + resultat + "rätt";
-
+            VisaSvar(facit);
         }
 
         public void SerializaSvar(List<fraga> svar)
@@ -298,6 +308,51 @@ namespace bankprov
 
             {
                 serializer.Serialize(writer, svar);
+            }
+        }
+
+        public void DoljKontroller()
+        {
+            btnGorProv.Visible = false;
+            btnLamnain.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+        }
+
+        public void VisaSvar(prov facit)
+        {
+            int i = -1;
+
+            foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
+            {
+                i++;
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                {
+                    if (facit.fragelista[i].svarsalternativa != null)
+                    {
+                        var LabelA = (Label)item.FindControl("LabelA");
+                        LabelA.CssClass = "korrektsvar";
+                    }
+                    
+                    if (facit.fragelista[i].svarsalternativb != null)
+                    {
+                        var LabelB = (Label)item.FindControl("LabelB");
+                        LabelB.CssClass = "korrektsvar";
+                    }
+
+                    if (facit.fragelista[i].svarsalternativc != null)
+                    {
+                        var LabelC = (Label)item.FindControl("LabelC");
+                        LabelC.CssClass = "korrektsvar";
+                    }
+
+                    if (facit.fragelista[i].svarsalternativd != null)
+                    {
+                        var LabelD = (Label)item.FindControl("LabelD");
+                        LabelD.CssClass = "korrektsvar";
+                    }
+                }
+
             }
         }
         
