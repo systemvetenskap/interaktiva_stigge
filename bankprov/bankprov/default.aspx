@@ -37,28 +37,40 @@
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
                         </div>
                     </div>
-
+                    
                     <asp:Repeater ID="Repeater1" runat="server">
 
                         <HeaderTemplate></HeaderTemplate>
 
                         <ItemTemplate>
-                            <p><%# Eval("fragestallning") %></p>                             
-                            <table>
-                                <tr>
-                                    <td><asp:CheckBox ID="CheckBoxA" runat="server" /><asp:Label ID="LabelA" runat="server"><%#Eval ("svarsalternativa") %></asp:Label></td>
-                                    <td><asp:CheckBox ID="CheckBoxB" runat="server" /><asp:Label ID="LabelB" runat="server"><%#Eval ("svarsalternativb") %></asp:Label></td>
-                                </tr>
-                                 <tr>
-                                    <td><asp:CheckBox ID="CheckBoxC" runat="server" /><asp:Label ID="LabelC" runat="server"><%#Eval ("svarsalternativc") %></asp:Label></td>                            
-                                    <td><asp:CheckBox ID="CheckBoxD" runat="server" /><asp:Label ID="LabelD" runat="server"><%#Eval ("svarsalternativd") %></asp:Label></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <asp:Label ID="LabelInfo" runat="server"><%#Eval ("Info") %></asp:Label>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="poster">
+                                <div class="fraga">
+                                    <table>
+                                        <tr>
+                                            <td>                                    
+                                                <p><%# Eval("fragestallning") %></p>
+                                            </td> 
+                                        </tr>
+                                                                            <tr>
+                                            <td>
+                                                <asp:Label ID="LabelInfo" runat="server"><%#Eval ("Info") %></asp:Label>
+                                            </td>
+                                        </tr> 
+                                    </table>
+                                </div>  
+                                <div class="svarsalternativ">
+                                    <table>                                                 
+                                        <tr>
+                                            <td><asp:CheckBox ID="CheckBoxA" runat="server" /><asp:Label ID="LabelA" runat="server"><%#Eval ("svarsalternativa") %></asp:Label></td>
+                                            <td><asp:CheckBox ID="CheckBoxB" runat="server" /><asp:Label ID="LabelB" runat="server"><%#Eval ("svarsalternativb") %></asp:Label></td>
+                                        </tr>
+                                         <tr>
+                                            <td><asp:CheckBox ID="CheckBoxC" runat="server" /><asp:Label ID="LabelC" runat="server"><%#Eval ("svarsalternativc") %></asp:Label></td>                            
+                                            <td><asp:CheckBox ID="CheckBoxD" runat="server" /><asp:Label ID="LabelD" runat="server"><%#Eval ("svarsalternativd") %></asp:Label></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </ItemTemplate>
 
                         <FooterTemplate></FooterTemplate>

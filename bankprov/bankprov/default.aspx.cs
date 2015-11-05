@@ -99,7 +99,7 @@ namespace bankprov
 
         public void HamtaFragor()
         {
-            string xml = Server.MapPath("test.xml");
+            string xml = Server.MapPath("fragor.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -121,7 +121,7 @@ namespace bankprov
 
         public prov HamtaFragor2()
         {
-            string xml = Server.MapPath("test.xml");
+            string xml = Server.MapPath("fragor.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -139,7 +139,6 @@ namespace bankprov
             int checkboxkontroll;
 
             int i = -1;
-            int j = 0;
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
             {
@@ -192,7 +191,7 @@ namespace bankprov
 
         public void RattaProv(List<fraga> gjortprov)
         {
-            string xml = Server.MapPath("facittest.xml");
+            string xml = Server.MapPath("facit.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -202,10 +201,11 @@ namespace bankprov
 
             int i = -1;
             int resultat = 0;
-            int flersvarsfraga = 0;
+            int flersvarsfraga;
 
             foreach (object objekt in gjortprov)
-            {   
+            {
+                flersvarsfraga = 0;
                 i++;
 
                 if (gjortprov[i].info != facit.fragelista[i].info)
