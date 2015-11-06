@@ -17,10 +17,20 @@ namespace bankprov
     {
         //////public string anv = "jahy1400";
         //////public bool provledare = true;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ////btnLamnain.Visible = false;
+            ////arlinsensierad();
+            //LiteralFraga.Visible = false;
+            //LabelA.Visible = false;
+            //LabelB.Visible = false;
+            //LabelC.Visible = false;
+            //LabelD.Visible = false;
+            //RadioButtonA.Visible = false;
+            //RadioButtonB.Visible = false;
+            //RadioButtonC.Visible = false;
+            //RadioButtonD.Visible = false;                        
         }
 
         public static int GetPersonId(string anvandare)
@@ -71,36 +81,43 @@ namespace bankprov
                 }
             }
             catch (NpgsqlException ex)
-            {
-            }
+           {
+           }
             finally
-            {
+           {
                 conn.Close();
-            }
+           }
             return linsensierad;
         }
 
         protected void btnGorProv_Click(object sender, EventArgs e)
         {
-            string anvandare = TextBoxanvandare.Text;
-            int person_id = 1;
-            person_id = GetPersonId(anvandare);
+            btnGorProv.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            LabelEjInloggad.Visible = false;
+            LabelKompetensportal.Visible = false;
+            btnLamnain.Visible = true;
 
-            if (ArLicensierad(person_id) == true)
-            {
-                HamtaFragor();
-            }
-            else
-            {
-                //öppna sidan för linsensiering
 
-            }
+            HamtaFragor();
+
+            //LiteralFraga.Visible = true;
+            //LabelA.Visible = true;
+            //LabelB.Visible = true;
+            //LabelC.Visible = true;
+            //LabelD.Visible = true;
+            //RadioButtonA.Visible = true;
+            //RadioButtonB.Visible = true;
+            //RadioButtonC.Visible = true;
+            //RadioButtonD.Visible = true;
+            
 
         }
 
         public void HamtaFragor()
         {
-            string xml = Server.MapPath("test.xml");
+            string xml = Server.MapPath("fragor.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -121,11 +138,12 @@ namespace bankprov
 
             provet = HamtaFragor2();
             HittaSvar(provet);
+            DoljKontroller();
         }
 
         public prov HamtaFragor2()
         {
-            string xml = Server.MapPath("test.xml");
+            string xml = Server.MapPath("fragor.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -143,7 +161,6 @@ namespace bankprov
             int checkboxkontroll;
 
             int i = -1;
-            int j = 0;
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
             {
@@ -159,6 +176,9 @@ namespace bankprov
                     {
                         fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
                         checkboxkontroll++;
+
+                        var LabelA = (Label)item.FindControl("LabelA"); // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
+                        LabelA.CssClass = "felsvar";
                     }
 
                     var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
@@ -166,6 +186,9 @@ namespace bankprov
                     {
                         fragaobj.svarsalternativb = provet.fragelista[i].svarsalternativb;
                         checkboxkontroll++;
+
+                        var LabelB = (Label)item.FindControl("LabelB");
+                        LabelB.CssClass = "felsvar";
 
                     }
 
@@ -175,6 +198,9 @@ namespace bankprov
                         fragaobj.svarsalternativc = provet.fragelista[i].svarsalternativc;
                         checkboxkontroll++;
 
+                        var LabelC = (Label)item.FindControl("LabelC");
+                        LabelC.CssClass = "felsvar";
+
                     }
 
                     var checkBoxD = (CheckBox)item.FindControl("CheckBoxD");
@@ -182,6 +208,9 @@ namespace bankprov
                     {
                         fragaobj.svarsalternativd = provet.fragelista[i].svarsalternativd;
                         checkboxkontroll++;
+
+                        var LabelD = (Label)item.FindControl("LabelD");
+                        LabelD.CssClass = "felsvar";
 
                     }
                 }
@@ -196,7 +225,7 @@ namespace bankprov
 
         public void RattaProv(List<fraga> gjortprov)
         {
-            string xml = Server.MapPath("facittest.xml");
+            string xml = Server.MapPath("facit.xml");
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -206,10 +235,14 @@ namespace bankprov
 
             int i = -1;
             int resultat = 0;
-            int flersvarsfraga = 0;
+            int flersvarsfraga;
+            int produkterochhanteringavkundensaffärer = 0;
+            int ekonominationalekonomifinansiellekonomiochprivatekonomi = 0;
+            int etikochregelverk = 0;
 
             foreach (object objekt in gjortprov)
             {   
+                flersvarsfraga = 0;
                 i++;
 
                 if (gjortprov[i].info != facit.fragelista[i].info)
@@ -223,12 +256,44 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {                                
                             resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                        }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
 
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
                         {
-                            flersvarsfraga++;
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
 
@@ -236,7 +301,23 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
+                                resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
                             resultat++;
+                                etikochregelverk++;
+                            }
                         }
     
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
@@ -246,7 +327,23 @@ namespace bankprov
 
                         if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
                             resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
 
@@ -254,7 +351,23 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
                             resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
 
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
@@ -264,7 +377,23 @@ namespace bankprov
 
                         if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
                             resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
                     }
 
@@ -272,7 +401,23 @@ namespace bankprov
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
                             resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
+                            }
                         }
 
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
@@ -282,15 +427,28 @@ namespace bankprov
 
                         if (flersvarsfraga == Convert.ToInt32(facit.fragelista[i].info))
                         {
+                            if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
+                            {
+                                resultat++;
+                                produkterochhanteringavkundensaffärer++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                            {
                             resultat++;
+                                ekonominationalekonomifinansiellekonomiochprivatekonomi++;
+                            }
+
+                            if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
+                            {
+                                resultat++;
+                                etikochregelverk++;
                         }
                     }
                 }
             }
-
-            LabelEjInloggad.Visible = true;
-            LabelEjInloggad.Text = "Du fick " + resultat + "rätt";
-
+        }
+            VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
         }
 
         public void SerializaSvar(List<fraga> svar)
@@ -302,6 +460,63 @@ namespace bankprov
 
             {
                 serializer.Serialize(writer, svar);
+            }
+        }
+        
+        public void DoljKontroller()
+        {
+            btnGorProv.Visible = false;
+            btnLamnain.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            LabelEjInloggad.Visible = true;
+        }
+
+        public void VisaSvar(prov facit, int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk)
+        {
+            int i = -1;
+
+            foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
+            {
+                i++;
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                {
+                    if (facit.fragelista[i].svarsalternativa != null)
+                    {
+                        var LabelA = (Label)item.FindControl("LabelA");
+                        LabelA.CssClass = "korrektsvar";
+                    }
+                    
+                    if (facit.fragelista[i].svarsalternativb != null)
+                    {
+                        var LabelB = (Label)item.FindControl("LabelB");
+                        LabelB.CssClass = "korrektsvar";
+                    }
+
+                    if (facit.fragelista[i].svarsalternativc != null)
+                    {
+                        var LabelC = (Label)item.FindControl("LabelC");
+                        LabelC.CssClass = "korrektsvar";
+                    }
+
+                    if (facit.fragelista[i].svarsalternativd != null)
+                    {
+                        var LabelD = (Label)item.FindControl("LabelD");
+                        LabelD.CssClass = "korrektsvar";
+                    }
+                }
+
+            }
+
+            // funkar ej men det löser sig under helgen
+            if (resultat >= 0.7 * 25 && produkterochhanteringavkundensaffärer >= 0.6 * 8 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * 8 && etikochregelverk >= 0.6 * 9)
+            {
+                LabelEjInloggad.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
+            }
+
+            else
+            {
+                LabelEjInloggad.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
             }
         }
         
