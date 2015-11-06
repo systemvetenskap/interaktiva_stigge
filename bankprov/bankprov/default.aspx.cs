@@ -15,85 +15,86 @@ namespace bankprov
 {
     public partial class index : System.Web.UI.Page
     {
-        
-        public string anv = "jahy1400";
-        public bool provledare = true;
-        
+        //////public string anv = "jahy1400";
+        //////public bool provledare = true;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnLamnain.Visible = false;
-            arlinsensierad();
-            //LiteralFraga.Visible = false;
-            //LabelA.Visible = false;
-            //LabelB.Visible = false;
-            //LabelC.Visible = false;
-            //LabelD.Visible = false;
-            //RadioButtonA.Visible = false;
-            //RadioButtonB.Visible = false;
-            //RadioButtonC.Visible = false;
-            //RadioButtonD.Visible = false;                        
+
         }
 
-        public void arlinsensierad()
+        public static int GetPersonId(string anvandare)
         {
-           if (anv == "jahy1400" && provledare == true)
+
+            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            int person_id = 0;
+            try
             {
-                btnGorProv.Visible = true;
-                btnSeResultat.Visible = true;
-                btnSeResultatAnstallda.Visible = true;
-                LabelEjInloggad.Visible = false;
-                btnLamnain.Visible = false;
+                conn.Open();
+                string sql = "SELECT id FROM u4_konto WHERE anvandarnamn = @anvandare;";
+                NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+                command.Parameters.AddWithValue("anvandare", anvandare);
 
-
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    person_id = Convert.ToInt32(dr["id"]);
+                }
             }
+            catch (NpgsqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return person_id;
+        }
 
-           else if (anv == "jahy1400" && provledare == false)
-           {
-               btnGorProv.Visible = true;
-               btnSeResultat.Visible = true;
-               btnSeResultatAnstallda.Visible = false;
-               LabelEjInloggad.Visible = false;
-               btnLamnain.Visible = false;
-
-
-           }
-
-           else
-           {
-               btnGorProv.Visible = false;
-               btnSeResultat.Visible = false;
-               btnSeResultatAnstallda.Visible = false;
-               LabelEjInloggad.Visible = true;
-               LabelEjInloggad.Text = "Du måste vara inloggad för att använda kompetensportalen";
-               btnLamnain.Visible = false;
-
-           }
-
+        public static bool ArLicensierad(int fk_person_id)
+        {
+            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require;";
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            bool linsensierad = false;
+            try
+            {
+                conn.Open();
+                string sql = "SELECT linsensierad FROM u4_person WHERE id = @fk_person_id;";
+                NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+                command.Parameters.AddWithValue("fk_person_id", fk_person_id);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    linsensierad = (bool)(dr["linsensierad"]);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return linsensierad;
         }
 
         protected void btnGorProv_Click(object sender, EventArgs e)
         {
-            btnGorProv.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
-            LabelEjInloggad.Visible = false;
-            LabelKompetensportal.Visible = false;
-            btnLamnain.Visible = true;
+            string anvandare = TextBoxanvandare.Text;
+            int person_id = 1;
+            person_id = GetPersonId(anvandare);
 
+            if (ArLicensierad(person_id) == true)
+            {
+                HamtaFragor();
+            }
+            else
+            {
+                //öppna sidan för linsensiering
 
-            HamtaFragor();
-
-            //LiteralFraga.Visible = true;
-            //LabelA.Visible = true;
-            //LabelB.Visible = true;
-            //LabelC.Visible = true;
-            //LabelD.Visible = true;
-            //RadioButtonA.Visible = true;
-            //RadioButtonB.Visible = true;
-            //RadioButtonC.Visible = true;
-            //RadioButtonD.Visible = true;
-            
+            }
 
         }
 
@@ -104,11 +105,14 @@ namespace bankprov
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
             object obj = deserializer.Deserialize(reader);
-            prov laddatprov = (prov)obj;
+            prov XmlData = (prov)obj;
             reader.Close();
 
-            Repeater1.DataSource = laddatprov.fragelista;
+
+
+            Repeater1.DataSource = XmlData.fragelista;
             Repeater1.DataBind();
+
         }
 
         protected void btnLamnain_Click(object sender, EventArgs e)
