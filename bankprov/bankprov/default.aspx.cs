@@ -23,16 +23,8 @@ namespace bankprov
         protected void Page_Load(object sender, EventArgs e)
         {
             btnLamnain.Visible = false;
-            arlinsensierad();
-            //LiteralFraga.Visible = false;
-            //LabelA.Visible = false;
-            //LabelB.Visible = false;
-            //LabelC.Visible = false;
-            //LabelD.Visible = false;
-            //RadioButtonA.Visible = false;
-            //RadioButtonB.Visible = false;
-            //RadioButtonC.Visible = false;
-            //RadioButtonD.Visible = false;                        
+            btnStartaProv.Visible = false;
+            arlinsensierad();                      
         }
 
         public void arlinsensierad()
@@ -78,22 +70,23 @@ namespace bankprov
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
             LabelEjInloggad.Visible = false;
-            LabelKompetensportal.Visible = false;
-            btnLamnain.Visible = true;
+            LabelKompetensportal.Text = "Provet består av frågor i tre olika kategorier. Det finns ingen tidsbegränsning.";
+            btnStartaProv.Visible = true;
 
+                       
+        }
+
+        protected void btnStartaProv_Click(object sender, EventArgs e)
+        {
+            btnGorProv.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            LabelEjInloggad.Visible = false;
+            LabelKompetensportal.Visible = false;
+            btnStartaProv.Visible = false;
 
             HamtaFragor();
-
-            //LiteralFraga.Visible = true;
-            //LabelA.Visible = true;
-            //LabelB.Visible = true;
-            //LabelC.Visible = true;
-            //LabelD.Visible = true;
-            //RadioButtonA.Visible = true;
-            //RadioButtonB.Visible = true;
-            //RadioButtonC.Visible = true;
-            //RadioButtonD.Visible = true;
-            
+            btnLamnain.Visible = true;
 
         }
 

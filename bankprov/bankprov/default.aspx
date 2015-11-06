@@ -34,6 +34,7 @@
                     <div class="sektion">
                         <div class="sektioncentrera">
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />
+                            <asp:Button ID="btnStartaProv" runat="server" Text="Starta provet" onclick="btnStartaProv_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
                         </div>
                     </div>
@@ -84,7 +85,6 @@
                            
 
                         </div>
-                        <div class="info"></div>
                         <div class="sektioncentrera sektionprovlamnain">                            
                             <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" />
                             <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />
