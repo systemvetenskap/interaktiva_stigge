@@ -15,8 +15,8 @@ namespace bankprov
 {
     public partial class index : System.Web.UI.Page
     {
-        //////public string anv = "jahy1400";
-        //////public bool provledare = true;
+        ///public string anv = "jahy1400";
+        ////public bool provledare = true;
         
         protected void Page_Load(object sender, EventArgs e)
         {
