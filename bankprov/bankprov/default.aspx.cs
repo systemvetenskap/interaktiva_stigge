@@ -14,23 +14,11 @@ using System.IO;
 namespace bankprov
 {
     public partial class index : System.Web.UI.Page
-    {
-        ///public string anv = "jahy1400";
-        ////public bool provledare = true;
-        
+    {        
         protected void Page_Load(object sender, EventArgs e)
         {
-            ////btnLamnain.Visible = false;
-            ////arlinsensierad();
-            //LiteralFraga.Visible = false;
-            //LabelA.Visible = false;
-            //LabelB.Visible = false;
-            //LabelC.Visible = false;
-            //LabelD.Visible = false;
-            //RadioButtonA.Visible = false;
-            //RadioButtonB.Visible = false;
-            //RadioButtonC.Visible = false;
-            //RadioButtonD.Visible = false;                        
+            btnLamnain.Visible = false;
+            LabelEjInloggad.Visible = false;      
         }
 
         public static int GetPersonId(string anvandare)
@@ -99,6 +87,14 @@ namespace bankprov
             if (ArLicensierad(person_id) == true)
             {
                 HamtaFragor();
+                btnGorProv.Visible = false;
+                btnSeResultat.Visible = false;
+                btnSeResultatAnstallda.Visible = false;
+                LabelEjInloggad.Visible = false;
+                TextBoxanvandare.Visible = false;
+                LabelKompetensportal.Visible = false;
+                Labelfornam.Visible = false;
+                btnLamnain.Visible = true;
             }
             else
             {
@@ -464,7 +460,7 @@ namespace bankprov
             btnLamnain.Visible = false;
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
-            LabelEjInloggad.Visible = true;
+            LabelKompetensportal.Visible = true;
         }
 
         public void VisaSvar(prov facit, int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk)
@@ -506,12 +502,12 @@ namespace bankprov
             // funkar ej men det löser sig under helgen
             if (resultat >= 0.7 * 25 && produkterochhanteringavkundensaffärer >= 0.6 * 8 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * 8 && etikochregelverk >= 0.6 * 9)
             {
-                LabelEjInloggad.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
+                LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
             }
 
             else
             {
-                LabelEjInloggad.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
+                LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
             }
         }
         
