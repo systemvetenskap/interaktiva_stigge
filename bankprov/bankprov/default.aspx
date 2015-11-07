@@ -37,7 +37,7 @@
                             <asp:Button ID="btnStartaProv" runat="server" Text="Starta provet" onclick="btnStartaProv_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>
                             <br />
-                            <asp:Label ID="Labelfornam" runat="server" Text="Förnamn"></asp:Label>
+                            <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
                         </div>
                     </div>
