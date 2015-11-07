@@ -92,30 +92,25 @@ namespace bankprov
 
         protected void btnGorProv_Click(object sender, EventArgs e)
         {
-            btnGorProv.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
-            LabelEjInloggad.Visible = false;
-            LabelKompetensportal.Visible = false;
-            btnLamnain.Visible = true;
+            string anvandare = TextBoxanvandare.Text;
+            int person_id = 1;
+            person_id = GetPersonId(anvandare);
 
+            if (ArLicensierad(person_id) == true)
+            {
+                HamtaFragor();
+            }
+            else
+            {
+                //öppna sidan för linsensiering
 
-            HamtaFragor();
-
-            //LiteralFraga.Visible = true;
-            //LabelA.Visible = true;
-            //LabelB.Visible = true;
-            //LabelC.Visible = true;
-            //LabelD.Visible = true;
-            //RadioButtonA.Visible = true;
-            //RadioButtonB.Visible = true;
-            //RadioButtonC.Visible = true;
-            //RadioButtonD.Visible = true;
-            
+            }
 
         }
 
-        public void HamtaFragor()
+
+
+    public void HamtaFragor()
         {
             string xml = Server.MapPath("fragor.xml");
 
