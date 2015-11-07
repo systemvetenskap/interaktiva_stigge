@@ -87,7 +87,6 @@ div.sektion{
     float: left;
     margin-left: 5%;
     margin-right: 5%;
-
 }
 
 div.sektion h3{
@@ -96,8 +95,10 @@ div.sektion h3{
 
 div.sektion p{
     margin-top: 0;
+    margin-bottom: 30px;
     display: inline-block;
     vertical-align: top;
+
 }
 
 div.sektioncentrera {
@@ -106,7 +107,6 @@ div.sektioncentrera {
     padding-left: 10%;
     padding-right: 10%;
 }
-
 
 
 div.sektion input {
@@ -137,9 +137,10 @@ div.poster {
     border: 2px solid #929292;
     border-radius: 30px;
     min-width: 75%;
-    margin: 10px 10%;
+    margin-left: 10%;
+    margin-right: 10%;
     padding: 15px;
-
+    margin-bottom: 10px;
 }
 
 div.fraga table {
@@ -148,7 +149,7 @@ div.fraga table {
 }
 
 div.fraga p {
-    margin: 0;
+    margin-bottom: 0;
 }
 
 div.svarsalternativ {

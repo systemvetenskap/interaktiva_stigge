@@ -15,9 +15,7 @@ namespace bankprov
 {
     public partial class index : System.Web.UI.Page
     {
-        ///public string anv = "jahy1400";
-        ////public bool provledare = true;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ////btnLamnain.Visible = false;
@@ -503,7 +501,7 @@ namespace bankprov
 
             }
 
-            // funkar ej men det löser sig under helgen
+            // ska ändras till nån typ av tabell
             if (resultat >= 0.7 * 25 && produkterochhanteringavkundensaffärer >= 0.6 * 8 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * 8 && etikochregelverk >= 0.6 * 9)
             {
                 LabelEjInloggad.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
@@ -515,6 +513,10 @@ namespace bankprov
             }
         }
         
+
     }
+
+    
+
 }
 
