@@ -90,7 +90,7 @@ namespace bankprov
             return linsensierad;
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)
+        protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
         {
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
