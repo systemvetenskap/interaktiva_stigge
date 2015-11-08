@@ -43,7 +43,9 @@
 
                     <asp:Repeater ID="Repeater1" runat="server">
 
-                        <HeaderTemplate></HeaderTemplate>
+                        <HeaderTemplate>
+                            <h3>Fyll i efterfrågat antal svar per fråga</h3>
+                        </HeaderTemplate>
 
                         <ItemTemplate>
                             <div class="poster">
