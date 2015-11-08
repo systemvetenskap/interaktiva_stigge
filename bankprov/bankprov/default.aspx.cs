@@ -14,11 +14,13 @@ using System.IO;
 namespace bankprov
 {
     public partial class index : System.Web.UI.Page
-    {        
+    {
+        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             btnLamnain.Visible = false;
-            LabelEjInloggad.Visible = false;      
+            LabelEjInloggad.Visible = false;     
         }
 
         public static int GetPersonId(string anvandare)
@@ -49,6 +51,7 @@ namespace bankprov
                 conn.Close();
             }
             return person_id;
+            
         }
 
         public static bool ArLicensierad(int fk_person_id)
@@ -531,7 +534,7 @@ namespace bankprov
 
 
             con.Open();
-            cmd.Parameters.AddWithValue("person_id", 1); // Fixa så íd på inloggad skickas in här
+            cmd.Parameters.AddWithValue("person_id", 1); // Fixa så id på inloggad skickas in här
             cmd.Parameters.AddWithValue("datum", dagens);
             cmd.Parameters.AddWithValue("provxml", svarxml);
             cmd.Parameters.AddWithValue("facit", facitxml);

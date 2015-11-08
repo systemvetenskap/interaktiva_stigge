@@ -14,11 +14,13 @@
     <body>
        <div class="container">
             <div class="header">
+                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
                 <img src="jebanken.jpg" alt="JE-Banken logo" />
             </div>
 
             <div class="nav">
                 <ul class="clearfix">
+
                     <li><a href="#">Logga ut</a></li>
                 </ul>
             </div>
