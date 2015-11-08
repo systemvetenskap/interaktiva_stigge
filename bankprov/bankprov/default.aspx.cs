@@ -10,6 +10,7 @@ using System.Data;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.Text;
 
 namespace bankprov
 {
@@ -51,7 +52,6 @@ namespace bankprov
                 conn.Close();
             }
             return person_id;
-            
         }
 
         public static bool ArLicensierad(int fk_person_id)
@@ -98,6 +98,9 @@ namespace bankprov
                 LabelKompetensportal.Visible = false;
                 Labelfornam.Visible = false;
                 btnLamnain.Visible = true;
+                LabelInloggad.Visible = true;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;
+
             }
             else
             {
@@ -518,6 +521,8 @@ namespace bankprov
 
         public void SparaTest()
         {
+            int person_id = HamtaID2();
+
             DateTime dagens = DateTime.Today;
 
             string facit = Server.MapPath("facit.xml");
@@ -534,7 +539,7 @@ namespace bankprov
 
 
             con.Open();
-            cmd.Parameters.AddWithValue("person_id", 1); // Fixa så id på inloggad skickas in här
+            cmd.Parameters.AddWithValue("person_id", person_id); // Fixa så id på inloggad skickas in här
             cmd.Parameters.AddWithValue("datum", dagens);
             cmd.Parameters.AddWithValue("provxml", svarxml);
             cmd.Parameters.AddWithValue("facit", facitxml);
@@ -542,8 +547,44 @@ namespace bankprov
 
             cmd.ExecuteNonQuery();
             con.Close();
+        }
+
+        public int HamtaID2()
+        {
+            string anvandare = HittaNamn();
+
+            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
+            string sql = "SELECT id FROM u4_konto WHERE anvandarnamn = '" + anvandare + "'";
+
+            NpgsqlConnection con = new NpgsqlConnection(connectionString);
+
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
 
 
+            con.Open();
+            int person_id = Convert.ToInt32(cmd.ExecuteScalar());
+            con.Close();
+
+            return person_id;
+        }
+
+        public string HittaNamn() // Löjligt komplicerat för att hitta användarnamnet men det funkade inte med global variabel som användar id och jag orkade inte krångla
+        {
+            string inloggadtext = LabelInloggad.Text;
+            string anvandare = "";
+
+            for (int i = 0; i < inloggadtext.Length; i++)
+            {
+                if (inloggadtext[i] == ':')
+                {
+                    for(int j = i + 2 ; j < inloggadtext.Length; j++)
+                    {
+                        anvandare = anvandare + inloggadtext[j];
+                    }
+                }
+            }
+
+            return anvandare;
         }
     }
 }

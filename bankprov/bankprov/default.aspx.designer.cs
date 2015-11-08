@@ -13,13 +13,13 @@ namespace bankprov {
     public partial class index {
         
         /// <summary>
-        /// Literal1 control.
+        /// LabelInloggad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
+        protected global::System.Web.UI.WebControls.Label LabelInloggad;
         
         /// <summary>
         /// form1 control.
