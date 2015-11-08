@@ -143,7 +143,7 @@ namespace bankprov
             }
         }
 
-        public void SenasteProv(int id)
+        public bool SenasteProv(int id)
         {
             DateTime senasteprov = new DateTime();
             string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";
@@ -162,12 +162,14 @@ namespace bankprov
                 LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
                 LabelKompetensportal.Visible = true;
                 btnSeResultat.Visible = true;
+                return true;
             }
 
             else
             {
                 LabelKompetensportal.Visible = false;
                 btnSeResultat.Visible = false;
+                return false;
             }
 
         }
@@ -175,8 +177,18 @@ namespace bankprov
 
         protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
         {
+            int person_id = HamtaID2();
             
+            if (SenasteProv(person_id))
+            {
+                HamtaFragorLicensierad();
+            }
+
+            else
+            {
                 HamtaFragor();
+            }
+
                 btnGorProv.Visible = false;
                 btnSeResultat.Visible = false;
                 btnSeResultatAnstallda.Visible = false;
@@ -185,11 +197,60 @@ namespace bankprov
                 LabelKompetensportal.Visible = false;
                 Labelfornam.Visible = false;
                 btnLamnain.Visible = true;
-                LabelInloggad.Visible = true;        
+                LabelInloggad.Visible = true;  
+      
+                
 
         }
 
+        public void HamtaFragorLicensierad()
+        {
+            string xml = Server.MapPath("fragor.xml");
 
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+            TextReader reader = new StreamReader(xml);
+            object obj = deserializer.Deserialize(reader);
+            prov XmlData = (prov)obj;
+            reader.Close();
+
+            int i = 0;
+            int antal = 0;
+            List<fraga> listafragor = new List<fraga>();
+           
+            foreach (object objekt in XmlData.fragelista)
+            {
+                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")
+                {
+                    if (antal <= 4)
+                    {
+                        antal++;
+                        listafragor.Add(XmlData.fragelista[i]);
+                    }
+                }
+
+                if (XmlData.fragelista[i].kategori == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                {                    
+                    if (antal >= 5 && antal <= 9)
+                    {
+                        antal++;
+                        listafragor.Add(XmlData.fragelista[i]);
+                    }
+                }
+
+                if (XmlData.fragelista[i].kategori == "Etik och regelverk.")
+                {                    
+                    if (antal <= 14 && antal >= 10)
+                    {
+                        antal++;
+                        listafragor.Add(XmlData.fragelista[i]);
+                    }
+                }
+
+                i++;
+            }
+            Repeater1.DataSource = listafragor;
+            Repeater1.DataBind();
+        }
 
     public void HamtaFragor()
         {
@@ -586,7 +647,7 @@ namespace bankprov
 
             }
 
-            // funkar ej men det löser sig under helgen
+            // Ersätta med tabell kanske
             if (resultat >= 0.7 * 25 && produkterochhanteringavkundensaffärer >= 0.6 * 8 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * 8 && etikochregelverk >= 0.6 * 9)
             {
                 LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
