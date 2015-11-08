@@ -2,55 +2,6 @@ body{
     background-image: url("moln.jpg");
 }
 
-a {
-    font-family: Verdana, Arial;
-
-}
-
-div.container{
-    max-width: 900px;
-    margin: auto;
-}
-
-div.footer{
-    width: 100%;
-    background-color: #929292; 
-    border-radius: 0 0 30px 30px;
-}
-
-div.footer table{
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 25%;
-    text-align: center;
-}
-
-div.footer table p{
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
-div.footer table a{
-    color: black;
-}
-
-div.footer table a:hover{
-    font-weight: bold;
-}
-
-div.fraga table {
-    width: 100%;
-    text-align: center;
-}
-
-div.fraga p {
-    margin-bottom: 0;
-}
-
-div.fraga span{
-    font-size: 11px;
-}
-
 div.header{
     margin-top: 20px;
     background-color: White;
@@ -64,6 +15,35 @@ div.header img{
     padding: 20px;
 }
 
+h1 {
+    color: #444444;
+    text-align: center;
+}
+
+h2 {
+    color: #444444;
+    text-align: center;
+}
+
+h3 {
+    color: #444444;
+    text-align: center;
+}
+
+a {
+    font-family: Verdana, Arial;
+
+}
+
+p {
+    font-family: Verdana, Arial;
+}
+
+div.container{
+    max-width: 900px;
+    margin: auto;
+}
+
 div.infotext {
     width: 70%;
     text-align: center;
@@ -71,6 +51,10 @@ div.infotext {
     margin-right: 15%;
     margin-bottom: 5%;
 
+}
+
+div.sektioner{
+    background-color: White;
 }
 
 div.nav{
@@ -102,17 +86,6 @@ div.nav ul li a:hover{
     background-color: #858585;
 }
 
-div.poster {
-    font-family: Verdana, Arial;
-    border: 2px solid #929292;
-    border-radius: 30px;
-    min-width: 75%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 15px;
-    margin-bottom: 10px;
-}
-
 div.sektion{
     width: 90%;
     background-color: white;
@@ -125,11 +98,21 @@ div.sektion h3{
     margin: 0;
 }
 
-div.sektion img{
-    width: 100%;
-    height: auto;
-    padding-top: 1%;
+div.sektion p{
+    margin-top: 0;
+    margin-bottom: 30px;
+    display: inline-block;
+    vertical-align: top;
+
 }
+
+div.sektioncentrera {
+    display:block;
+    text-align: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
 
 div.sektion input {
     height: 60px;
@@ -154,27 +137,24 @@ div.sektion input:hover {
     box-shadow: 0 0 1px rgba(0,0,0, .75);
 }
 
-div.sektion p{
-    margin-top: 0;
-    margin-bottom: 30px;
-    display: inline-block;
-    vertical-align: top;
-
+div.poster {
+    font-family: Verdana, Arial;
+    border: 2px solid #929292;
+    border-radius: 30px;
+    min-width: 75%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 15px;
+    margin-bottom: 10px;
 }
 
-div.sektion2{
-    margin-right: 1%;
-}
-
-div.sektioncentrera {
-    display:block;
+div.fraga table {
+    width: 100%;
     text-align: center;
-    padding-left: 10%;
-    padding-right: 10%;
 }
 
-div.sektioner{
-    background-color: White;
+div.fraga p {
+    margin-bottom: 0;
 }
 
 div.svarsalternativ {
@@ -186,28 +166,8 @@ div.svarsalternativ table {
     margin-left: 15%;
 }
 
-div.svarsalternativ td {
-    width: 50%;
-    text-align: left;
-}
-
-h1 {
-    color: #444444;
-    text-align: center;
-}
-
-h2 {
-    color: #444444;
-    text-align: center;
-}
-
-h3 {
-    color: #444444;
-    text-align: center;
-}
-
-p {
-    font-family: Verdana, Arial;
+div.fraga span{
+    font-size: 11px;
 }
 
 .korrektsvar{
@@ -218,8 +178,50 @@ p {
     color: red;
 }
 
+div.svarsalternativ td {
+    width: 50%;
+    text-align: left;
+}
+
 .mindre{
     width: 80%;
+}
+
+
+div.sektion img{
+    width: 100%;
+    height: auto;
+    padding-top: 1%;
+}
+
+div.sektion2{
+    margin-right: 1%;
+}
+
+div.footer{
+    width: 100%;
+    background-color: #929292; 
+    border-radius: 0 0 30px 30px;
+}
+
+div.footer table{
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    text-align: center;
+}
+
+div.footer table p{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+div.footer table a{
+    color: black;
+}
+
+div.footer table a:hover{
+    font-weight: bold;
 }
 
 
