@@ -104,7 +104,7 @@ namespace bankprov
                 Labelfornam.Visible = false;
                 btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
                 btnOk.Visible = false;
                 
 
@@ -175,42 +175,42 @@ namespace bankprov
 
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
+        protected void btnGorProv_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
         {
-            int person_id = HamtaID2();
-            
-            if (SenasteProv(person_id))
+            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
+
+            if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare.  Om man gjort prov tidigare så är satsen true
             {
-                HamtaFragorLicensierad();
+                HamtaFragorLicensierad();   // HÄR SAKNAS DET EN METOD!!!
             }
 
-            else
+            else                     // Om man inte gjort provet tidigare       TOLKAR JAG DETTA RÄTT???? SKALL DET INTE VARA OM MAN HAR ETT FÖR GAMMALT PROV ELLER EJ GJORT DET ALLS?
             {
-                HamtaFragor();
+                HamtaFragor();    // Skriver ut frågelistan i Repeater1. Se repeatern i "default.aspx"
             }
 
-                btnGorProv.Visible = false;
+                btnGorProv.Visible = false;                 // Gömmer undan en massa saker ur formuläret
                 btnSeResultat.Visible = false;
                 btnSeResultatAnstallda.Visible = false;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
                 LabelKompetensportal.Visible = false;
                 Labelfornam.Visible = false;
-                btnLamnain.Visible = true;
+                btnLamnain.Visible = true;                  // Visar "Lämna in"-knappen
                 LabelInloggad.Visible = true;        
 
                 
 
         }
 
-        public void HamtaFragor()
+        public void HamtaFragor()       // KOLLA HUR DENNA FUNKAR EGENTLIGEN.
         {
-            string xml = Server.MapPath("fragor.xml");
+            string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
-            TextReader reader = new StreamReader(xml);
-            object obj = deserializer.Deserialize(reader);
-            prov XmlData = (prov)obj;
+            TextReader reader = new StreamReader(xml);      
+            object obj = deserializer.Deserialize(reader);  
+            prov XmlData = (prov)obj;                       
             reader.Close();
 
 
@@ -640,12 +640,12 @@ namespace bankprov
             con.Close();
         }
 
-        public int HamtaID2()
+        public int HamtaID2()   // Returnerar id-nummer på användaren som är inloggad
         {
-            string anvandare = HittaNamn();
+            string anvandare = HittaNamn();     // Returnerar användarnamnet
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            string sql = "SELECT id FROM u4_konto WHERE anvandarnamn = '" + anvandare + "'";
+            string sql = "SELECT id FROM u4_konto WHERE anvandarnamn = '" + anvandare + "'";        // Söker vilket Id som tillhör användarnamnet
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);
 
@@ -661,7 +661,7 @@ namespace bankprov
 
         public string HittaNamn() // Löjligt komplicerat för att hitta användarnamnet men det funkade inte med global variabel som användar id och jag orkade inte krångla
         {
-            string inloggadtext = LabelInloggad.Text;
+            string inloggadtext = LabelInloggad.Text;       // Läser in namnet på den som är inloggad från en label.  Se metod btnOK_Click()
             string anvandare = "";
 
             for (int i = 0; i < inloggadtext.Length; i++)
