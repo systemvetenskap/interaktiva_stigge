@@ -452,6 +452,8 @@ namespace bankprov
             {
                 serializer.Serialize(writer, svar);
             }
+
+            SparaTest();
         }
         
         public void DoljKontroller()
@@ -510,7 +512,36 @@ namespace bankprov
                 LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
             }
         }
-        
+
+        public void SparaTest()
+        {
+            DateTime dagens = DateTime.Today;
+
+            string facit = Server.MapPath("facit.xml");
+            string facitxml = File.ReadAllText(facit);
+
+            string xml = Server.MapPath("svar.xml");
+            string svarxml = File.ReadAllText(xml);
+
+            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
+            string sql = "INSERT INTO u4_prov (person_id, datum, provxml, facit) VALUES (@person_id, @datum, @provxml, @facit)";
+
+            NpgsqlConnection con = new NpgsqlConnection(connectionString);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+
+            con.Open();
+            cmd.Parameters.AddWithValue("person_id", 1); // Fixa så íd på inloggad skickas in här
+            cmd.Parameters.AddWithValue("datum", dagens);
+            cmd.Parameters.AddWithValue("provxml", svarxml);
+            cmd.Parameters.AddWithValue("facit", facitxml);
+
+
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+
+        }
     }
 }
 
