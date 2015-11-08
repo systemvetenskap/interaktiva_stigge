@@ -14,13 +14,13 @@ using System.IO;
 namespace bankprov
 {
     public partial class index : System.Web.UI.Page
-    {
+    {        
         
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnLamnain.Visible = false;
-            LabelEjInloggad.Visible = false;     
+            btnLamnain.Visible = false;     // Knappen "Lämna In" är inte synlig från start utan dyker upp när man gör provet
+            LabelEjInloggad.Visible = false;      
         }
 
         public static int GetPersonId(string anvandare)
@@ -81,7 +81,7 @@ namespace bankprov
             return linsensierad;
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
+        protected void btnGorProv_Click(object sender, EventArgs e)// inloggning 
         {
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
