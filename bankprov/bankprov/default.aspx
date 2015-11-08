@@ -39,7 +39,7 @@
                             <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
-                            <asp:Button ID="btnOk" runat="server" Text="OK" />
+                            <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />
                         </div>
                         
                     </div>

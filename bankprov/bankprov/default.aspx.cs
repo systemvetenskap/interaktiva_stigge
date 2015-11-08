@@ -92,7 +92,6 @@ namespace bankprov
 
             if (ArLicensierad(person_id) == true)
             {
-                HamtaFragor();
                 btnGorProv.Visible = true;
                 btnSeResultat.Visible = true;
                 btnSeResultatAnstallda.Visible = false;
@@ -103,6 +102,7 @@ namespace bankprov
                 btnLamnain.Visible = true;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;
+                btnOk.Visible = false;
 
             }
             else
