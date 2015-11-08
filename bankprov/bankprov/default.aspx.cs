@@ -20,14 +20,14 @@ namespace bankprov
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnLamnain.Visible = false;     // Knappen "Lämna In" är inte synlig från start utan dyker upp när man gör provet
+            btnLamnain.Visible = false;     // Dessa element är dolda vid start. 
             LabelEjInloggad.Visible = false;     
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
             btnGorProv.Visible = false;
         }
 
-        public int GetPersonId(string anvandare)
+        public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
         {
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
@@ -36,14 +36,14 @@ namespace bankprov
             try
             {
                 conn.Open();
-                string sql = "SELECT id FROM u4_konto WHERE anvandarnamn = @anvandare;";
+                string sql = "SELECT id FROM u4_konto WHERE anvandarnamn = @anvandare;";    //Tar ut id för den användare som skrivits in i textrutan. 
                 NpgsqlCommand command = new NpgsqlCommand(sql, conn);
                 command.Parameters.AddWithValue("anvandare", anvandare);
 
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    person_id = Convert.ToInt32(dr["id"]);
+                    person_id = Convert.ToInt32(dr["id"]);      // Id-nummret sparas i variabeln
                 }
             }
             catch (NpgsqlException ex)
@@ -55,18 +55,18 @@ namespace bankprov
                 conn.Close();
             }
 
-            SenasteProv(person_id);
-            Chef(person_id);
+            SenasteProv(person_id);                // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
+            Chef(person_id);                    // Om användaren är chef så visas knappen för att se de anställdas resultat
 
-            return person_id;
+            return person_id;                   //Returnerar id-nummer för användaren
 
         }
 
-        public static bool ArLicensierad(int fk_person_id)
+        public static bool ArLicensierad(int fk_person_id)  // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad
         {
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require;";
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            bool linsensierad = false;
+            bool licensierad = false;
             try
             {
                 conn.Open();
@@ -76,7 +76,7 @@ namespace bankprov
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    linsensierad = (bool)(dr["linsensierad"]);
+                    licensierad = (bool)(dr["linsensierad"]);
                 }
             }
             catch (NpgsqlException ex)
@@ -86,17 +86,17 @@ namespace bankprov
            {
                 conn.Close();
            }
-            return linsensierad;
+            return licensierad;
         }
 
-        public void btnOK_Click(object sender, EventArgs e)
+        public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
-            person_id = GetPersonId(anvandare);
+            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer
 
-            if (ArLicensierad(person_id) == true)
-            {
+            if (ArLicensierad(person_id) == true)       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+            {                                           // om så är fallet så visas följande element på skärmen
                 btnGorProv.Visible = true;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
@@ -111,14 +111,15 @@ namespace bankprov
             }
             else
             {
-                //öppna sidan för linsensiering
+                //öppna sidan för licensiering.    
+                // JAG ANTAR ATT NÅGON ANNAN SIDA SKALL VISAS OM MAN INTE HAR ETT GILTIGT TESTRESULTAT. VAD???
 
             }
         }
 
-        public void Chef(int id)
+        public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
         {
-            string sql = "SELECT chef FROM u4_konto WHERE id = " + id;
+            string sql = "SELECT chef FROM u4_konto WHERE id = " + id;      //VI BORDE INTE HA CHEF SOM BOOLEAN UTAN SOM EN FRÄMMANDE NYCKEL TILL KONTO-ID
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
@@ -143,10 +144,10 @@ namespace bankprov
             }
         }
 
-        public bool SenasteProv(int id)
+        public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
             DateTime senasteprov = new DateTime();
-            string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";
+            string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -155,9 +156,9 @@ namespace bankprov
             senasteprov = Convert.ToDateTime(cmd.ExecuteScalar());
             con.Close();
 
-            DateTime nastaprov = senasteprov.AddYears(1);
+            DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
 
-            if (senasteprov.Year != 0001)
+            if (senasteprov.Year != 0001)       // VARFÖR SKULLE SENASTE PROV VARA ÅR 0001?
             {
                 LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
                 LabelKompetensportal.Visible = true;
@@ -174,12 +175,11 @@ namespace bankprov
 
         }
 
-
         protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
         {
             int person_id = HamtaID2();
             prov prov = new prov();
-
+            
             if (SenasteProv(person_id))
             {
                 prov = HamtaFragorLicensierad();
@@ -203,8 +203,6 @@ namespace bankprov
                 LabelInloggad.Visible = true;  
       
                 
-
-        }
 
         public prov HamtaFragorLicensierad()
         {
@@ -287,7 +285,7 @@ namespace bankprov
 
             else
             {
-                provet = HamtaFragor2();
+            provet = HamtaFragor2();
             }
 
             HittaSvar(provet);
