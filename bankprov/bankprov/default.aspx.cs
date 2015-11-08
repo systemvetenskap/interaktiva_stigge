@@ -55,7 +55,7 @@ namespace bankprov
                 conn.Close();
             }
 
-            SenasteProv(person_id);             // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas 
+            SenasteProv(person_id);                // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
             Chef(person_id);                    // Om användaren är chef så visas knappen för att se de anställdas resultat
 
             return person_id;                   //Returnerar id-nummer för användaren
@@ -144,7 +144,7 @@ namespace bankprov
             }
         }
 
-        public bool SenasteProv(int id)
+        public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
             DateTime senasteprov = new DateTime();
             string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
@@ -203,9 +203,7 @@ namespace bankprov
 
         }
 
-
-
-    public void HamtaFragor()
+        public void HamtaFragor()
         {
             string xml = Server.MapPath("fragor.xml");
 
