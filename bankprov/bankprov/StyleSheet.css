@@ -39,6 +39,10 @@ p {
     font-family: Verdana, Arial;
 }
 
+span {
+    font-family: Verdana, Arial;
+}
+
 div.container{
     max-width: 900px;
     margin: auto;
@@ -85,6 +89,12 @@ div.nav ul li a{
 div.nav ul li a:hover{
     background-color: #858585;
 }
+
+div.nav span{
+    font-size: 12px;
+    margin: 10px;
+}
+
 
 div.sektion{
     width: 90%;

@@ -16,12 +16,12 @@
     <body>
        <div class="container">
             <div class="header">
-                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
                 <img src="jebanken.jpg" alt="JE-Banken logo" />
             </div>
 
-            <div class="nav">   <!-- navigeringsmeny med endast ett objekt, behövs detta? -->
-                <ul class="clearfix">   <!-- återställer floats-->
+            <div class="nav">
+                <ul class="clearfix">
+                    <asp:Label ID="LabelInloggad" runat="server" Text=""></asp:Label>
                     <li><a href="#">Logga ut</a></li>
                 </ul>
             </div>
@@ -42,9 +42,10 @@
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>    <!--  VAD GÖR DENNA??? -->
                             <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
-                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>     <!-- Textbox för inmatning av användarnamn. -->
-                            <!--DENNA BÖR VI BYTA UT MOT EN LISTA SOM LÄSES FRÅN DATABASEN -->
+                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
+                            <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />
                         </div>
+                        
                     </div>
 
 
