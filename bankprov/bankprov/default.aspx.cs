@@ -200,7 +200,8 @@ namespace bankprov
                 LabelKompetensportal.Visible = false;
                 Labelfornam.Visible = false;
                 btnLamnain.Visible = true;
-                LabelInloggad.Visible = true;  
+                LabelInloggad.Visible = true;
+        }
       
                 
 
