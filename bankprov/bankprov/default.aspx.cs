@@ -177,11 +177,14 @@ namespace bankprov
 
         protected void btnGorProv_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
         {
-            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
-
+            int person_id = HamtaID2();
+            prov prov = new prov();
+            
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare.  Om man gjort prov tidigare så är satsen true
             {
-                HamtaFragorLicensierad();   // HÄR SAKNAS DET EN METOD!!!
+                prov = HamtaFragorLicensierad();
+                Repeater1.DataSource = prov.fragelista;
+                Repeater1.DataBind();
             }
 
             else                     // Om man inte gjort provet tidigare       TOLKAR JAG DETTA RÄTT???? SKALL DET INTE VARA OM MAN HAR ETT FÖR GAMMALT PROV ELLER EJ GJORT DET ALLS?
@@ -198,19 +201,67 @@ namespace bankprov
                 Labelfornam.Visible = false;
                 btnLamnain.Visible = true;                  // Visar "Lämna in"-knappen
                 LabelInloggad.Visible = true;        
+        }
 
                 
 
+        public prov HamtaFragorLicensierad()
+        {
+            string xml = Server.MapPath("fragor.xml");
+
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+            TextReader reader = new StreamReader(xml);
+            object obj = deserializer.Deserialize(reader);
+            prov XmlData = (prov)obj;
+            reader.Close();
+
+            int i = 0;
+            int antal = 0;
+            prov listafragor = new prov();
+           
+            foreach (object objekt in XmlData.fragelista)
+            {
+                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")
+                {
+                    if (antal <= 4)
+                    {
+                        antal++;
+                        listafragor.fragelista.Add(XmlData.fragelista[i]);
+        }
+                }
+
+                if (XmlData.fragelista[i].kategori == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
+                {                    
+                    if (antal >= 5 && antal <= 9)
+                    {
+                        antal++;
+                        listafragor.fragelista.Add(XmlData.fragelista[i]);
+                    }
+                }
+
+                if (XmlData.fragelista[i].kategori == "Etik och regelverk.")
+                {                    
+                    if (antal <= 14 && antal >= 10)
+                    {
+                        antal++;
+                        listafragor.fragelista.Add(XmlData.fragelista[i]);
+                    }
+                }
+
+                i++;
+            }
+
+            return listafragor;
         }
 
-        public void HamtaFragor()       // KOLLA HUR DENNA FUNKAR EGENTLIGEN.
+    public void HamtaFragor()
         {
             string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
-            TextReader reader = new StreamReader(xml);      
-            object obj = deserializer.Deserialize(reader);  
-            prov XmlData = (prov)obj;                       
+            TextReader reader = new StreamReader(xml);
+            object obj = deserializer.Deserialize(reader);
+            prov XmlData = (prov)obj;
             reader.Close();
 
 
@@ -222,9 +273,22 @@ namespace bankprov
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
+            int person_id = HamtaID2();
+
+
             prov provet = new prov();
 
+            
+            if (SenasteProv(person_id))
+                {
+                    provet = HamtaFragorLicensierad();
+                }
+
+            else
+            {
             provet = HamtaFragor2();
+            }
+
             HittaSvar(provet);
             DoljKontroller();
         }
@@ -256,13 +320,14 @@ namespace bankprov
                 checkboxkontroll = 0;
 
                 fraga fragaobj = new fraga();
-                fragaobj.nr = i;
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
                 {
                     var checkBoxA = (CheckBox)item.FindControl("CheckBoxA"); 
                     if (checkBoxA.Checked == true)
                     {
                         fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
+                        fragaobj.nr = provet.fragelista[i].nr;
+
                         checkboxkontroll++;
 
                         var LabelA = (Label)item.FindControl("LabelA"); // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
@@ -273,6 +338,8 @@ namespace bankprov
                     if (checkBoxB.Checked == true)
                     {
                         fragaobj.svarsalternativb = provet.fragelista[i].svarsalternativb;
+                        fragaobj.nr = provet.fragelista[i].nr;
+
                         checkboxkontroll++;
 
                         var LabelB = (Label)item.FindControl("LabelB");
@@ -284,6 +351,8 @@ namespace bankprov
                     if (checkBoxC.Checked == true)
                     {
                         fragaobj.svarsalternativc = provet.fragelista[i].svarsalternativc;
+                        fragaobj.nr = provet.fragelista[i].nr;
+
                         checkboxkontroll++;
 
                         var LabelC = (Label)item.FindControl("LabelC");
@@ -295,11 +364,17 @@ namespace bankprov
                     if (checkBoxD.Checked == true)
                     {
                         fragaobj.svarsalternativd = provet.fragelista[i].svarsalternativd;
+                        fragaobj.nr = provet.fragelista[i].nr;
+
                         checkboxkontroll++;
 
                         var LabelD = (Label)item.FindControl("LabelD");
                         LabelD.CssClass = "felsvar";
+                    }
 
+                    if (checkBoxA.Checked == false && checkBoxB.Checked == false && checkBoxC.Checked == false && checkBoxD.Checked == false)
+                    {
+                        fragaobj.nr = provet.fragelista[i].nr;
                     }
                 }
                 fragaobj.info = checkboxkontroll.ToString(); 
@@ -321,12 +396,40 @@ namespace bankprov
             prov facit = (prov)obj;
             reader.Close();
 
+            int l = 0;
+            int k = -1;
             int i = -1;
             int resultat = 0;
             int flersvarsfraga;
             int produkterochhanteringavkundensaffärer = 0;
             int ekonominationalekonomifinansiellekonomiochprivatekonomi = 0;
             int etikochregelverk = 0;
+
+            int person_id = HamtaID2();
+
+            if (SenasteProv(person_id))
+            {
+                prov nyfacit = new prov();
+                
+                foreach (object objektobjekt in facit.fragelista)
+                {
+                    k++;
+                    if (gjortprov[l].nr == facit.fragelista[k].nr)
+                    {
+                        nyfacit.fragelista.Add(facit.fragelista[k]);
+                        l++;
+
+                        if (l == 15)
+                        {
+                            break;
+                        }
+                    }
+                }
+                facit.fragelista.Clear();
+                facit = nyfacit;
+            }
+
+
 
             foreach (object objekt in gjortprov)
             {   
@@ -596,17 +699,33 @@ namespace bankprov
                     }
                 }
 
+                }
+
+            // Ersätta med tabell kanske samt att man kanske ska hämta anta frågor ur varje kategori ur xml istället
+            int totalt = 25;
+            int totaltkategori1 = 8;
+            int totaltkategori2 = 8;
+            int totaltkategori3 = 9;
+
+            int person_id = HamtaID2();
+            if (SenasteProv(person_id))
+            {
+                totalt = 15;
+                totaltkategori1 = 5;
+                totaltkategori2 = 5;
+                totaltkategori3 = 5;
             }
 
-            // Ersätta med tabell kanske
-            if (resultat >= 0.7 * 25 && produkterochhanteringavkundensaffärer >= 0.6 * 8 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * 8 && etikochregelverk >= 0.6 * 9)
+            
+
+            if (resultat >= 0.7 * totalt && produkterochhanteringavkundensaffärer >= 0.6 * totaltkategori1 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * totaltkategori2 && etikochregelverk >= 0.6 * totaltkategori3)
             {
-                LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
+                LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
             }
 
             else
             {
-                LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av 25. " + produkterochhanteringavkundensaffärer + "av 8 inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av 8 inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av 9 i kategorin Etik och regelverk";
+                LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
             }
         }
 
