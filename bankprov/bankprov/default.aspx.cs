@@ -27,7 +27,7 @@ namespace bankprov
             btnGorProv.Visible = false;
         }
 
-        public static int GetPersonId(string anvandare)
+        public int GetPersonId(string anvandare)
         {
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
@@ -54,7 +54,12 @@ namespace bankprov
             {
                 conn.Close();
             }
+
+            SenasteProv(person_id);
+            Chef(person_id);
+
             return person_id;
+
         }
 
         public static bool ArLicensierad(int fk_person_id)
@@ -94,15 +99,15 @@ namespace bankprov
             {
                 btnGorProv.Visible = true;
                 btnSeResultat.Visible = true;
-                btnSeResultatAnstallda.Visible = true;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = false;
+                LabelKompetensportal.Visible = true;
                 Labelfornam.Visible = false;
                 btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;
                 btnOk.Visible = false;
+                
 
             }
             else
@@ -110,6 +115,60 @@ namespace bankprov
                 //öppna sidan för linsensiering
 
             }
+        }
+
+        public void Chef(int id)
+        {
+            string sql = "SELECT chef FROM u4_konto WHERE id = " + id;
+
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+            con.Open();
+
+            string chefstring = Convert.ToString(cmd.ExecuteScalar());
+            bool chef = Convert.ToBoolean(chefstring);
+            
+            con.Close();
+
+
+            if (chef == true)
+            {
+                btnSeResultatAnstallda.Visible = true;
+            }
+
+            else
+            {
+                btnSeResultatAnstallda.Visible = false;
+            }
+        }
+
+        public void SenasteProv(int id)
+        {
+            DateTime senasteprov = new DateTime();
+            string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+            con.Open();
+            senasteprov = Convert.ToDateTime(cmd.ExecuteScalar());
+            con.Close();
+
+            DateTime nastaprov = senasteprov.AddYears(1);
+
+            if (senasteprov != null)
+            {
+                LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
+                LabelKompetensportal.Visible = true;
+            }
+
+            else
+            {
+
+            }
+
         }
 
 
