@@ -70,7 +70,7 @@ namespace bankprov
             try
             {
                 conn.Open();
-                string sql = "SELECT linsensierad FROM u4_person WHERE id = @fk_person_id;";
+                string sql = "SELECT linsensierad FROM u4_konto WHERE id = @fk_person_id;";
                 NpgsqlCommand command = new NpgsqlCommand(sql, conn);
                 command.Parameters.AddWithValue("fk_person_id", fk_person_id);
                 NpgsqlDataReader dr = command.ExecuteReader();
@@ -98,7 +98,6 @@ namespace bankprov
             if (ArLicensierad(person_id) == true)
             {
                 btnGorProv.Visible = true;
-                btnSeResultat.Visible = true;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
                 LabelKompetensportal.Visible = true;
@@ -158,15 +157,17 @@ namespace bankprov
 
             DateTime nastaprov = senasteprov.AddYears(1);
 
-            if (senasteprov != null)
+            if (senasteprov.Year != 0001)
             {
                 LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
                 LabelKompetensportal.Visible = true;
+                btnSeResultat.Visible = true;
             }
 
             else
             {
-
+                LabelKompetensportal.Visible = false;
+                btnSeResultat.Visible = false;
             }
 
         }
