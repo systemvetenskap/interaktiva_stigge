@@ -94,12 +94,12 @@ namespace bankprov
             {
                 btnGorProv.Visible = true;
                 btnSeResultat.Visible = true;
-                btnSeResultatAnstallda.Visible = false;
+                btnSeResultatAnstallda.Visible = true;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
                 LabelKompetensportal.Visible = false;
                 Labelfornam.Visible = false;
-                btnLamnain.Visible = true;
+                btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;
                 btnOk.Visible = false;
