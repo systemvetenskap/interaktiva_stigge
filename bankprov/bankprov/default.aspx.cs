@@ -21,7 +21,10 @@ namespace bankprov
         protected void Page_Load(object sender, EventArgs e)
         {
             btnLamnain.Visible = false;
-            LabelEjInloggad.Visible = false;     
+            LabelEjInloggad.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            btnGorProv.Visible = false;
         }
 
         public static int GetPersonId(string anvandare)
@@ -81,7 +84,7 @@ namespace bankprov
             return linsensierad;
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
+        public void btnOK_Click(object sender, EventArgs e)
         {
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
@@ -90,8 +93,8 @@ namespace bankprov
             if (ArLicensierad(person_id) == true)
             {
                 HamtaFragor();
-                btnGorProv.Visible = false;
-                btnSeResultat.Visible = false;
+                btnGorProv.Visible = true;
+                btnSeResultat.Visible = true;
                 btnSeResultatAnstallda.Visible = false;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
@@ -107,6 +110,22 @@ namespace bankprov
                 //öppna sidan för linsensiering
 
             }
+        }
+
+
+        protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
+        {
+            
+                HamtaFragor();
+                btnGorProv.Visible = false;
+                btnSeResultat.Visible = false;
+                btnSeResultatAnstallda.Visible = false;
+                LabelEjInloggad.Visible = false;
+                TextBoxanvandare.Visible = false;
+                LabelKompetensportal.Visible = false;
+                Labelfornam.Visible = false;
+                btnLamnain.Visible = true;
+                LabelInloggad.Visible = true;        
 
         }
 
