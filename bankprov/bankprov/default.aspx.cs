@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Npgsql;
 using NpgsqlTypes;
-using System.Data;
+using System.Data;  
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
@@ -17,7 +17,7 @@ namespace bankprov
     {        
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnLamnain.Visible = false;
+            btnLamnain.Visible = false;     // Knappen "Lämna In" är inte synlig från start utan dyker upp när man gör provet
             LabelEjInloggad.Visible = false;      
         }
 
@@ -78,7 +78,7 @@ namespace bankprov
             return linsensierad;
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)// inlågning 
+        protected void btnGorProv_Click(object sender, EventArgs e)// inloggning 
         {
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
