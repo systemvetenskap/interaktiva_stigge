@@ -21,6 +21,32 @@ namespace bankprov
             LabelEjInloggad.Visible = false;      
         }
 
+        protected void btnGorProv_Click(object sender, EventArgs e)   // Körs när man klickar på "Gör Provet"
+        {
+            string anvandare = TextBoxanvandare.Text;       
+            int person_id = 1;
+            person_id = GetPersonId(anvandare);             
+
+            if (ArLicensierad(person_id) == true)
+            {
+                HamtaFragor();
+                btnGorProv.Visible = false;
+                btnSeResultat.Visible = false;
+                btnSeResultatAnstallda.Visible = false;
+                LabelEjInloggad.Visible = false;
+                TextBoxanvandare.Visible = false;
+                LabelKompetensportal.Visible = false;
+                Labelfornam.Visible = false;
+                btnLamnain.Visible = true;
+            }
+            else
+            {
+                //öppna sidan för linsensiering
+
+            }
+
+        }
+
         public static int GetPersonId(string anvandare)
         {
 
@@ -78,35 +104,7 @@ namespace bankprov
             return linsensierad;
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)// inloggning 
-        {
-            string anvandare = TextBoxanvandare.Text;
-            int person_id = 1;
-            person_id = GetPersonId(anvandare);
-
-            if (ArLicensierad(person_id) == true)
-            {
-                HamtaFragor();
-                btnGorProv.Visible = false;
-                btnSeResultat.Visible = false;
-                btnSeResultatAnstallda.Visible = false;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = false;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = true;
-            }
-            else
-            {
-                //öppna sidan för linsensiering
-
-            }
-
-        }
-
-
-
-    public void HamtaFragor()
+        public void HamtaFragor()
         {
             string xml = Server.MapPath("fragor.xml");
 
