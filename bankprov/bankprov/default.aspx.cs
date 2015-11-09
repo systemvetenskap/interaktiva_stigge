@@ -113,8 +113,6 @@ namespace bankprov
             else if (ArLicensierad(person_id) == false)
                 {
                 //öppna sidan för licensiering.    
-                // JAG ANTAR ATT NÅGON ANNAN SIDA SKALL VISAS OM MAN INTE HAR ETT GILTIGT TESTRESULTAT. VAD???
-
                 //här skall man hämta frågor för linsensiering
                 //öppna sidan för linsensiering den skall inehålla (""""25 frågor"""")
                 btnGorProv.Visible = true;
