@@ -110,13 +110,22 @@ namespace bankprov
                 
 
             }
-            else
-            {
+            else if (ArLicensierad(person_id) == false)
+                {
                 //öppna sidan för licensiering.    
                 // JAG ANTAR ATT NÅGON ANNAN SIDA SKALL VISAS OM MAN INTE HAR ETT GILTIGT TESTRESULTAT. VAD???
 
                 //här skall man hämta frågor för linsensiering
                 //öppna sidan för linsensiering den skall inehålla (""""25 frågor"""")
+                btnGorProv.Visible = true;
+                LabelEjInloggad.Visible = false;
+                TextBoxanvandare.Visible = false;
+                LabelKompetensportal.Visible = true;
+                Labelfornam.Visible = false;
+                btnLamnain.Visible = false;
+                LabelInloggad.Visible = true;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                btnOk.Visible = false;
             }
         }
 
