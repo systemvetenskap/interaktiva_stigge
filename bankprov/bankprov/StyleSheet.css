@@ -20,6 +20,11 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: #444444;
+    text-align: center;
+}
+
 h3 {
     color: #444444;
     text-align: center;
@@ -31,6 +36,10 @@ a {
 }
 
 p {
+    font-family: Verdana, Arial;
+}
+
+span {
     font-family: Verdana, Arial;
 }
 
@@ -80,6 +89,12 @@ div.nav ul li a{
 div.nav ul li a:hover{
     background-color: #858585;
 }
+
+div.nav span{
+    font-size: 12px;
+    margin: 10px;
+}
+
 
 div.sektion{
     width: 90%;
