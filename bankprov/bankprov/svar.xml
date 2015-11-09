@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfFraga xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
-    <nr>0</nr>
-    <svarsalternativa>En terrängversion</svarsalternativa>
-    <info>1</info>
-  </fraga>
-  <fraga>
     <nr>1</nr>
-    <svarsalternativb>278</svarsalternativb>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>2</nr>
@@ -24,18 +18,6 @@
   </fraga>
   <fraga>
     <nr>5</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>6</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>7</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>8</nr>
     <info>0</info>
   </fraga>
   <fraga>
@@ -59,18 +41,6 @@
     <info>0</info>
   </fraga>
   <fraga>
-    <nr>14</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>15</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>16</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
     <nr>17</nr>
     <info>0</info>
   </fraga>
@@ -88,18 +58,6 @@
   </fraga>
   <fraga>
     <nr>21</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>22</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>23</nr>
-    <info>0</info>
-  </fraga>
-  <fraga>
-    <nr>24</nr>
     <info>0</info>
   </fraga>
 </ArrayOfFraga>
