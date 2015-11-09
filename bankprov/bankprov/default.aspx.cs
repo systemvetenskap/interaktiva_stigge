@@ -91,6 +91,7 @@ namespace bankprov
 
         public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
+            //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
             person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer
@@ -114,6 +115,8 @@ namespace bankprov
                 //öppna sidan för licensiering.    
                 // JAG ANTAR ATT NÅGON ANNAN SIDA SKALL VISAS OM MAN INTE HAR ETT GILTIGT TESTRESULTAT. VAD???
 
+                //här skall man hämta frågor för linsensiering
+                //öppna sidan för linsensiering den skall inehålla (""""25 frågor"""")
             }
         }
 
