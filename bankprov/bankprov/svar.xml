@@ -2,13 +2,13 @@
 <ArrayOfFraga xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
     <nr>0</nr>
-    <svarsalternativa>En terrängversion</svarsalternativa>
-    <info>1</info>
+    <svarsalternativb>En sportversion</svarsalternativb>
+    <svarsalternativd>En dieselversion</svarsalternativd>
+    <info>2</info>
   </fraga>
   <fraga>
     <nr>1</nr>
-    <svarsalternativb>278</svarsalternativb>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>2</nr>
