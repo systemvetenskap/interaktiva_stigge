@@ -113,8 +113,8 @@ namespace bankprov
             else if (ArLicensierad(person_id) == false)
                 {
                 //öppna sidan för licensiering.    
-                //här skall man hämta frågor för linsensiering
-                //öppna sidan för linsensiering den skall inehålla (""""25 frågor"""")
+                //här skall man hämta frågor för licensiering
+                //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
                 btnGorProv.Visible = true;
                 LabelEjInloggad.Visible = false;
                 TextBoxanvandare.Visible = false;
@@ -212,9 +212,7 @@ namespace bankprov
                 btnLamnain.Visible = true;                  // Visar "Lämna in"-knappen
                 LabelInloggad.Visible = true;        
         }
-
-                
-
+        
         public prov HamtaFragorLicensierad()
         {
             string xml = Server.MapPath("fragor.xml");
@@ -264,7 +262,7 @@ namespace bankprov
             return listafragor;
         }
 
-    public void HamtaFragor()
+        public void HamtaFragor()
         {
             string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
 
@@ -283,14 +281,14 @@ namespace bankprov
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
-            int person_id = HamtaID2();
+            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
 
             prov provet = new prov();
 
             
-            if (SenasteProv(person_id))
-                {
+            if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare
+            {
                     provet = HamtaFragorLicensierad();
                 }
 
@@ -300,7 +298,7 @@ namespace bankprov
             }
 
             HittaSvar(provet);
-            DoljKontroller();
+            DoljKontroller();    //Döljer knapparna "Gör Prov" , "Lämna in prov", "Se resultat" och "Se anställdas resultat"
         }
 
         public prov HamtaFragor2()
@@ -417,7 +415,7 @@ namespace bankprov
 
             int person_id = HamtaID2();
 
-            if (SenasteProv(person_id))
+            if (SenasteProv(person_id))     //Returnerar en boolean som berättar om man gjort provet tidigare
             {
                 prov nyfacit = new prov();
                 
@@ -666,7 +664,7 @@ namespace bankprov
             SparaTest();
         }
         
-        public void DoljKontroller()
+        public void DoljKontroller()    //Döljer knapparna "Gör Prov" , "Lämna in prov", "Se resultat" och "Se anställdas resultat"
         {
             btnGorProv.Visible = false;
             btnLamnain.Visible = false;
@@ -741,7 +739,7 @@ namespace bankprov
 
         public void SparaTest()
         {
-            int person_id = HamtaID2();
+            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
             DateTime dagens = DateTime.Today;
 
