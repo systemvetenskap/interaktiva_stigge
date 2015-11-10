@@ -129,21 +129,18 @@ namespace bankprov
 
         public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
         {
-            string sql = "SELECT chef FROM u4_konto WHERE id = " + id;      //VI BORDE INTE HA CHEF SOM BOOLEAN UTAN SOM EN FRÄMMANDE NYCKEL TILL KONTO-ID
+            string sql = "SELECT chef FROM u4_konto WHERE chef = " + id;      //VI BORDE INTE HA CHEF SOM BOOLEAN UTAN SOM EN FRÄMMANDE NYCKEL TILL KONTO-ID
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
 
             con.Open();
-
-            string chefstring = Convert.ToString(cmd.ExecuteScalar());
-            bool chef = Convert.ToBoolean(chefstring);
-            
+            NpgsqlDataReader dr = cmd.ExecuteReader();
             con.Close();
 
 
-            if (chef == true)
+            if (dr.HasRows)
             {
                 btnSeResultatAnstallda.Visible = true;
             }
