@@ -127,35 +127,44 @@ namespace bankprov
         public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
             DateTime senasteprov = new DateTime();
+            string senasteprovstring;
             bool godkand;
 
-            string sql = "SELECT datum, godkant from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
+            string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
+            string sql2 = "SELECT godkant from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Vet att detta är en sunkig lösning men min reader krånglade
+
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            
+            NpgsqlCommand cmd2 = new NpgsqlCommand(sql2, con);
 
             con.Open();
-            var reader = cmd.ExecuteReader();
+            senasteprovstring = Convert.ToString(cmd.ExecuteScalar());
+            godkand = Convert.ToBoolean(cmd2.ExecuteScalar());
             con.Close();
 
-            senasteprov = Convert.ToDateTime(reader[0]);
-            godkand = Convert.ToBoolean(reader[1]);
-
-            DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
-
-            if (senasteprov.Year != 0001 && godkand == true)       // VARFÖR SKULLE SENASTE PROV VARA ÅR 0001?
+            if (senasteprovstring != "")
             {
+                senasteprov = Convert.ToDateTime(senasteprovstring);
+                DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
                 LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
                 LabelKompetensportal.Visible = true;
                 btnSeResultat.Visible = true;
-                return true;
             }
 
             else
             {
                 LabelKompetensportal.Visible = false;
                 btnSeResultat.Visible = false;
+            }
+
+            if (godkand)
+            {
+                return true;
+            }
+
+            else
+            {
                 return false;
             }
 
