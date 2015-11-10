@@ -25,6 +25,7 @@ namespace bankprov
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
             btnGorProv.Visible = false;
+            btnStartaprov.Visible = false;
         }
 
         public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
@@ -62,33 +63,6 @@ namespace bankprov
 
         }
 
-        public static bool ArLicensierad(int fk_person_id)  // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad
-        {
-            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require;";
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-            bool licensierad = false;
-            try
-            {
-                conn.Open();
-                string sql = "SELECT linsensierad FROM u4_konto WHERE id = @fk_person_id;";
-                NpgsqlCommand command = new NpgsqlCommand(sql, conn);
-                command.Parameters.AddWithValue("fk_person_id", fk_person_id);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
-                {
-                    licensierad = (bool)(dr["linsensierad"]);
-                }
-            }
-            catch (NpgsqlException ex)
-           {
-           }
-            finally
-           {
-                conn.Close();
-           }
-            return licensierad;
-        }
-
         public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
             //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
@@ -96,7 +70,7 @@ namespace bankprov
             int person_id = 1;
             person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer
 
-            if (ArLicensierad(person_id) == true)       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+            if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
             {                                           // om så är fallet så visas följande element på skärmen
                 btnGorProv.Visible = true;
                 LabelEjInloggad.Visible = false;
@@ -106,12 +80,11 @@ namespace bankprov
                 btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;
+                btnOk.Visible = false;             
                 
-
             }
-            else if (ArLicensierad(person_id) == false)
-                {
+            else 
+            {
                 //öppna sidan för licensiering.    
                 //här skall man hämta frågor för licensiering
                 //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
@@ -156,7 +129,7 @@ namespace bankprov
             DateTime senasteprov = new DateTime();
             bool godkand;
 
-            string sql = "SELECT datum, godkand from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
+            string sql = "SELECT datum, godkant from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -188,7 +161,21 @@ namespace bankprov
 
         }
 
-        protected void btnGorProv_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
+        protected void btnGorProv_Click(object sender, EventArgs e)
+        {
+            btnGorProv.Visible = false;                 // Gömmer undan en massa saker ur formuläret
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            LabelEjInloggad.Visible = false;
+            TextBoxanvandare.Visible = false;
+            LabelKompetensportal.Visible = true;
+            LabelKompetensportal.Text = "Tryck på knappen för att starta testet. Det finns ingen tidsgräns så ta de piano och gör dig noggrann!";
+            Labelfornam.Visible = false;
+            btnLamnain.Visible = true;                  // Visar "Lämna in"-knappen
+            LabelInloggad.Visible = true;        
+        }
+
+        protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
         {
             int person_id = HamtaID2();
             prov prov = new prov();
@@ -205,15 +192,7 @@ namespace bankprov
                 HamtaFragor();    // Skriver ut frågelistan i Repeater1. Se repeatern i "default.aspx"
             }
 
-                btnGorProv.Visible = false;                 // Gömmer undan en massa saker ur formuläret
-                btnSeResultat.Visible = false;
-                btnSeResultatAnstallda.Visible = false;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = false;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = true;                  // Visar "Lämna in"-knappen
-                LabelInloggad.Visible = true;        
+                btnStartaprov.Visible = false;                 // Gömmer undan en massa saker ur formuläret      
         }
         
         public prov HamtaFragorLicensierad()
