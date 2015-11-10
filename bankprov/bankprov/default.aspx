@@ -103,7 +103,7 @@
                         <div class="info"></div>        <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->    
                         <div class="sektioncentrera sektionprovlamnain">         <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->  
                                                 
-                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" />
+                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" onclick="btn_SeResultat_Click"/>
                             
                             <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />   <!-- När man är klar med provet så klickar man påknappen och då körs metoden "btnLamnain_Click" i default.aspx.cs -->
 

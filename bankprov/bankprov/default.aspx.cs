@@ -180,12 +180,15 @@ namespace bankprov
             LabelKompetensportal.Visible = true;
             LabelKompetensportal.Text = "Tryck på knappen för att starta testet. Det finns ingen tidsgräns så ta de piano och gör dig noggrann!";
             Labelfornam.Visible = false;
-            btnLamnain.Visible = true;                  // Visar "Lämna in"-knappen
-            LabelInloggad.Visible = true;        
+            btnLamnain.Visible = false;
+            LabelInloggad.Visible = true;
+            btnStartaprov.Visible = true;
         }
 
         protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
         {
+            btnLamnain.Visible = true;
+
             int person_id = HamtaID2();
             prov prov = new prov();
             
@@ -272,6 +275,7 @@ namespace bankprov
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
+            
             int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
 
@@ -806,6 +810,11 @@ namespace bankprov
             }
 
             return anvandare;
+        }
+    
+        protected void btnSeResultat_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
