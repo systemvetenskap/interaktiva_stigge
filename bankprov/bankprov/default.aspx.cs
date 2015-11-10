@@ -154,20 +154,26 @@ namespace bankprov
         public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
             DateTime senasteprov = new DateTime();
-            string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
+            bool godkand;
+
+            string sql = "SELECT datum, godkand from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            
 
             con.Open();
-            senasteprov = Convert.ToDateTime(cmd.ExecuteScalar());
+            var reader = cmd.ExecuteReader();
             con.Close();
+
+            senasteprov = Convert.ToDateTime(reader[0]);
+            godkand = Convert.ToBoolean(reader[1]);
 
             DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
 
-            if (senasteprov.Year != 0001)       // VARFÖR SKULLE SENASTE PROV VARA ÅR 0001?
+            if (senasteprov.Year != 0001 && godkand == true)       // VARFÖR SKULLE SENASTE PROV VARA ÅR 0001?
             {
-                LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
+                LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
                 LabelKompetensportal.Visible = true;
                 btnSeResultat.Visible = true;
                 return true;
@@ -286,16 +292,35 @@ namespace bankprov
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare
             {
-                    provet = HamtaFragorLicensierad();
-                }
+                provet = HamtaFragorLicensierad();
+            }
 
             else
             {
-            provet = HamtaFragor2();
+                provet = HamtaFragor2();
             }
 
-            HittaSvar(provet);
-            DoljKontroller();    //Döljer knapparna "Gör Prov" , "Lämna in prov", "Se resultat" och "Se anställdas resultat"
+            List<fraga> gjortprov = HittaSvar(provet);
+            SerializaSvar(gjortprov);
+            
+            var tuple = RattaProv(gjortprov);
+            prov facit = tuple.Item1;
+            int resultat = tuple.Item2;
+            int produkterochhanteringavkundensaffärer = tuple.Item3;
+            int ekonominationalekonomifinansiellekonomiochprivatekonomi = tuple.Item4;
+            int etikochregelverk = tuple.Item5;
+
+            bool godkand = VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
+
+            SparaTest(resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
+
+
+
+            btnGorProv.Visible = false;
+            btnLamnain.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            LabelKompetensportal.Visible = true;
         }
 
         public prov HamtaFragor2()
@@ -312,7 +337,7 @@ namespace bankprov
 
         }
 
-        public void HittaSvar(prov provet)
+        public List<fraga> HittaSvar(prov provet)
         {
             List <fraga> gjortprov = new List<fraga>();
             int checkboxkontroll;
@@ -386,12 +411,10 @@ namespace bankprov
                 gjortprov.Add(fragaobj); // lägger till svaret i en lista
             }
 
-            SerializaSvar(gjortprov); // ropar på serializern
-            RattaProv(gjortprov);
-
+            return gjortprov;
         }
 
-        public void RattaProv(List<fraga> gjortprov)
+        public Tuple<prov, int, int, int, int> RattaProv(List<fraga> gjortprov)
         {
             string xml = Server.MapPath("facit.xml");
 
@@ -644,7 +667,7 @@ namespace bankprov
                 }
             }
         }
-            VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
+            return Tuple.Create(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
         }
 
         public void SerializaSvar(List<fraga> svar)
@@ -657,20 +680,9 @@ namespace bankprov
             {
                 serializer.Serialize(writer, svar);
             }
+        }      
 
-            SparaTest();
-        }
-        
-        public void DoljKontroller()    //Döljer knapparna "Gör Prov" , "Lämna in prov", "Se resultat" och "Se anställdas resultat"
-        {
-            btnGorProv.Visible = false;
-            btnLamnain.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
-            LabelKompetensportal.Visible = true;
-        }
-
-        public void VisaSvar(prov facit, int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk)
+        public bool VisaSvar(prov facit, int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk)
         {
             int i = -1;
 
@@ -726,15 +738,18 @@ namespace bankprov
             if (resultat >= 0.7 * totalt && produkterochhanteringavkundensaffärer >= 0.6 * totaltkategori1 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * totaltkategori2 && etikochregelverk >= 0.6 * totaltkategori3)
             {
                 LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
+                return true;
             }
 
             else
             {
                 LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
+                return false;
             }
+
         }
 
-        public void SparaTest()
+        public void SparaTest(int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk, bool godkand)
         {
             int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
@@ -747,18 +762,21 @@ namespace bankprov
             string svarxml = File.ReadAllText(xml);
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            string sql = "INSERT INTO u4_prov (person_id, datum, provxml, facit) VALUES (@person_id, @datum, @provxml, @facit)";
+            string sql = "INSERT INTO u4_prov (person_id, datum, provxml, facit, ressek1, ressek2, ressek3, godkant) VALUES (@person_id, @datum, @provxml, @facit, @ressek1, @ressek2, @ressek3, @godkant)";
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
 
 
             con.Open();
-            cmd.Parameters.AddWithValue("person_id", person_id); // Fixa så id på inloggad skickas in här
+            cmd.Parameters.AddWithValue("person_id", person_id);
             cmd.Parameters.AddWithValue("datum", dagens);
             cmd.Parameters.AddWithValue("provxml", svarxml);
             cmd.Parameters.AddWithValue("facit", facitxml);
-
+            cmd.Parameters.AddWithValue("ressek1", produkterochhanteringavkundensaffärer);
+            cmd.Parameters.AddWithValue("ressek2", ekonominationalekonomifinansiellekonomiochprivatekonomi);
+            cmd.Parameters.AddWithValue("ressek3", etikochregelverk);
+            cmd.Parameters.AddWithValue("godkant", godkand);
 
             cmd.ExecuteNonQuery();
             con.Close();
