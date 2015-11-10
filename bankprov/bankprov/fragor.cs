@@ -10,10 +10,10 @@ namespace bankprov
 
         {
             [XmlElement("fraga")]
-            public List<fraga> fragelista = new List<fraga>();
+            public List<fraga> fragelista = new List<fraga>();      // Skapar en lista av frågeobjekt
         }
 
-    public class fraga
+    public class fraga      //Frågeobjekt
     {
         public int nr { get; set; }
         public string kategori { get; set; }

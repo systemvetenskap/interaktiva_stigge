@@ -171,7 +171,7 @@ namespace bankprov
 
             DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
 
-            if (senasteprov.Year != 0001 && godkand == true)       // VARFÖR SKULLE SENASTE PROV VARA ÅR 0001?
+            if (senasteprov.Year != 0001 && godkand == true)      // Har inget prov gjorts tidigare så blir året 0001
             {
                 LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
                 LabelKompetensportal.Visible = true;
@@ -195,7 +195,7 @@ namespace bankprov
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare.  Om man gjort prov tidigare så är satsen true
             {
-                prov = HamtaFragorLicensierad();
+                prov = HamtaFragorLicensierad();    // Returnerar en lista på 15 frågor till provet
                 Repeater1.DataSource = prov.fragelista;
                 Repeater1.DataBind();
             }
@@ -216,34 +216,34 @@ namespace bankprov
                 LabelInloggad.Visible = true;        
         }
         
-        public prov HamtaFragorLicensierad()
+        public prov HamtaFragorLicensierad() // Returnerar en lista på 15 frågor till provet
         {
-            string xml = Server.MapPath("fragor.xml");
+            string xml = Server.MapPath("fragor.xml");  //läser in xmlfilen till en sträng från fragor.xml på servern
 
-            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
-            TextReader reader = new StreamReader(xml);
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));   //Skapar en deserializerare för att avkoda xmlfilen till ett objekt av klassen "prov"  se "fragor.cs" 
+            TextReader reader = new StreamReader(xml);  // Läser xml.filen
             object obj = deserializer.Deserialize(reader);
-            prov XmlData = (prov)obj;
+            prov XmlData = (prov)obj;   // Skapar ett objekt av klassen "prov"
             reader.Close();
 
             int i = 0;
             int antal = 0;
-            prov listafragor = new prov();
+            prov listafragor = new prov();  // "prov" skapar en lista av frågor
            
-            foreach (object objekt in XmlData.fragelista)
+            foreach (object objekt in XmlData.fragelista)   // Loopar igenom samtliga boster i frågelistan
             {
-                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")
+                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")     // Väljer ut frågor av en speciell kategori
                 {
-                    if (antal <= 4)
+                    if (antal <= 4)     //  De första 5 frågorna skall tillhöra första kategorin
                     {
                         antal++;
-                        listafragor.fragelista.Add(XmlData.fragelista[i]);
-        }
+                        listafragor.fragelista.Add(XmlData.fragelista[i]);  // Om frågan matchar kraven så läggs den till provet
+                    }
                 }
 
                 if (XmlData.fragelista[i].kategori == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                 {                    
-                    if (antal >= 5 && antal <= 9)
+                    if (antal >= 5 && antal <= 9)   //  Nästa 5 frågor skall tillhöra andra kategorin
                     {
                         antal++;
                         listafragor.fragelista.Add(XmlData.fragelista[i]);
@@ -252,7 +252,7 @@ namespace bankprov
 
                 if (XmlData.fragelista[i].kategori == "Etik och regelverk.")
                 {                    
-                    if (antal <= 14 && antal >= 10)
+                    if (antal <= 14 && antal >= 10)   //  De sista 5 frågorna skall tillhöra tredje kategorin
                     {
                         antal++;
                         listafragor.fragelista.Add(XmlData.fragelista[i]);
@@ -262,10 +262,10 @@ namespace bankprov
                 i++;
             }
 
-            return listafragor;
+            return listafragor; // Returnerar listan på frågor till provet
         }
 
-        public void HamtaFragor()
+        public void HamtaFragor()   
         {
             string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
 
@@ -287,20 +287,20 @@ namespace bankprov
             int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
 
-            prov provet = new prov();
+            prov provet = new prov();   // Skapar ett objekt av typen "prov" se fragor.cs
 
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare
             {
-                provet = HamtaFragorLicensierad();
+                provet = HamtaFragorLicensierad();   // Returnerar en lista på 15 frågeobjekt
             }
 
             else
             {
-                provet = HamtaFragor2();
+                provet = HamtaFragor2();  // Läser in och returnerar samtliga 25 frågor i ett lista av frågeobjekt
             }
 
-            List<fraga> gjortprov = HittaSvar(provet);
+            List<fraga> gjortprov = HittaSvar(provet);  
             SerializaSvar(gjortprov);
             
             var tuple = RattaProv(gjortprov);
@@ -323,7 +323,7 @@ namespace bankprov
             LabelKompetensportal.Visible = true;
         }
 
-        public prov HamtaFragor2()
+        public prov HamtaFragor2()  // Läser in och returnerar samtliga 25 frågor i ett lista av frågeobjekt
         {
             string xml = Server.MapPath("fragor.xml");
 
@@ -337,31 +337,32 @@ namespace bankprov
 
         }
 
-        public List<fraga> HittaSvar(prov provet)
+        public List<fraga> HittaSvar(prov provet)   //Skickar in ett "prov" lista med frågeobjekt. Returnerar
         {
-            List <fraga> gjortprov = new List<fraga>();
+            List <fraga> gjortprov = new List<fraga>(); // Skapar en lista av frågeobjekt
             int checkboxkontroll;
 
             int i = -1;
 
-            foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
+            foreach (RepeaterItem item in Repeater1.Items)  // loopar genom alla objekt i repeatern  dvs. alla frågorna
             {
                 i++;
                 checkboxkontroll = 0;
 
-                fraga fragaobj = new fraga();
+                fraga fragaobj = new fraga();  
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
                 {
-                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA"); 
-                    if (checkBoxA.Checked == true)
+                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA");    // kopplar en variabel till checkboxen för svar A
+                    if (checkBoxA.Checked == true)  // Kollar om checkbox A är ikryssad
                     {
-                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
+                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;      
                         fragaobj.nr = provet.fragelista[i].nr;
 
                         checkboxkontroll++;
 
-                        var LabelA = (Label)item.FindControl("LabelA"); // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
-                        LabelA.CssClass = "felsvar";
+                        var LabelA = (Label)item.FindControl("LabelA"); // Väljer ut labeln för aktuellt svarsalternativ
+                        LabelA.CssClass = "felsvar";    // Svarsalternativet blir rödfärgat i enlighet med css-filen "StyleSheet.css"
+                        // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar() 
                     }
 
                     var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
@@ -407,7 +408,7 @@ namespace bankprov
                         fragaobj.nr = provet.fragelista[i].nr;
                     }
                 }
-                fragaobj.info = checkboxkontroll.ToString(); 
+                fragaobj.info = checkboxkontroll.ToString(); // VAD HÄNDER HÄR?
                 gjortprov.Add(fragaobj); // lägger till svaret i en lista
             }
 
