@@ -292,8 +292,8 @@ namespace bankprov
                 provet = HamtaFragor2();    //Skapar ett prov bestående av samtliga 25 frågor
             }
 
-            List<fraga> gjortprov = HittaSvar(provet);
-            SerializaSvar(gjortprov);
+            List<fraga> gjortprov = HittaSvar(provet);        // Färgar valda svarsalternativ röda och returnerar en lista med valda svarsalternativ för varje fråga
+            SerializaSvar(gjortprov);   // Serialiserar svarslistan
             
             var tuple = RattaProv(gjortprov);
             prov facit = tuple.Item1;
@@ -329,7 +329,7 @@ namespace bankprov
 
         }
 
-        public List<fraga> HittaSvar(prov provet)
+        public List<fraga> HittaSvar(prov provet)       // Färgar valda svarsalternativ röda och returnerar en lista med valda svarsalternativ för varje fråga
         {
             List <fraga> gjortprov = new List<fraga>();
             int checkboxkontroll;
