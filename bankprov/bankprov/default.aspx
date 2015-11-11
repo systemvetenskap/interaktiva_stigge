@@ -39,7 +39,7 @@
                         <div class="sektioncentrera">   <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />  
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
-                            <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click"/>
+                            <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>    <!--  VAD GÖR DENNA??? -->
                             <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
@@ -54,7 +54,6 @@
 
 
                         <HeaderTemplate>                                        <!-- rubriken i repeatern -->
-                            <h3>Fyll i efterfrågat antal svar per fråga</h3>
                         </HeaderTemplate>
 
                         <ItemTemplate>                                          <!-- De repeterade elementen i repeatern. I detta fall våra frågor med svarsrutor.-->
@@ -92,18 +91,16 @@
                         <FooterTemplate></FooterTemplate>      <%--här kan vi lägga till någon avslutande text på repeatern om vi vill--%>        
                     </asp:Repeater>
 
-        
+                    <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
         
                     <div class="sektion">                       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
-                        
                         <div class="svarsalternativ">          <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->     
-                           
 
                         </div>
                         <div class="info"></div>        <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->    
                         <div class="sektioncentrera sektionprovlamnain">         <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->  
                                                 
-                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" onclick="btn_SeResultat_Click"/>
+                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" OnClick="btnSeResultat_Click" />
                             
                             <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />   <!-- När man är klar med provet så klickar man påknappen och då körs metoden "btnLamnain_Click" i default.aspx.cs -->
 

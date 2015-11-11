@@ -26,6 +26,7 @@ namespace bankprov
             btnSeResultatAnstallda.Visible = false;
             btnGorProv.Visible = false;
             btnStartaprov.Visible = false;
+            ListBox1.Visible = false;
         }
 
         public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
@@ -201,7 +202,9 @@ namespace bankprov
 
             else                     // Om man inte gjort provet tidigare       TOLKAR JAG DETTA RÄTT???? SKALL DET INTE VARA OM MAN HAR ETT FÖR GAMMALT PROV ELLER EJ GJORT DET ALLS?
             {
-                HamtaFragor();    // Skriver ut frågelistan i Repeater1. Se repeatern i "default.aspx"
+                prov = HamtaFragor();    // Skriver ut frågelistan i Repeater1. Se repeatern i "default.aspx"
+                Repeater1.DataSource = prov;
+                Repeater1.DataBind();
             }
 
                 btnStartaprov.Visible = false;                 // Gömmer undan en massa saker ur formuläret      
@@ -256,23 +259,6 @@ namespace bankprov
             return listafragor;
         }
 
-        public void HamtaFragor()
-        {
-            string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
-
-            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
-            TextReader reader = new StreamReader(xml);
-            object obj = deserializer.Deserialize(reader);
-            prov XmlData = (prov)obj;
-            reader.Close();
-
-
-
-            Repeater1.DataSource = XmlData.fragelista;
-            Repeater1.DataBind();
-
-        }
-
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
             
@@ -289,7 +275,7 @@ namespace bankprov
 
             else
             {
-                provet = HamtaFragor2();
+                provet = HamtaFragor();
             }
 
             List<fraga> gjortprov = HittaSvar(provet);
@@ -315,7 +301,7 @@ namespace bankprov
             LabelKompetensportal.Visible = true;
         }
 
-        public prov HamtaFragor2()
+        public prov HamtaFragor()
         {
             string xml = Server.MapPath("fragor.xml");
 
@@ -326,7 +312,6 @@ namespace bankprov
             reader.Close();
 
             return laddatprov;
-
         }
 
         public List<fraga> HittaSvar(prov provet)
@@ -814,8 +799,83 @@ namespace bankprov
     
         protected void btnSeResultat_Click(object sender, EventArgs e)
         {
+            HamtaGjordaProv();
+            btnGorProv.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            ListBox1.Visible = true;
+        }
+
+        public void HamtaGjordaProv()
+        {
+            int person_id = HamtaID2();
+            List<gjordaprov> lista = new List<gjordaprov>();
+            int resultatdel1;
+            int resultatdel2;
+            int resultatdel3;
+            bool godkand;
+
+            string sql = "SELECT prov_id, ressek1, ressek2, ressek3, godkant FROM u4_prov WHERE person_id= " + person_id;
+
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+            con.Open();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                gjordaprov gjortprov = new gjordaprov();
+                gjortprov.id = Convert.ToInt32(dr["prov_id"]);
+                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                resultatdel2 = Convert.ToInt32(dr["ressek2"]);
+                resultatdel3 = Convert.ToInt32(dr["ressek3"]);
+                gjortprov.resultat = resultatdel1 + resultatdel2 + resultatdel3;
+                godkand = Convert.ToBoolean(dr["godkant"]);
+
+                if (godkand == true)
+                {
+                    gjortprov.godkand = "Godkänt";
+                }
+
+                if (godkand == false)
+                {
+                    gjortprov.godkand = "Icke Godkänt";
+                }
+
+                lista.Add(gjortprov);
+            }
+
+            ListBox1.DataSource = lista;
+            ListBox1.DataBind();
+
+            con.Close();
 
         }
+
+
+
+        //public prov HamtaFragorDB()
+        //{
+
+        //    string sql = "SELECT prov FROM u4_prov WHERE person_id= " + person_id;
+
+        //    NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+        //    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+        //    con.Open();
+        //    NpgsqlDataReader dr = cmd.ExecuteReader();
+
+        //    string xml;
+
+        //    XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+        //    TextReader reader = new StreamReader(xml);
+        //    object obj = deserializer.Deserialize(reader);
+        //    prov laddatprov = (prov)obj;
+        //    reader.Close();
+
+        //    return laddatprov;
+        //}    
     }
 }
 
