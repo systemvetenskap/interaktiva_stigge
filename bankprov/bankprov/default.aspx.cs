@@ -207,13 +207,13 @@ namespace bankprov
                 btnStartaprov.Visible = false;                 // Gömmer undan en massa saker ur formuläret      
         }
         
-        public prov HamtaFragorLicensierad()
+        public prov HamtaFragorLicensierad()    //Returnerar en lista med 15 frågeobjekt av utvald kategori
         {
-            string xml = Server.MapPath("fragor.xml");
+            string xml = Server.MapPath("fragor.xml");  // xml filen läses in till en textsträng
 
-            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));   
             TextReader reader = new StreamReader(xml);
-            object obj = deserializer.Deserialize(reader);
+            object obj = deserializer.Deserialize(reader);  // Xml-filen läses in och deserialiseras till en lista av fråge objekt i enlighet med klassen "fragor.cs"
             prov XmlData = (prov)obj;
             reader.Close();
 
@@ -221,14 +221,14 @@ namespace bankprov
             int antal = 0;
             prov listafragor = new prov();
            
-            foreach (object objekt in XmlData.fragelista)
+            foreach (object objekt in XmlData.fragelista)       //Loopar igenom frågorna
             {
-                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")
+                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")     // Väljer ut frågor av en viss kategori
                 {
                     if (antal <= 4)
                     {
                         antal++;
-                        listafragor.fragelista.Add(XmlData.fragelista[i]);
+                        listafragor.fragelista.Add(XmlData.fragelista[i]);      // De första 5 frågorna i provet skall tillhöra den valda kategorin
         }
                 }
 
@@ -256,7 +256,7 @@ namespace bankprov
             return listafragor;
         }
 
-        public void HamtaFragor()
+        public void HamtaFragor()   
         {
             string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
 
@@ -284,12 +284,12 @@ namespace bankprov
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare
             {
-                provet = HamtaFragorLicensierad();
+                provet = HamtaFragorLicensierad();    //Skapar ett prov bestående av 15 frågeobjekt av utvald kategori
             }
 
             else
             {
-                provet = HamtaFragor2();
+                provet = HamtaFragor2();    //Skapar ett prov bestående av samtliga 25 frågor
             }
 
             List<fraga> gjortprov = HittaSvar(provet);
@@ -315,9 +315,9 @@ namespace bankprov
             LabelKompetensportal.Visible = true;
         }
 
-        public prov HamtaFragor2()
+        public prov HamtaFragor2()  // Returnerar en lista med samtliga 25 frågor som en lista av frågeobjekt
         {
-            string xml = Server.MapPath("fragor.xml");
+            string xml = Server.MapPath("fragor.xml");      // Se metod HamtaFragorLicensierad()
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -341,19 +341,20 @@ namespace bankprov
                 i++;
                 checkboxkontroll = 0;
 
-                fraga fragaobj = new fraga();
+                fraga fragaobj = new fraga();   
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
                 {
                     var checkBoxA = (CheckBox)item.FindControl("CheckBoxA"); 
-                    if (checkBoxA.Checked == true)
+                    if (checkBoxA.Checked == true)      // Kollar om checkbox A är markerad för gällande fråga
                     {
-                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
+                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa; // Skapar ett frågeobjekt med endast valda svarsalternativ
                         fragaobj.nr = provet.fragelista[i].nr;
 
                         checkboxkontroll++;
 
-                        var LabelA = (Label)item.FindControl("LabelA"); // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
-                        LabelA.CssClass = "felsvar";
+                        var LabelA = (Label)item.FindControl("LabelA");     
+                        LabelA.CssClass = "felsvar";        // Om svar A är valt så blir det röd-färgat
+                        // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
                     }
 
                     var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
@@ -400,7 +401,7 @@ namespace bankprov
                     }
                 }
                 fragaobj.info = checkboxkontroll.ToString(); 
-                gjortprov.Add(fragaobj); // lägger till svaret i en lista
+                gjortprov.Add(fragaobj); // skapar en lista med valda svarsalternativ
             }
 
             return gjortprov;
