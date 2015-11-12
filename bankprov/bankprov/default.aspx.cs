@@ -26,7 +26,7 @@ namespace bankprov
             btnSeResultatAnstallda.Visible = false;
             btnGorProv.Visible = false;
             btnStartaprov.Visible = false;
-            ListBox1.Visible = false;
+            GridView1.Visible = false;
         }
 
         public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
@@ -188,6 +188,14 @@ namespace bankprov
 
         protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
         {
+            string xmlpath = Server.MapPath("fragor.xml");
+
+            string xml;
+            using (StreamReader reader = new StreamReader(xmlpath))
+            {
+                xml = reader.ReadLine();
+            }
+
             btnLamnain.Visible = true;
 
             int person_id = HamtaID2();
@@ -261,7 +269,7 @@ namespace bankprov
 
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
-            
+            string xml = Server.MapPath("fragor.xml");
             int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
 
@@ -738,8 +746,11 @@ namespace bankprov
             string xml = Server.MapPath("svar.xml");
             string svarxml = File.ReadAllText(xml);
 
+            string prov = Server.MapPath("fragor.xml");
+            string provxml = Server.MapPath(prov);
+
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            string sql = "INSERT INTO u4_prov (person_id, datum, provxml, facit, ressek1, ressek2, ressek3, godkant) VALUES (@person_id, @datum, @provxml, @facit, @ressek1, @ressek2, @ressek3, @godkant)";
+            string sql = "INSERT INTO u4_prov (person_id, datum, provxml, facit, ressek1, ressek2, ressek3, godkant, svarxml) VALUES (@person_id, @datum, @provxml, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml)";
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -748,12 +759,13 @@ namespace bankprov
             con.Open();
             cmd.Parameters.AddWithValue("person_id", person_id);
             cmd.Parameters.AddWithValue("datum", dagens);
-            cmd.Parameters.AddWithValue("provxml", svarxml);
+            cmd.Parameters.AddWithValue("svarxml", svarxml);
             cmd.Parameters.AddWithValue("facit", facitxml);
             cmd.Parameters.AddWithValue("ressek1", produkterochhanteringavkundensaffärer);
             cmd.Parameters.AddWithValue("ressek2", ekonominationalekonomifinansiellekonomiochprivatekonomi);
             cmd.Parameters.AddWithValue("ressek3", etikochregelverk);
             cmd.Parameters.AddWithValue("godkant", godkand);
+            cmd.Parameters.AddWithValue("provxml", provxml);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -803,10 +815,10 @@ namespace bankprov
             btnGorProv.Visible = false;
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
-            ListBox1.Visible = true;
+            GridView1.Visible = true;
         }
 
-        public void HamtaGjordaProv()
+        public List<gjordaprov> HamtaGjordaProv()
         {
             int person_id = HamtaID2();
             List<gjordaprov> lista = new List<gjordaprov>();
@@ -846,36 +858,83 @@ namespace bankprov
                 lista.Add(gjortprov);
             }
 
-            ListBox1.DataSource = lista;
-            ListBox1.DataBind();
-
             con.Close();
+
+            GridView1.DataSource = lista;
+            GridView1.DataBind();
+
+            return lista;
 
         }
 
+        public void GridView1_SelectedIndexChanged(Object sender, EventArgs e)
+        {
+            var tuple = HamtaFragorDB();
+            string provxml = tuple.Item1;
+            string svarxml = tuple.Item2;
+            string facitxml = tuple.Item3;
 
 
-        //public prov HamtaFragorDB()
-        //{
+            prov provet = new prov();
 
-        //    string sql = "SELECT prov FROM u4_prov WHERE person_id= " + person_id;
+            if (RaknaSvar(facitxml) == 15)
+            {
+                provet = HamtaFragorLicensierad();
+            }
 
-        //    NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
-        //    NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            if (RaknaSvar(facitxml) == 25)
+            {
+                provet = HamtaFragorLicensierad();
+            }
 
-        //    con.Open();
-        //    NpgsqlDataReader dr = cmd.ExecuteReader();
+            Repeater1.DataSource = provet;
+            Repeater1.DataBind();
 
-        //    string xml;
+        }
 
-        //    XmlSerializer deserializer = new XmlSerializer(typeof(prov));
-        //    TextReader reader = new StreamReader(xml);
-        //    object obj = deserializer.Deserialize(reader);
-        //    prov laddatprov = (prov)obj;
-        //    reader.Close();
+        public Tuple<string, string, string> HamtaFragorDB()
+        {
+            string provxml;
+            string svarxml;
+            string facitxml;
 
-        //    return laddatprov;
-        //}    
+            GridViewRow row = GridView1.SelectedRow;
+            int prov_id = Convert.ToInt32(row.Cells[1]);
+
+            string sql = "SELECT provxml, facit, svarxml FROM u4_prov WHERE person_id= " + prov_id;
+
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+            con.Open();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+
+            provxml = Convert.ToString(dr["provxml"]);
+            svarxml = Convert.ToString(dr["svarxml"]);
+            facitxml = Convert.ToString(dr["facitxml"]);
+
+            con.Close();
+
+            return Tuple.Create(provxml, svarxml, facitxml);
+        }
+
+        public int RaknaSvar(string xml)
+        {
+            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
+            TextReader reader = new StreamReader(xml);
+            object obj = deserializer.Deserialize(reader);
+            prov laddatprov = (prov)obj;
+            reader.Close();
+
+            int i = 0;
+
+            foreach (object objekt in laddatprov.fragelista)
+            {
+                i++;
+            }
+
+            return i;
+        }
     }
 }
 

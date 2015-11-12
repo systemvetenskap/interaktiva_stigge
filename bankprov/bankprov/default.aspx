@@ -45,6 +45,8 @@
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
                             <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="true" ></asp:GridView>
+                            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
                         </div>
                         
                     </div>
@@ -90,8 +92,6 @@
 
                         <FooterTemplate></FooterTemplate>      <%--här kan vi lägga till någon avslutande text på repeatern om vi vill--%>        
                     </asp:Repeater>
-
-                    <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
         
                     <div class="sektion">                       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
                         <div class="svarsalternativ">          <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->     
