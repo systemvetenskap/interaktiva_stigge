@@ -60,7 +60,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="facit.xml" />
+    <Content Include="facit.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="facittest.xml" />
     <Content Include="fragor.xml">
       <SubType>Designer</SubType>
@@ -82,6 +84,7 @@
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gjordaprov.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

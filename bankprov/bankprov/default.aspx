@@ -39,12 +39,14 @@
                         <div class="sektioncentrera">   <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />  
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
-                            <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click"/>
+                            <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>    <!--  VAD GÖR DENNA??? -->
                             <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
                             <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" ></asp:GridView>
+                            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
                         </div>
                         
                     </div>
@@ -54,7 +56,6 @@
 
 
                         <HeaderTemplate>                                        <!-- rubriken i repeatern -->
-                            <h3>Fyll i efterfrågat antal svar per fråga</h3>
                         </HeaderTemplate>
 
                         <ItemTemplate>                                          <!-- De repeterade elementen i repeatern. I detta fall våra frågor med svarsrutor.-->
@@ -91,19 +92,15 @@
 
                         <FooterTemplate></FooterTemplate>      <%--här kan vi lägga till någon avslutande text på repeatern om vi vill--%>        
                     </asp:Repeater>
-
-        
         
                     <div class="sektion">                       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
-                        
                         <div class="svarsalternativ">          <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->     
-                           
 
                         </div>
                         <div class="info"></div>        <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->    
                         <div class="sektioncentrera sektionprovlamnain">         <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->  
                                                 
-                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" onclick="btn_SeResultat_Click"/>
+                            <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" OnClick="btnSeResultat_Click" />
                             
                             <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />   <!-- När man är klar med provet så klickar man påknappen och då körs metoden "btnLamnain_Click" i default.aspx.cs -->
 
@@ -112,7 +109,7 @@
 
                     <div class="sektion">
                         <div class="sektioncentrera">                        <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->            
-                            <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" />
+                            <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" OnClick="btnSeResultatAnstallda_Click" />
                         </div>
                     </div>
 
