@@ -211,7 +211,7 @@ namespace bankprov
             else                     // Om man inte gjort provet tidigare       TOLKAR JAG DETTA RÄTT???? SKALL DET INTE VARA OM MAN HAR ETT FÖR GAMMALT PROV ELLER EJ GJORT DET ALLS?
             {
                 prov = HamtaFragor();    // Skriver ut frågelistan i Repeater1. Se repeatern i "default.aspx"
-                Repeater1.DataSource = prov;
+                Repeater1.DataSource = prov.fragelista;
                 Repeater1.DataBind();
             }
 
@@ -271,6 +271,7 @@ namespace bankprov
         {
             string xml = Server.MapPath("fragor.xml");
             int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
+            bool visagammalt = false; //Hade gjort så att funktionen RattaProv slutar vid 15 frågor om man gjort prov tidigare. Problemet är att om man kör den via visa gamla prov så stannar den ju vid 15 fast det gamla provet kan ha 25 frågor. Alltså skickar jag bara in en variabel också och gör det enkelt för mig
 
 
             prov provet = new prov();
@@ -286,10 +287,10 @@ namespace bankprov
                 provet = HamtaFragor();
             }
 
-            List<fraga> gjortprov = HittaSvar(provet);
+            prov gjortprov = HittaSvar(provet);
             SerializaSvar(gjortprov);
             
-            var tuple = RattaProv(gjortprov);
+            var tuple = RattaProv(gjortprov, visagammalt);
             prov facit = tuple.Item1;
             int resultat = tuple.Item2;
             int produkterochhanteringavkundensaffärer = tuple.Item3;
@@ -297,6 +298,30 @@ namespace bankprov
             int etikochregelverk = tuple.Item5;
 
             bool godkand = VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
+
+            // Ersätta med tabell kanske samt att man kanske ska hämta anta frågor ur varje kategori ur xml istället
+            int totalt = 25;
+            int totaltkategori1 = 8;
+            int totaltkategori2 = 8;
+            int totaltkategori3 = 9;
+
+            if (SenasteProv(person_id))
+            {
+                totalt = 15;
+                totaltkategori1 = 5;
+                totaltkategori2 = 5;
+                totaltkategori3 = 5;
+            }
+
+            if (godkand)
+            {
+                LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
+            }
+
+            else
+            {
+                LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
+            }
 
             SparaTest(resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
 
@@ -311,7 +336,7 @@ namespace bankprov
 
         public prov HamtaFragor()
         {
-            string xml = Server.MapPath("fragor.xml");
+            string xml = Server.MapPath("fragor.xml");  // Frågor finns i "frågor.xml
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
@@ -322,9 +347,9 @@ namespace bankprov
             return laddatprov;
         }
 
-        public List<fraga> HittaSvar(prov provet)
+        public prov HittaSvar(prov provet)
         {
-            List <fraga> gjortprov = new List<fraga>();
+            prov gjortprov = new prov();
             int checkboxkontroll;
 
             int i = -1;
@@ -393,13 +418,13 @@ namespace bankprov
                     }
                 }
                 fragaobj.info = checkboxkontroll.ToString(); 
-                gjortprov.Add(fragaobj); // lägger till svaret i en lista
+                gjortprov.fragelista.Add(fragaobj); // lägger till svaret i en lista
             }
 
             return gjortprov;
         }
 
-        public Tuple<prov, int, int, int, int> RattaProv(List<fraga> gjortprov)
+        public Tuple<prov, int, int, int, int> RattaProv(prov gjortprov, bool visagammalt)
         {
             string xml = Server.MapPath("facit.xml");
 
@@ -427,12 +452,12 @@ namespace bankprov
                 foreach (object objektobjekt in facit.fragelista)
                 {
                     k++;
-                    if (gjortprov[l].nr == facit.fragelista[k].nr)
+                    if (gjortprov.fragelista[l].nr == facit.fragelista[k].nr)
                     {
                         nyfacit.fragelista.Add(facit.fragelista[k]);
                         l++;
 
-                        if (l == 15)
+                        if (l == 15 && visagammalt == false)
                         {
                             break;
                         }
@@ -444,19 +469,19 @@ namespace bankprov
 
 
 
-            foreach (object objekt in gjortprov)
+            foreach (object objekt in gjortprov.fragelista)
             {   
                 flersvarsfraga = 0;
                 i++;
 
-                if (gjortprov[i].info != facit.fragelista[i].info)
+                if (gjortprov.fragelista[i].info != facit.fragelista[i].info)
                 {
                     //För många eller för få alternativ kryssade. Skickar vidare till nästa fråga
                 }
 
                 else
-                {                
-                    if (gjortprov[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov[i].svarsalternativa != null)
+                {
+                    if (gjortprov.fragelista[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov.fragelista[i].svarsalternativa != null)
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
@@ -501,7 +526,7 @@ namespace bankprov
                         }
                     }
 
-                    if (gjortprov[i].svarsalternativb == facit.fragelista[i].svarsalternativb && gjortprov[i].svarsalternativb != null)
+                    if (gjortprov.fragelista[i].svarsalternativb == facit.fragelista[i].svarsalternativb && gjortprov.fragelista[i].svarsalternativb != null)
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
@@ -551,7 +576,7 @@ namespace bankprov
                         }
                     }
 
-                    if (gjortprov[i].svarsalternativc == facit.fragelista[i].svarsalternativc && gjortprov[i].svarsalternativc != null)
+                    if (gjortprov.fragelista[i].svarsalternativc == facit.fragelista[i].svarsalternativc && gjortprov.fragelista[i].svarsalternativc != null)
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
@@ -601,7 +626,7 @@ namespace bankprov
                         }
                     }
 
-                    if (gjortprov[i].svarsalternativd == facit.fragelista[i].svarsalternativd && gjortprov[i].svarsalternativd != null)
+                    if (gjortprov.fragelista[i].svarsalternativd == facit.fragelista[i].svarsalternativd && gjortprov.fragelista[i].svarsalternativd != null)
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
@@ -655,11 +680,11 @@ namespace bankprov
             return Tuple.Create(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
         }
 
-        public void SerializaSvar(List<fraga> svar)
+        public void SerializaSvar(prov svar)
         {
             string directory = Server.MapPath("svar.xml");
 
-            XmlSerializer serializer = new XmlSerializer(typeof(List<fraga>));
+            XmlSerializer serializer = new XmlSerializer(typeof(prov));
             using (TextWriter writer = new StreamWriter(directory))
 
             {
@@ -703,7 +728,6 @@ namespace bankprov
 
                 }
 
-            // Ersätta med tabell kanske samt att man kanske ska hämta anta frågor ur varje kategori ur xml istället
             int totalt = 25;
             int totaltkategori1 = 8;
             int totaltkategori2 = 8;
@@ -718,17 +742,13 @@ namespace bankprov
                 totaltkategori3 = 5;
             }
 
-            
-
             if (resultat >= 0.7 * totalt && produkterochhanteringavkundensaffärer >= 0.6 * totaltkategori1 && ekonominationalekonomifinansiellekonomiochprivatekonomi >= 0.6 * totaltkategori2 && etikochregelverk >= 0.6 * totaltkategori3)
             {
-                LabelKompetensportal.Text = "Grattis du har klarat kompetenstestet! Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
                 return true;
             }
 
             else
             {
-                LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
                 return false;
             }
 
@@ -746,11 +766,8 @@ namespace bankprov
             string xml = Server.MapPath("svar.xml");
             string svarxml = File.ReadAllText(xml);
 
-            string prov = Server.MapPath("fragor.xml");
-            string provxml = Server.MapPath(prov);
-
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            string sql = "INSERT INTO u4_prov (person_id, datum, provxml, facit, ressek1, ressek2, ressek3, godkant, svarxml) VALUES (@person_id, @datum, @provxml, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml)";
+            string sql = "INSERT INTO u4_prov (person_id, datum, facit, ressek1, ressek2, ressek3, godkant, svarxml) VALUES (@person_id, @datum, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml)";
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -765,7 +782,6 @@ namespace bankprov
             cmd.Parameters.AddWithValue("ressek2", ekonominationalekonomifinansiellekonomiochprivatekonomi);
             cmd.Parameters.AddWithValue("ressek3", etikochregelverk);
             cmd.Parameters.AddWithValue("godkant", godkand);
-            cmd.Parameters.AddWithValue("provxml", provxml);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -827,7 +843,7 @@ namespace bankprov
             int resultatdel3;
             bool godkand;
 
-            string sql = "SELECT prov_id, ressek1, ressek2, ressek3, godkant FROM u4_prov WHERE person_id= " + person_id;
+            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant FROM u4_prov WHERE person_id= " + person_id;
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -839,6 +855,7 @@ namespace bankprov
             {
                 gjordaprov gjortprov = new gjordaprov();
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
+                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
@@ -869,10 +886,10 @@ namespace bankprov
 
         public void GridView1_SelectedIndexChanged(Object sender, EventArgs e)
         {
+            bool visagammalt = true;
             var tuple = HamtaFragorDB();
-            string provxml = tuple.Item1;
-            string svarxml = tuple.Item2;
-            string facitxml = tuple.Item3;
+            string svarxml = tuple.Item1;
+            string facitxml = tuple.Item2;
 
 
             prov provet = new prov();
@@ -884,24 +901,139 @@ namespace bankprov
 
             if (RaknaSvar(facitxml) == 25)
             {
-                provet = HamtaFragorLicensierad();
+                provet = HamtaFragor();
             }
 
-            Repeater1.DataSource = provet;
+            Repeater1.DataSource = provet.fragelista;
             Repeater1.DataBind();
 
+            CheckaCheckboxar(svarxml);
+
+            prov gjortprov = HittaSvar(provet);
+
+            var tuple2 = RattaProv(gjortprov, visagammalt);
+            prov facit = tuple2.Item1;
+            int resultat = tuple2.Item2;
+            int produkterochhanteringavkundensaffärer = tuple2.Item3;
+            int ekonominationalekonomifinansiellekonomiochprivatekonomi = tuple2.Item4;
+            int etikochregelverk = tuple2.Item5;
+
+           VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
+
+           btnSeResultatAnstallda.Visible = false;
+           btnSeResultat.Visible = false;
         }
 
-        public Tuple<string, string, string> HamtaFragorDB()
+        public Tuple<string, string> HamtaFragorDB()
         {
-            string provxml;
             string svarxml;
             string facitxml;
 
-            GridViewRow row = GridView1.SelectedRow;
-            int prov_id = Convert.ToInt32(row.Cells[1]);
+            DataTable dt = new DataTable();
 
-            string sql = "SELECT provxml, facit, svarxml FROM u4_prov WHERE person_id= " + prov_id;
+            GridViewRow row = GridView1.SelectedRow;
+            int prov_id = Convert.ToInt32(row.Cells[3].Text);
+
+            string sql = "SELECT facit FROM u4_prov WHERE prov_id= " + prov_id;
+            string sql2 = "SELECT svarxml FROM u4_prov WHERE prov_id = " + prov_id;
+
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            NpgsqlCommand cmd2 = new NpgsqlCommand(sql2, con);
+
+            con.Open();
+            facitxml = Convert.ToString(cmd.ExecuteScalar());
+            svarxml = Convert.ToString(cmd2.ExecuteScalar());
+            con.Close();
+
+            return Tuple.Create(svarxml, facitxml);
+        }
+
+        public int RaknaSvar(string xml)
+        {
+            var serializer = new XmlSerializer(typeof(prov));
+            prov result;
+
+            using (TextReader reader = new StringReader(xml))
+            {
+                result = (prov)serializer.Deserialize(reader);
+            }
+
+            int i = 0;
+
+            foreach (object objekt in result.fragelista)
+            {
+                i++;
+            }
+
+            return i;
+        }
+
+        public void CheckaCheckboxar(string svarxml)
+        {
+            var serializer = new XmlSerializer(typeof(prov));
+            prov svar;
+
+            using (TextReader reader = new StringReader(svarxml))
+            {
+                svar = (prov)serializer.Deserialize(reader);
+            }
+
+            int i = 0;
+
+            foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
+            {
+                
+                fraga fragaobj = new fraga();
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                {
+                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA");                   
+                    if (svar.fragelista[i].svarsalternativa != null)
+                    {
+                        checkBoxA.Checked = true;
+                    }
+
+                    var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
+                    if (svar.fragelista[i].svarsalternativb != null)
+                    {
+                        checkBoxB.Checked = true;
+                    }
+
+                    var checkBoxC = (CheckBox)item.FindControl("CheckBoxC");
+                    if (svar.fragelista[i].svarsalternativc != null)
+                    {
+                        checkBoxC.Checked = true;
+                    }
+
+                    var checkBoxD = (CheckBox)item.FindControl("CheckBoxD");
+                    if (svar.fragelista[i].svarsalternativd != null)
+                    {
+                        checkBoxD.Checked = true;
+                    }
+                    i++;
+                }
+            }
+        }
+
+        protected void btnSeResultatAnstallda_Click(object sender, EventArgs e)
+        {
+            HamtaProvAnstallda();
+            btnGorProv.Visible = false;
+            btnSeResultat.Visible = false;
+            btnSeResultatAnstallda.Visible = false;
+            GridView1.Visible = true;
+        }
+
+        public List<gjordaprov> HamtaProvAnstallda()
+        {
+            int person_id = HamtaID2();
+            List<gjordaprov> lista = new List<gjordaprov>();
+            int resultatdel1;
+            int resultatdel2;
+            int resultatdel3;
+            bool godkand;
+
+            string sql = "SELECT prov_id, fnamn, enamn, datum, ressek1, ressek2, ressek3, godkant FROM u4_konto k INNER JOIN u4_prov p ON k.id = p.person_id WHERE k.chef = " + person_id;
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -909,31 +1041,39 @@ namespace bankprov
             con.Open();
             NpgsqlDataReader dr = cmd.ExecuteReader();
 
-            provxml = Convert.ToString(dr["provxml"]);
-            svarxml = Convert.ToString(dr["svarxml"]);
-            facitxml = Convert.ToString(dr["facitxml"]);
+            while (dr.Read())
+            {
+                gjordaprov gjortprov = new gjordaprov();
+                gjortprov.id = Convert.ToInt32(dr["prov_id"]);
+                gjortprov.fnamn = Convert.ToString(dr["fnamn"]);
+                gjortprov.enamn = Convert.ToString(dr["enamn"]);
+                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
+                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                resultatdel2 = Convert.ToInt32(dr["ressek2"]);
+                resultatdel3 = Convert.ToInt32(dr["ressek3"]);
+                gjortprov.resultat = resultatdel1 + resultatdel2 + resultatdel3;
+                godkand = Convert.ToBoolean(dr["godkant"]);
+
+                if (godkand == true)
+                {
+                    gjortprov.godkand = "Godkänt";
+                }
+
+                if (godkand == false)
+                {
+                    gjortprov.godkand = "Icke Godkänt";
+                }
+
+                lista.Add(gjortprov);
+            }
 
             con.Close();
 
-            return Tuple.Create(provxml, svarxml, facitxml);
-        }
+            GridView1.DataSource = lista;
+            GridView1.DataBind();
 
-        public int RaknaSvar(string xml)
-        {
-            XmlSerializer deserializer = new XmlSerializer(typeof(prov));
-            TextReader reader = new StreamReader(xml);
-            object obj = deserializer.Deserialize(reader);
-            prov laddatprov = (prov)obj;
-            reader.Close();
+            return lista;
 
-            int i = 0;
-
-            foreach (object objekt in laddatprov.fragelista)
-            {
-                i++;
-            }
-
-            return i;
         }
     }
 }

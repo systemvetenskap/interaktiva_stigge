@@ -45,7 +45,7 @@
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
                             <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="true" ></asp:GridView>
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" ></asp:GridView>
                             <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
                         </div>
                         
@@ -109,7 +109,7 @@
 
                     <div class="sektion">
                         <div class="sektioncentrera">                        <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->            
-                            <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" />
+                            <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" OnClick="btnSeResultatAnstallda_Click" />
                         </div>
                     </div>
 

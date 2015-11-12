@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfFraga xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<prov xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
     <nr>1</nr>
     <svarsalternativa>En terrängversion</svarsalternativa>
@@ -36,7 +36,7 @@
   </fraga>
   <fraga>
     <nr>7</nr>
-    <svarsalternativc>Vanlig bandy</svarsalternativc>
+    <svarsalternativa>Sossekontainer</svarsalternativa>
     <info>1</info>
   </fraga>
   <fraga>
@@ -62,7 +62,7 @@
   </fraga>
   <fraga>
     <nr>12</nr>
-    <svarsalternativd>Salomon 1080</svarsalternativd>
+    <svarsalternativb>Rossignol S3</svarsalternativb>
     <info>1</info>
   </fraga>
   <fraga>
@@ -72,9 +72,8 @@
   </fraga>
   <fraga>
     <nr>14</nr>
-    <svarsalternativb>Ja</svarsalternativb>
-    <svarsalternativc>Var är PWhite?</svarsalternativc>
-    <info>2</info>
+    <svarsalternativa>Nej</svarsalternativa>
+    <info>1</info>
   </fraga>
   <fraga>
     <nr>15</nr>
@@ -93,7 +92,7 @@
   </fraga>
   <fraga>
     <nr>18</nr>
-    <svarsalternativa>Rune Andréason</svarsalternativa>
+    <svarsalternativc>Rune Andreasson</svarsalternativc>
     <info>1</info>
   </fraga>
   <fraga>
@@ -108,10 +107,8 @@
   </fraga>
   <fraga>
     <nr>21</nr>
-    <svarsalternativb>Proteinpulver</svarsalternativb>
     <svarsalternativc>Köttbullar</svarsalternativc>
-    <svarsalternativd>Dunderhonung</svarsalternativd>
-    <info>3</info>
+    <info>1</info>
   </fraga>
   <fraga>
     <nr>22</nr>
@@ -133,4 +130,4 @@
     <svarsalternativb>Världens starkaste björn</svarsalternativb>
     <info>1</info>
   </fraga>
-</ArrayOfFraga>
+</prov>
