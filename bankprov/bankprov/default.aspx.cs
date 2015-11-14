@@ -856,21 +856,21 @@ namespace bankprov
             {
                 gjordaprov gjortprov = new gjordaprov();
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
+                gjortprov.Datum = Convert.ToDateTime(dr["datum"]);
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.resultat = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.Poäng = resultatdel1 + resultatdel2 + resultatdel3;
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
                 if (godkand == true)
                 {
-                    gjortprov.godkand = "Godkänt";
+                    gjortprov.Resultat = "Godkänt";
                 }
 
                 if (godkand == false)
                 {
-                    gjortprov.godkand = "Icke Godkänt";
+                    gjortprov.Resultat = "Icke Godkänt";
                 }
 
                 lista.Add(gjortprov);
@@ -1018,16 +1018,16 @@ namespace bankprov
 
         protected void btnSeResultatAnstallda_Click(object sender, EventArgs e)
         {
-            HamtaProvAnstallda();
+            HamtaProvAnstallda();   //Returnerar listan av objekt med provresultat för den inloggades anställda och fyller på dessa i griden
             btnGorProv.Visible = false;
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
-            GridView1.Visible = true;
+            GridView1.Visible = true;       // Döljer allt utom griden
         }
 
-        public List<gjordaprov> HamtaProvAnstallda()
+        public List<gjordaprov> HamtaProvAnstallda()   //Returnerar listan av objekt med provresultat för den inloggades anställda och fyller på dessa i griden
         {
-            int person_id = HamtaID2();
+            int person_id = HamtaID2();         // Hämtar konto-id för den inloggade
             List<gjordaprov> lista = new List<gjordaprov>();
             int resultatdel1;
             int resultatdel2;
@@ -1037,43 +1037,43 @@ namespace bankprov
             string sql = "SELECT prov_id, fnamn, enamn, datum, ressek1, ressek2, ressek3, godkant FROM u4_konto k INNER JOIN u4_prov p ON k.id = p.person_id WHERE k.chef = " + person_id;
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);    // Hämtar resultat för den línloggades anställdas prov
 
             con.Open();
             NpgsqlDataReader dr = cmd.ExecuteReader();
 
             while (dr.Read())
             {
-                gjordaprov gjortprov = new gjordaprov();
+                gjordaprov gjortprov = new gjordaprov();        // Läser in resultatet till ett objekt av klassen "gjordaprov.cs"
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.fnamn = Convert.ToString(dr["fnamn"]);
-                gjortprov.enamn = Convert.ToString(dr["enamn"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
+                gjortprov.Förnamn = Convert.ToString(dr["fnamn"]);
+                gjortprov.Efternamn = Convert.ToString(dr["enamn"]);
+                gjortprov.Datum = Convert.ToDateTime(dr["datum"]);
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.resultat = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.Poäng = resultatdel1 + resultatdel2 + resultatdel3;
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
-                if (godkand == true)
+                if (godkand == true)    // Ändrar texten i Resultatkolumnen
                 {
-                    gjortprov.godkand = "Godkänt";
+                    gjortprov.Resultat = "Godkänt";
                 }
 
                 if (godkand == false)
                 {
-                    gjortprov.godkand = "Icke Godkänt";
+                    gjortprov.Resultat = "Icke Godkänt";    
                 }
 
-                lista.Add(gjortprov);
+                lista.Add(gjortprov);   //Lägger till objektet i listan som sedan skall presenteras
             }
 
             con.Close();
 
-            GridView1.DataSource = lista;
+            GridView1.DataSource = lista;   // Visar listan i griden
             GridView1.DataBind();
 
-            return lista;
+            return lista;   //Returnerar listan av objekt
 
         }
     }

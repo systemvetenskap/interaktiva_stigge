@@ -41,19 +41,18 @@
   </fraga>
   <fraga>
     <nr>8</nr>
-    <svarsalternativc>Ferrari 250 GT California</svarsalternativc>
+    <svarsalternativd>Skoda Favorit</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>9</nr>
-    <svarsalternativa>Sammy Carlsson</svarsalternativa>
+    <svarsalternativd>Jon Brogan</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>10</nr>
     <svarsalternativb>The Pretzel Man</svarsalternativb>
-    <svarsalternativd>Todd Walnutz</svarsalternativd>
-    <info>2</info>
+    <info>1</info>
   </fraga>
   <fraga>
     <nr>11</nr>
@@ -62,27 +61,28 @@
   </fraga>
   <fraga>
     <nr>12</nr>
-    <svarsalternativb>Rossignol S3</svarsalternativb>
+    <svarsalternativd>Salomon 1080</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>13</nr>
-    <svarsalternativc>1440</svarsalternativc>
+    <svarsalternativa>1080</svarsalternativa>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>14</nr>
-    <svarsalternativa>Nej</svarsalternativa>
-    <info>1</info>
+    <svarsalternativb>Ja</svarsalternativb>
+    <svarsalternativc>Var är PWhite?</svarsalternativc>
+    <info>2</info>
   </fraga>
   <fraga>
     <nr>15</nr>
-    <svarsalternativb>Skiboards/Snowblades</svarsalternativb>
+    <svarsalternativc>Snowboards</svarsalternativc>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>16</nr>
-    <svarsalternativb>Session 1242</svarsalternativb>
+    <svarsalternativc>Mutiny</svarsalternativc>
     <info>1</info>
   </fraga>
   <fraga>
@@ -92,7 +92,7 @@
   </fraga>
   <fraga>
     <nr>18</nr>
-    <svarsalternativc>Rune Andreasson</svarsalternativc>
+    <svarsalternativa>Rune Andréason</svarsalternativa>
     <info>1</info>
   </fraga>
   <fraga>
@@ -107,7 +107,7 @@
   </fraga>
   <fraga>
     <nr>21</nr>
-    <svarsalternativc>Köttbullar</svarsalternativc>
+    <svarsalternativd>Dunderhonung</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
@@ -117,7 +117,7 @@
   </fraga>
   <fraga>
     <nr>23</nr>
-    <svarsalternativa>Köttbullar</svarsalternativa>
+    <svarsalternativc>Pannkakor</svarsalternativc>
     <info>1</info>
   </fraga>
   <fraga>
