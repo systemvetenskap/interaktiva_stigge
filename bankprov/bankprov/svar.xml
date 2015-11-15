@@ -2,15 +2,18 @@
 <prov xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
     <nr>1</nr>
-    <info>0</info>
+    <svarsalternativa>En terrängversion</svarsalternativa>
+    <info>1</info>
   </fraga>
   <fraga>
     <nr>2</nr>
-    <info>0</info>
+    <svarsalternativa>1000</svarsalternativa>
+    <info>1</info>
   </fraga>
   <fraga>
     <nr>3</nr>
-    <info>0</info>
+    <svarsalternativa>Svart metallic</svarsalternativa>
+    <info>1</info>
   </fraga>
   <fraga>
     <nr>4</nr>

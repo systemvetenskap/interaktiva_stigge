@@ -20,14 +20,30 @@ namespace bankprov
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            HideAll();
+            btnOk.Visible = true;
+            TextBoxanvandare.Visible = true;
+            LabelKompetensportal.Visible = true;
+
+        }
+
+        public void HideAll()   // Döljer alla element
+        {
             btnLamnain.Visible = false;     // Dessa element är dolda vid start. 
-            LabelEjInloggad.Visible = false;     
+            LabelEjInloggad.Visible = false;
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
+            btnStart.Visible = false;
             btnGorProv.Visible = false;
             btnStartaprov.Visible = false;
             GridView1.Visible = false;
+            btnOk.Visible = false;
+            TextBoxanvandare.Visible = false;
+            Repeater1.Visible = false;
+            LabelKompetensportal.Visible = false;
+
         }
+
 
         public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
         {
@@ -69,7 +85,7 @@ namespace bankprov
             //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
-            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer
+            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
 
             if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
             {                                           // om så är fallet så visas följande element på skärmen
@@ -173,21 +189,27 @@ namespace bankprov
 
         protected void btnGorProv_Click(object sender, EventArgs e)
         {
-            btnGorProv.Visible = false;                 // Gömmer undan en massa saker ur formuläret
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
-            LabelEjInloggad.Visible = false;
-            TextBoxanvandare.Visible = false;
+            HideAll();
+
+            //btnGorProv.Visible = false;       
+            //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
+            //LabelEjInloggad.Visible = false;
+            //TextBoxanvandare.Visible = false;
             LabelKompetensportal.Visible = true;
             LabelKompetensportal.Text = "Tryck på knappen för att starta testet. Det finns ingen tidsgräns så ta de piano och gör dig noggrann!";
-            Labelfornam.Visible = false;
-            btnLamnain.Visible = false;
+            //Labelfornam.Visible = false;
+            //btnLamnain.Visible = false;
             LabelInloggad.Visible = true;
             btnStartaprov.Visible = true;
+
         }
 
         protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Starta provet". 
         {
+
+            
+
             string xmlpath = Server.MapPath("fragor.xml");
 
             string xml;
@@ -195,8 +217,6 @@ namespace bankprov
             {
                 xml = reader.ReadLine();
             }
-
-            btnLamnain.Visible = true;
 
             
             int person_id = HamtaID2();
@@ -216,8 +236,12 @@ namespace bankprov
                 Repeater1.DataBind();
             }
 
-                btnStartaprov.Visible = false;                 // Gömmer undan Starta Prov-knappen 
-            btnSeResultat.Visible = false;
+            HideAll();
+            btnLamnain.Visible = true;
+            Repeater1.Visible = true;
+
+            //    btnStartaprov.Visible = false;                 // Gömmer undan Starta Prov-knappen 
+            //btnSeResultat.Visible = false;                      // Gömmer "Visa tidigare"-knappen
         }
         
         public prov HamtaFragorLicensierad()    //Returnerar en lista med 15 frågeobjekt av utvald kategori
@@ -327,13 +351,15 @@ namespace bankprov
 
             SparaTest(resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
 
+            HideAll();
 
-
-            btnGorProv.Visible = false;
-            btnLamnain.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
+            //btnGorProv.Visible = false;
+            //btnLamnain.Visible = false;
+            //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
             LabelKompetensportal.Visible = true;
+            btnStart.Visible = true;
+            Repeater1.Visible = true;
         }
 
         public prov HamtaFragor()
@@ -831,10 +857,13 @@ namespace bankprov
         protected void btnSeResultat_Click(object sender, EventArgs e)
         {
             HamtaGjordaProv();
-            btnGorProv.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
+            HideAll();
+           // btnGorProv.Visible = false;
+           // btnSeResultat.Visible = false;
+           // btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;
+            btnStart.Visible = true;
+
         }
 
         public List<gjordaprov> HamtaGjordaProv()
@@ -923,8 +952,12 @@ namespace bankprov
 
            VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
 
-           btnSeResultatAnstallda.Visible = false;
-           btnSeResultat.Visible = false;
+            HideAll();
+            btnStart.Visible = true;
+            Repeater1.Visible = true;
+            LabelKompetensportal.Visible = true;
+           //btnSeResultatAnstallda.Visible = false;
+           //btnSeResultat.Visible = false;
         }
 
         public Tuple<string, string> HamtaFragorDB()
@@ -1021,10 +1054,53 @@ namespace bankprov
         protected void btnSeResultatAnstallda_Click(object sender, EventArgs e)
         {
             HamtaProvAnstallda();   //Returnerar listan av objekt med provresultat för den inloggades anställda och fyller på dessa i griden
-            btnGorProv.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
+            HideAll();
+            //btnGorProv.Visible = false;
+            //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;       // Döljer allt utom griden
+            btnStart.Visible = true;
+        }
+
+        protected void btnStart_Click(object sender, EventArgs e)
+        {
+           
+            //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
+            string anvandare =  HittaNamn();
+            int person_id = 1;
+              HideAll();
+            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
+
+                      
+
+            if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+            {                                           // om så är fallet så visas följande element på skärmen
+                btnGorProv.Visible = true;
+              //  LabelEjInloggad.Visible = false;
+               // TextBoxanvandare.Visible = false;
+                LabelKompetensportal.Visible = true;
+                //    Labelfornam.Visible = false;
+                //    btnLamnain.Visible = false;
+                LabelInloggad.Visible = true;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                                                                     //      btnOk.Visible = false;
+
+            }
+            else
+            {
+                //öppna sidan för licensiering.    
+                //här skall man hämta frågor för licensiering
+                //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
+                btnGorProv.Visible = true;
+                //     LabelEjInloggad.Visible = false;
+                //      TextBoxanvandare.Visible = false;
+                LabelKompetensportal.Visible = true;
+                //       Labelfornam.Visible = false;
+                //      btnLamnain.Visible = false;
+                LabelInloggad.Visible = true;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                                                                     //      btnOk.Visible = false;
+            }
         }
 
         public List<gjordaprov> HamtaProvAnstallda()   //Returnerar listan av objekt med provresultat för den inloggades anställda och fyller på dessa i griden

@@ -110,6 +110,7 @@
                     <div class="sektion">
                         <div class="sektioncentrera">                        <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->            
                             <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" OnClick="btnSeResultatAnstallda_Click" />
+                            <asp:Button ID="btnStart" runat="server" Text="Åter till start" OnClick="btnStart_Click" />
                         </div>
                     </div>
 
