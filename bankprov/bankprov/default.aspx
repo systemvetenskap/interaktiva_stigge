@@ -40,7 +40,7 @@
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />  
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
                             <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
-                            <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>    <!--  VAD GÖR DENNA??? -->
+                            <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>                                                    <!--  VAD GÖR DENNA??? -->
                             <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>

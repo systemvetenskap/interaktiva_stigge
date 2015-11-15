@@ -955,7 +955,6 @@ namespace bankprov
             HideAll();
             btnStart.Visible = true;
             Repeater1.Visible = true;
-            LabelKompetensportal.Visible = true;
            //btnSeResultatAnstallda.Visible = false;
            //btnSeResultat.Visible = false;
         }
