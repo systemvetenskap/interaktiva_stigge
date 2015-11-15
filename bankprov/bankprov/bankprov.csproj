@@ -86,7 +86,6 @@
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="gjordaprov.cs" />
-    <Compile Include="gjordaProvUtanNamn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

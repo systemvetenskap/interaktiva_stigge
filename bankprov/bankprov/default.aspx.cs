@@ -186,7 +186,7 @@ namespace bankprov
             btnStartaprov.Visible = true;
         }
 
-        protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
+        protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Starta provet". 
         {
             string xmlpath = Server.MapPath("fragor.xml");
 
@@ -198,6 +198,7 @@ namespace bankprov
 
             btnLamnain.Visible = true;
 
+            
             int person_id = HamtaID2();
             prov prov = new prov();
             
@@ -215,7 +216,8 @@ namespace bankprov
                 Repeater1.DataBind();
             }
 
-                btnStartaprov.Visible = false;                 // Gömmer undan en massa saker ur formuläret      
+                btnStartaprov.Visible = false;                 // Gömmer undan Starta Prov-knappen 
+            btnSeResultat.Visible = false;
         }
         
         public prov HamtaFragorLicensierad()    //Returnerar en lista med 15 frågeobjekt av utvald kategori

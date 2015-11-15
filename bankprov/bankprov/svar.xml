@@ -2,132 +2,102 @@
 <prov xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
     <nr>1</nr>
-    <svarsalternativa>En terrängversion</svarsalternativa>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>2</nr>
-    <svarsalternativb>278</svarsalternativb>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>3</nr>
-    <svarsalternativc>Bert Åke Varg</svarsalternativc>
-    <svarsalternativd>Hej Svejs</svarsalternativd>
-    <info>2</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>4</nr>
-    <svarsalternativc>Volvo P1800</svarsalternativc>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>5</nr>
-    <svarsalternativd>Ta en raggarrunda på stan</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>6</nr>
-    <svarsalternativa>Ja</svarsalternativa>
-    <svarsalternativb>Absolut</svarsalternativb>
-    <svarsalternativc>Definitivt</svarsalternativc>
-    <svarsalternativd>Har påven en lustig hatt?</svarsalternativd>
-    <info>4</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>7</nr>
-    <svarsalternativa>Sossekontainer</svarsalternativa>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>8</nr>
-    <svarsalternativd>Skoda Favorit</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>9</nr>
-    <svarsalternativd>Jon Brogan</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>10</nr>
-    <svarsalternativb>The Pretzel Man</svarsalternativb>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>11</nr>
-    <svarsalternativc>2012</svarsalternativc>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>12</nr>
-    <svarsalternativd>Salomon 1080</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>13</nr>
-    <svarsalternativa>1080</svarsalternativa>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>14</nr>
-    <svarsalternativb>Ja</svarsalternativb>
-    <svarsalternativc>Var är PWhite?</svarsalternativc>
-    <info>2</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>15</nr>
-    <svarsalternativc>Snowboards</svarsalternativc>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>16</nr>
-    <svarsalternativc>Mutiny</svarsalternativc>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>17</nr>
-    <svarsalternativd>Brummelisa</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>18</nr>
-    <svarsalternativa>Rune Andréason</svarsalternativa>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>19</nr>
-    <svarsalternativc>Sköldpadda</svarsalternativc>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>20</nr>
-    <svarsalternativb>Mat och sov klocka</svarsalternativb>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>21</nr>
-    <svarsalternativd>Dunderhonung</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>22</nr>
-    <svarsalternativd>Varg</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>23</nr>
-    <svarsalternativc>Pannkakor</svarsalternativc>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>24</nr>
-    <svarsalternativd>4</svarsalternativd>
-    <info>1</info>
+    <info>0</info>
   </fraga>
   <fraga>
     <nr>25</nr>
-    <svarsalternativb>Världens starkaste björn</svarsalternativb>
-    <info>1</info>
+    <info>0</info>
   </fraga>
 </prov>
