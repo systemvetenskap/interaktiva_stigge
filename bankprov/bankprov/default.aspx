@@ -35,7 +35,19 @@
                     </div>
 
 
-                    <div class="sektion">       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
+                    <div class="sektion">
+                        <div class="sektioncentrera <%--poster--%>">
+                             <asp:GridView ID="GridView1" CssClass="grid" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateColumns="false" rowstyle-cssclass="rowHover">
+                                <Columns>
+                                    <asp:BoundField DataField="id" HeaderText="ID" Visible="false" />
+                                    <asp:BoundField DataField="fornamn" HeaderText="Förnamn" Visible="false" />
+                                    <asp:BoundField DataField="efternamn" HeaderText="Efternamn" Visible="false" />
+                                    <asp:BoundField DataField="datum" HeaderText="Datum" Visible="true" />
+                                    <asp:BoundField DataField="poang" HeaderText="Poäng" Visible="true" />
+                                    <asp:BoundField DataField="resultat" HeaderText="Godkänt" Visible="true" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
                         <div class="sektioncentrera">   <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />  
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
@@ -43,9 +55,9 @@
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>                                                    <!--  VAD GÖR DENNA??? -->
                             <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
-                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
+                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px" ></asp:TextBox>
                             <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" ></asp:GridView>
+
                             <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
                         </div>
                         

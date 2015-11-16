@@ -887,21 +887,21 @@ namespace bankprov
             {
                 gjordaprov gjortprov = new gjordaprov();
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.Datum = Convert.ToDateTime(dr["datum"]);
+                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.Poäng = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.poang = resultatdel1 + resultatdel2 + resultatdel3;
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
                 if (godkand == true)
                 {
-                    gjortprov.Resultat = "Godkänt";
+                    gjortprov.resultat = "Godkänt";
                 }
 
                 if (godkand == false)
                 {
-                    gjortprov.Resultat = "Icke Godkänt";
+                    gjortprov.resultat = "Icke Godkänt";
                 }
 
                 lista.Add(gjortprov);
@@ -911,6 +911,8 @@ namespace bankprov
 
             GridView1.DataSource = lista;
             GridView1.DataBind();
+            GridView1.Columns[1].Visible = false;
+            GridView1.Columns[2].Visible = false;
 
             return lista;
 
@@ -1123,23 +1125,23 @@ namespace bankprov
             {
                 gjordaprov gjortprov = new gjordaprov();        // Läser in resultatet till ett objekt av klassen "gjordaprov.cs"
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.Förnamn = Convert.ToString(dr["fnamn"]);
-                gjortprov.Efternamn = Convert.ToString(dr["enamn"]);
-                gjortprov.Datum = Convert.ToDateTime(dr["datum"]);
+                gjortprov.fornamn = Convert.ToString(dr["fnamn"]);
+                gjortprov.efternamn = Convert.ToString(dr["enamn"]);
+                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.Poäng = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.poang = resultatdel1 + resultatdel2 + resultatdel3;
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
                 if (godkand == true)    // Ändrar texten i Resultatkolumnen
                 {
-                    gjortprov.Resultat = "Godkänt";
+                    gjortprov.resultat = "Godkänt";
                 }
 
                 if (godkand == false)
                 {
-                    gjortprov.Resultat = "Icke Godkänt";    
+                    gjortprov.resultat = "Icke Godkänt";    
                 }
 
                 lista.Add(gjortprov);   //Lägger till objektet i listan som sedan skall presenteras
@@ -1149,6 +1151,8 @@ namespace bankprov
 
             GridView1.DataSource = lista;   // Visar listan i griden
             GridView1.DataBind();
+            GridView1.Columns[1].Visible = true;
+            GridView1.Columns[2].Visible = true;
 
             return lista;   //Returnerar listan av objekt
 

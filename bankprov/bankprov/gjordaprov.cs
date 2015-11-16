@@ -7,12 +7,12 @@ namespace bankprov
 {
     public class gjordaprov
     {
-        public string Förnamn { get; set; }
-        public string Efternamn { get; set; }
+        public string fornamn { get; set; }
+        public string efternamn { get; set; }
         public int id { get; set; }
-        public DateTime Datum { get; set; }
-        public int Poäng { get; set; }
-        public string Resultat { get; set; }
+        public DateTime datum { get; set; }
+        public int poang { get; set; }
+        public string resultat { get; set; }
 
     }
 }
