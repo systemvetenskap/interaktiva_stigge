@@ -13,6 +13,15 @@ namespace bankprov {
     public partial class index {
         
         /// <summary>
+        /// form1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        
+        /// <summary>
         /// LabelInloggad control.
         /// </summary>
         /// <remarks>
@@ -22,13 +31,13 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelInloggad;
         
         /// <summary>
-        /// form1 control.
+        /// LinkButtonLoggaut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonLoggaut;
         
         /// <summary>
         /// LabelKompetensportal control.
@@ -146,6 +155,15 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSeResultatAnstallda;
+        
+        /// <summary>
+        /// GridView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView2;
         
         /// <summary>
         /// btnStart control.

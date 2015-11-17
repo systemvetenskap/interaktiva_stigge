@@ -14,19 +14,19 @@
 
         </head>
     <body>
+        <form id ="form1" runat="server">
        <div class="container">
             <div class="header">
                 <img src="jebanken.jpg" alt="JE-Banken logo" />
             </div>
-
             <div class="nav">
                 <ul class="clearfix">
                     <asp:Label ID="LabelInloggad" runat="server" Text=""></asp:Label>       <!-- Namnet på den som är inloggad skrivs i en label -->
-                    <li><a href="#">Logga ut</a></li>
+                    <li>    <asp:LinkButton ID="LinkButtonLoggaut" runat="server" OnClick="LinkButtonLoggaut_Click">Logga Ut</asp:LinkButton></li>
                 </ul>
             </div>
            
-            <form id ="form1" runat="server">
+            
                 <div class="sektioner clearfix">    <!-- klassen sektioner ger vit bakgrundsfärg -->
                     <h1>Kompetensportal</h1>        <!--  h1 är centrerad med en mörkgrå färg -->
                     <div class="infotext">          <!-- klassen infotext fyller 70% av bredden, texten centrerad -->
@@ -53,7 +53,6 @@
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
                             <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>                                                    <!--  VAD GÖR DENNA??? -->
-                            <br />
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px" ></asp:TextBox>
                             <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
@@ -127,12 +126,13 @@
                     <div class="sektion">
                         <div class="sektioncentrera">                        <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->            
                             <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" OnClick="btnSeResultatAnstallda_Click" />
+                            <asp:GridView ID="GridView2" runat="server"></asp:GridView>
                             <asp:Button ID="btnStart" runat="server" Text="Åter till start" OnClick="btnStart_Click" />
                         </div>
                     </div>
 
                 </div>
-             </form>
+             
 
             <div class="footer">        <!-- Sidfot på websidan -->
                 <table>
@@ -151,5 +151,6 @@
             </div>
 
             </div>
+            </form>
     </body>
 </html>
