@@ -40,6 +40,15 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelKompetensportal;
         
         /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
+        
+        /// <summary>
         /// btnGorProv control.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,15 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGorProv;
+        
+        /// <summary>
+        /// btnStartaprov control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStartaprov;
         
         /// <summary>
         /// LabelEjInloggad control.
@@ -85,6 +103,15 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Button btnOk;
         
         /// <summary>
+        /// ObjectDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSource1;
+        
+        /// <summary>
         /// Repeater1 control.
         /// </summary>
         /// <remarks>
@@ -119,5 +146,14 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSeResultatAnstallda;
+        
+        /// <summary>
+        /// btnStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStart;
     }
 }
