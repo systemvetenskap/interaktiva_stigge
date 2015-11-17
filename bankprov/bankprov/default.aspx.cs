@@ -143,47 +143,51 @@ namespace bankprov
 
         public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
+            DataTable dt = new DataTable();
             DateTime senasteprov = new DateTime();
             string senasteprovstring;
-            bool godkand;
 
             string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
-            string sql2 = "SELECT godkant from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Vet att detta är en sunkig lösning men min reader krånglade
+            string sql2 = "SELECT godkant from u4_prov WHERE person_id = " + id + "ORDER BY datum DESC";
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            NpgsqlCommand cmd2 = new NpgsqlCommand(sql2, con);
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql2, con);
 
             con.Open();
             senasteprovstring = Convert.ToString(cmd.ExecuteScalar());
-            godkand = Convert.ToBoolean(cmd2.ExecuteScalar());
+            da.Fill(dt);
             con.Close();
 
-            if (senasteprovstring != "")
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                senasteprov = Convert.ToDateTime(senasteprovstring);
-                DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
-                LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
-                LabelKompetensportal.Visible = true;
-                btnSeResultat.Visible = true;
+               if (Convert.ToBoolean(dt.Rows[i][0]) == true)
+                   {                       
+                       if (i == 0)
+                       {
+                           senasteprov = Convert.ToDateTime(senasteprovstring);
+                           DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
+                           LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
+                           LabelKompetensportal.Visible = true;
+                           btnSeResultat.Visible = true;
+                       }
+
+                       else
+                       {
+                           LabelKompetensportal.Visible = true;
+                           LabelKompetensportal.Text = "Ditt senaste prov var tyvärr inte godkänt och du måste göra ett nytt snarast!";
+                           btnSeResultat.Visible = true;
+                       }
+
+                       return true;
+                   }
             }
 
-            else
-            {
-                LabelKompetensportal.Visible = false;
-                btnSeResultat.Visible = false;
-            }
+            LabelKompetensportal.Visible = false;
+            btnSeResultat.Visible = false;
 
-            if (godkand)
-            {
-                return true;
-            }
-
-            else
-            {
-                return false;
-            }
+            return false;     
 
         }
 
@@ -349,7 +353,7 @@ namespace bankprov
                 LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
             }
 
-            SparaTest(resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
+            SparaTest(resultat, totalt, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
 
             HideAll();
 
@@ -726,7 +730,7 @@ namespace bankprov
             int i = -1;
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
-            {
+            {                
                 i++;
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
                 {
@@ -783,7 +787,7 @@ namespace bankprov
 
         }
 
-        public void SparaTest(int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk, bool godkand)
+        public void SparaTest(int resultat, int totalt, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk, bool godkand)
         {
             int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
@@ -796,7 +800,7 @@ namespace bankprov
             string svarxml = File.ReadAllText(xml);
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            string sql = "INSERT INTO u4_prov (person_id, datum, facit, ressek1, ressek2, ressek3, godkant, svarxml) VALUES (@person_id, @datum, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml)";
+            string sql = "INSERT INTO u4_prov (person_id, datum, facit, ressek1, ressek2, ressek3, godkant, svarxml, antalfragor) VALUES (@person_id, @datum, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml, @antalfragor)";
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -811,6 +815,7 @@ namespace bankprov
             cmd.Parameters.AddWithValue("ressek2", ekonominationalekonomifinansiellekonomiochprivatekonomi);
             cmd.Parameters.AddWithValue("ressek3", etikochregelverk);
             cmd.Parameters.AddWithValue("godkant", godkand);
+            cmd.Parameters.AddWithValue("antalfragor", totalt);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -875,7 +880,7 @@ namespace bankprov
             int resultatdel3;
             bool godkand;
 
-            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant FROM u4_prov WHERE person_id= " + person_id;
+            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant, antalfragor FROM u4_prov WHERE person_id= " + person_id;
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -891,8 +896,9 @@ namespace bankprov
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.poang = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
                 godkand = Convert.ToBoolean(dr["godkant"]);
+ 
 
                 if (godkand == true)
                 {
@@ -913,6 +919,12 @@ namespace bankprov
             GridView1.DataBind();
             GridView1.Columns[1].Visible = false;
             GridView1.Columns[2].Visible = false;
+
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                LinkButton lb = (LinkButton)row.Cells[0].Controls[0];
+                lb.Text = "Visa Provet";
+            }
 
             return lista;
 
@@ -1113,7 +1125,7 @@ namespace bankprov
             int resultatdel3;
             bool godkand;
 
-            string sql = "SELECT prov_id, fnamn, enamn, datum, ressek1, ressek2, ressek3, godkant FROM u4_konto k INNER JOIN u4_prov p ON k.id = p.person_id WHERE k.chef = " + person_id;
+            string sql = "SELECT a.*, b.* FROM u4_konto a INNER JOIN u4_prov b ON a.id = b.person_id INNER JOIN (SELECT person_id, MAX(datum) maxdatum FROM u4_prov GROUP BY person_id) c ON b.person_id = c.person_id AND b.datum = c.maxdatum WHERE chef = 1";
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);    // Hämtar resultat för den línloggades anställdas prov
@@ -1131,7 +1143,7 @@ namespace bankprov
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.poang = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
                 if (godkand == true)    // Ändrar texten i Resultatkolumnen
@@ -1149,14 +1161,29 @@ namespace bankprov
 
             con.Close();
 
-            GridView1.DataSource = lista;   // Visar listan i griden
-            GridView1.DataBind();
             GridView1.Columns[1].Visible = true;
             GridView1.Columns[2].Visible = true;
+            GridView1.DataSource = lista;   // Visar listan i griden
+            GridView1.DataBind();
+
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                LinkButton lb = (LinkButton)row.Cells[0].Controls[0];
+                lb.Text = "Visa Provet";
+            }
 
             return lista;   //Returnerar listan av objekt
-
         }
+
+        protected void LinkButtonLoggaut_Click(object sender, EventArgs e)
+        {
+            HideAll();
+            LabelInloggad.Text = "";
+            btnOk.Visible = true;
+            LabelKompetensportal.Visible = true;
+            LabelKompetensportal.Text = "Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden.";
+            TextBoxanvandare.Visible = true;
+        }        
     }
 }
 
