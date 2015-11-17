@@ -81,6 +81,11 @@
                                         </tr>
                                         <tr>
                                             <td>                                               
+                                                 <asp:Label ID="LabelKategori" runat="server"><%#Eval ("kategori") %></asp:Label>  <!-- på rad två hämtas info om hur frågan skall besvaras som lagrats i "Info" i klassen "fragor.cs" -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>                                               
                                                  <asp:Label ID="LabelInfo" runat="server"><%#Eval ("Info") %></asp:Label>  <!-- på rad två hämtas info om hur frågan skall besvaras som lagrats i "Info" i klassen "fragor.cs" -->
                                             </td>
                                         </tr>
