@@ -151,6 +151,11 @@ namespace bankprov
                     btnOk.Visible = false;
                 }
             }
+
+            else
+                {
+                    Labelfornam.CssClass = "felsvar";
+                }
         }
 
         public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
