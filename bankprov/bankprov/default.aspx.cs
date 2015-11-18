@@ -53,7 +53,7 @@ namespace bankprov
 
         public void LaddaAnvandare()
         {
-            string sql = "SELECT anvandarnamn FROM u4_konto";
+            string sql = "SELECT anvandarnamn FROM u4_konto ORDER by anvandarnamn ASC";
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -115,38 +115,41 @@ namespace bankprov
 
         public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
-            //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
-            string anvandare = ListBoxanvandare.Text;
-            int person_id = 1;
-            person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
-
-            if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
-            {                                           // om så är fallet så visas följande element på skärmen
-                btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                ListBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
-                LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;             
-                
-            }
-            else 
+            if (ListBoxanvandare.SelectedIndex != -1)
             {
-                //öppna sidan för licensiering.    
-                //här skall man hämta frågor för licensiering
-                //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
-                btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                ListBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
-                LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;
+                //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
+                string anvandare = ListBoxanvandare.Text;
+                int person_id = 1;
+                person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
+
+                if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+                {                                           // om så är fallet så visas följande element på skärmen
+                    btnGorProv.Visible = true;
+                    LabelEjInloggad.Visible = false;
+                    ListBoxanvandare.Visible = false;
+                    LabelKompetensportal.Visible = true;
+                    Labelfornam.Visible = false;
+                    btnLamnain.Visible = false;
+                    LabelInloggad.Visible = true;
+                    LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                    btnOk.Visible = false;             
+                
+                }
+                else 
+                {
+                    //öppna sidan för licensiering.    
+                    //här skall man hämta frågor för licensiering
+                    //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
+                    btnGorProv.Visible = true;
+                    LabelEjInloggad.Visible = false;
+                    ListBoxanvandare.Visible = false;
+                    LabelKompetensportal.Visible = true;
+                    Labelfornam.Visible = false;
+                    btnLamnain.Visible = false;
+                    LabelInloggad.Visible = true;
+                    LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                    btnOk.Visible = false;
+                }
             }
         }
 
