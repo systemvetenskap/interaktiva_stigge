@@ -22,8 +22,15 @@ namespace bankprov
         {
             HideAll();
             btnOk.Visible = true;
-            TextBoxanvandare.Visible = true;
+            ListBoxanvandare.Visible = true;
             LabelKompetensportal.Visible = true;
+
+            if (!IsPostBack)
+            {
+                ListBoxanvandare.Items.Clear();
+                LaddaAnvandare();
+            }
+            
 
         }
 
@@ -38,19 +45,45 @@ namespace bankprov
             btnStartaprov.Visible = false;
             GridView1.Visible = false;
             btnOk.Visible = false;
-            TextBoxanvandare.Visible = false;
+            ListBoxanvandare.Visible = false;
             Repeater1.Visible = false;
             LabelKompetensportal.Visible = false;
 
         }
 
+        public void LaddaAnvandare()
+        {
+            string sql = "SELECT anvandarnamn FROM u4_konto ORDER by anvandarnamn ASC";
 
-        public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
+
+            List<string> lista = new List<string>();
+
+            con.Open();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            con.Close();
+
+            while (dr.Read())
+            {
+                string anvandarnamn = (string)dr["anvandarnamn"];
+                lista.Add(anvandarnamn);               
+            }
+
+            ListBoxanvandare.DataSource = lista;
+            ListBoxanvandare.DataBind();
+        }
+
+
+        public int GetPersonId()    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
         {
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             int person_id = 0;
+            string anvandare = ListBoxanvandare.SelectedValue.ToString();
+
+
             try
             {
                 conn.Open();
@@ -82,39 +115,47 @@ namespace bankprov
 
         public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
-            //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
-            string anvandare = TextBoxanvandare.Text;
-            int person_id = 1;
-            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
-
-            if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
-            {                                           // om så är fallet så visas följande element på skärmen
-                btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
-                LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;             
-                
-            }
-            else 
+            if (ListBoxanvandare.SelectedIndex != -1)
             {
-                //öppna sidan för licensiering.    
-                //här skall man hämta frågor för licensiering
-                //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
-                btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
-                LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;
+                //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
+                string anvandare = ListBoxanvandare.Text;
+                int person_id = 1;
+                person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
+
+                if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+                {                                           // om så är fallet så visas följande element på skärmen
+                    btnGorProv.Visible = true;
+                    LabelEjInloggad.Visible = false;
+                    ListBoxanvandare.Visible = false;
+                    LabelKompetensportal.Visible = true;
+                    Labelfornam.Visible = false;
+                    btnLamnain.Visible = false;
+                    LabelInloggad.Visible = true;
+                    LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                    btnOk.Visible = false;             
+                
+                }
+                else 
+                {
+                    //öppna sidan för licensiering.    
+                    //här skall man hämta frågor för licensiering
+                    //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
+                    btnGorProv.Visible = true;
+                    LabelEjInloggad.Visible = false;
+                    ListBoxanvandare.Visible = false;
+                    LabelKompetensportal.Visible = true;
+                    Labelfornam.Visible = false;
+                    btnLamnain.Visible = false;
+                    LabelInloggad.Visible = true;
+                    LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                    btnOk.Visible = false;
+                }
             }
+
+            else
+                {
+                    Labelfornam.CssClass = "felsvar";
+                }
         }
 
         public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
@@ -1082,7 +1123,7 @@ namespace bankprov
             string anvandare =  HittaNamn();
             int person_id = 1;
               HideAll();
-            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
+            person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
 
                       
 
@@ -1182,7 +1223,7 @@ namespace bankprov
             btnOk.Visible = true;
             LabelKompetensportal.Visible = true;
             LabelKompetensportal.Text = "Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden.";
-            TextBoxanvandare.Visible = true;
+            ListBoxanvandare.Visible = true;
         }        
     }
 }

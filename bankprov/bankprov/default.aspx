@@ -53,10 +53,7 @@
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
                             <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>                                                    <!--  VAD GÖR DENNA??? -->
-                            <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
-                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px" ></asp:TextBox>
-                            <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
-
+                            <asp:Label ID="Labelfornam" runat="server" Text="Välj användare"></asp:Label>
                             <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
                         </div>
                         
@@ -76,6 +73,11 @@
                                         <tr>
                                             <td>
                                                 <p><%# Eval("fragestallning") %></p>    <!-- Eval hämtar upp innehållet i "fragestallning" från klassen fragor.cs. Dvs själva frågan -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>                                               
+                                                 <asp:Label ID="LabelKategori" runat="server"><%#Eval ("kategori") %></asp:Label>  <!-- på rad två hämtas info om hur frågan skall besvaras som lagrats i "Info" i klassen "fragor.cs" -->
                                             </td>
                                         </tr>
                                         <tr>
@@ -110,7 +112,8 @@
                         </div>
                         <div class="info"></div>        <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->    
                         <div class="sektioncentrera sektionprovlamnain">         <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->  
-                                                
+                            <asp:ListBox ID="ListBoxanvandare" runat="server"></asp:ListBox>
+                                
                             <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" OnClick="btnSeResultat_Click" />
                             
                             <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />   <!-- När man är klar med provet så klickar man påknappen och då körs metoden "btnLamnain_Click" i default.aspx.cs -->
@@ -121,6 +124,8 @@
                     <div class="sektion">
                         <div class="sektioncentrera">                        <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->            
                             <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" OnClick="btnSeResultatAnstallda_Click" />
+                            <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
+                            
                             <asp:GridView ID="GridView2" runat="server"></asp:GridView>
                             <asp:Button ID="btnStart" runat="server" Text="Åter till start" OnClick="btnStart_Click" />
                         </div>
