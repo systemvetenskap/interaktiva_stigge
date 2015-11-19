@@ -28,7 +28,7 @@ namespace bankprov
             btnStartaprov.Visible = false;
             GridView1.Visible = false;
 
-            //Ladda in använder
+            //här skall alla användare hämtas till listan
 
             if(Page.IsPostBack == false) {
                 HamtaAnvandare();
