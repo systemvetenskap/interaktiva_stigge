@@ -13,6 +13,15 @@ namespace bankprov {
     public partial class index {
         
         /// <summary>
+        /// form1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        
+        /// <summary>
         /// LabelInloggad control.
         /// </summary>
         /// <remarks>
@@ -22,13 +31,13 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelInloggad;
         
         /// <summary>
-        /// form1 control.
+        /// InloggadPersonId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.HiddenField InloggadPersonId;
         
         /// <summary>
         /// LabelKompetensportal control.
@@ -65,6 +74,15 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelEjInloggad;
+        
+        /// <summary>
+        /// ListBoxAnvandare control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox ListBoxAnvandare;
         
         /// <summary>
         /// Labelfornam control.

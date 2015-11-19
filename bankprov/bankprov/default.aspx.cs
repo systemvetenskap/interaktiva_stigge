@@ -27,11 +27,43 @@ namespace bankprov
             btnGorProv.Visible = false;
             btnStartaprov.Visible = false;
             GridView1.Visible = false;
+
+            //Ladda in använder
+
+            if(Page.IsPostBack == false) {
+                HamtaAnvandare();
+            }
+        }
+        public void HamtaAnvandare()
+        {
+            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+
+            ListBoxAnvandare.Items.Clear();
+
+            try {
+                string sql = "SELECT id, fnamn, enamn FROM u4_konto ";
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())      // Loopar så länge det finns rader att läsa i databasen
+                {
+                    string namn = dr["fnamn"].ToString() + " " + dr["enamn"].ToString();
+                    string varde = dr["id"].ToString();
+                    
+                    ListBoxAnvandare.Items.Add(new ListItem(namn, varde));               // Fyller i listan med den inhämtade posten    
+                }
+                conn.Close();
+            }
+            catch(Exception e)
+            {
+                ListBoxAnvandare.Items.Add("Något blev fel!");
+            }
+
         }
 
         public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
         {
-
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             int person_id = 0;
@@ -66,11 +98,13 @@ namespace bankprov
 
         public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
+            /*
             //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
             string anvandare = TextBoxanvandare.Text;
             int person_id = 1;
             person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer
 
+            //ListBoxAnvandare
             if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
             {                                           // om så är fallet så visas följande element på skärmen
                 btnGorProv.Visible = true;
@@ -98,7 +132,7 @@ namespace bankprov
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
                 btnOk.Visible = false;
-            }
+            }*/
         }
 
         public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
@@ -178,6 +212,7 @@ namespace bankprov
             btnSeResultatAnstallda.Visible = false;
             LabelEjInloggad.Visible = false;
             TextBoxanvandare.Visible = false;
+            ListBoxAnvandare.Visible = false;
             LabelKompetensportal.Visible = true;
             LabelKompetensportal.Text = "Tryck på knappen för att starta testet. Det finns ingen tidsgräns så ta de piano och gör dig noggrann!";
             Labelfornam.Visible = false;
@@ -198,7 +233,7 @@ namespace bankprov
 
             btnLamnain.Visible = true;
 
-            int person_id = HamtaID2();
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
             prov prov = new prov();
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare.  Om man gjort prov tidigare så är satsen true
@@ -270,7 +305,7 @@ namespace bankprov
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
             string xml = Server.MapPath("fragor.xml");
-            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
             bool visagammalt = false; //Hade gjort så att funktionen RattaProv slutar vid 15 frågor om man gjort prov tidigare. Problemet är att om man kör den via visa gamla prov så stannar den ju vid 15 fast det gamla provet kan ha 25 frågor. Alltså skickar jag bara in en variabel också och gör det enkelt för mig
 
 
@@ -443,7 +478,7 @@ namespace bankprov
             int ekonominationalekonomifinansiellekonomiochprivatekonomi = 0;
             int etikochregelverk = 0;
 
-            int person_id = HamtaID2();
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
 
             if (SenasteProv(person_id))     //Returnerar en boolean som berättar om man gjort provet tidigare
             {
@@ -733,7 +768,7 @@ namespace bankprov
             int totaltkategori2 = 8;
             int totaltkategori3 = 9;
 
-            int person_id = HamtaID2();
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
             if (SenasteProv(person_id))
             {
                 totalt = 15;
@@ -756,7 +791,7 @@ namespace bankprov
 
         public void SparaTest(int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk, bool godkand)
         {
-            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
             DateTime dagens = DateTime.Today;
 
@@ -836,7 +871,7 @@ namespace bankprov
 
         public List<gjordaprov> HamtaGjordaProv()
         {
-            int person_id = HamtaID2();
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
             List<gjordaprov> lista = new List<gjordaprov>();
             int resultatdel1;
             int resultatdel2;
@@ -1026,7 +1061,7 @@ namespace bankprov
 
         public List<gjordaprov> HamtaProvAnstallda()
         {
-            int person_id = HamtaID2();
+            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
             List<gjordaprov> lista = new List<gjordaprov>();
             int resultatdel1;
             int resultatdel2;
@@ -1041,6 +1076,7 @@ namespace bankprov
             con.Open();
             NpgsqlDataReader dr = cmd.ExecuteReader();
 
+            int i = 0;
             while (dr.Read())
             {
                 gjordaprov gjortprov = new gjordaprov();
@@ -1074,6 +1110,50 @@ namespace bankprov
 
             return lista;
 
+        }
+
+        protected void ListBoxAnvandare_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string anvandare = ListBoxAnvandare.SelectedItem.Text;
+            int person_id = int.Parse(ListBoxAnvandare.SelectedValue);
+
+
+            InloggadPersonId.Value = person_id.ToString();
+
+            SenasteProv(person_id);                // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
+            Chef(person_id);                    // Om användaren är chef så visas knappen för att se de anställdas resultat
+
+            //ListBoxAnvandare
+            if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+            {                                           // om så är fallet så visas följande element på skärmen
+                btnGorProv.Visible = true;
+                LabelEjInloggad.Visible = false;
+                TextBoxanvandare.Visible = false;
+                ListBoxAnvandare.Visible = false;
+                LabelKompetensportal.Visible = true;
+                Labelfornam.Visible = false;
+                btnLamnain.Visible = false;
+                LabelInloggad.Visible = true;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                btnOk.Visible = false;
+
+            }
+            else
+            {
+                //öppna sidan för licensiering.    
+                //här skall man hämta frågor för licensiering
+                //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
+                btnGorProv.Visible = true;
+                LabelEjInloggad.Visible = false;
+                TextBoxanvandare.Visible = false;
+                ListBoxAnvandare.Visible = false;
+                LabelKompetensportal.Visible = true;
+                Labelfornam.Visible = false;
+                btnLamnain.Visible = false;
+                LabelInloggad.Visible = true;
+                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                btnOk.Visible = false;
+            }
         }
     }
 }

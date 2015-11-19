@@ -15,18 +15,20 @@
         </head>
     <body>
        <div class="container">
+           
+            <form id ="form1" runat="server">
             <div class="header">
-                <img src="jebanken.jpg" alt="JE-Banken logo" />
+                <a href="default.aspx"><img src="jebanken.jpg" alt="JE-Banken logo" /></a>
             </div>
 
             <div class="nav">
                 <ul class="clearfix">
                     <asp:Label ID="LabelInloggad" runat="server" Text=""></asp:Label>       <!-- Namnet på den som är inloggad skrivs i en label -->
+                    <asp:HiddenField ID="InloggadPersonId" runat="server" Value="" />
                     <li><a href="#">Logga ut</a></li>
                 </ul>
             </div>
            
-            <form id ="form1" runat="server">
                 <div class="sektioner clearfix">    <!-- klassen sektioner ger vit bakgrundsfärg -->
                     <h1>Kompetensportal</h1>        <!--  h1 är centrerad med en mörkgrå färg -->
                     <div class="infotext">          <!-- klassen infotext fyller 70% av bredden, texten centrerad -->
@@ -42,6 +44,7 @@
                             <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
                             <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>    <!--  VAD GÖR DENNA??? -->
                             <br />
+                            <asp:ListBox ID="ListBoxAnvandare" runat="server" Height="213px" AutoPostBack="true" Width="212px" OnSelectedIndexChanged="ListBoxAnvandare_SelectedIndexChanged"></asp:ListBox>
                             <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
                             <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
                             <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
