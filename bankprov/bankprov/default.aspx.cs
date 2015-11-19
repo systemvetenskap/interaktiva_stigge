@@ -958,8 +958,8 @@ namespace bankprov
 
             GridView1.DataSource = lista;
             GridView1.DataBind();
-            GridView1.Columns[1].Visible = false;
-            GridView1.Columns[2].Visible = false;
+            //GridView1.Columns[1].Visible = false;
+            //GridView1.Columns[2].Visible = false;
 
             foreach (GridViewRow row in GridView1.Rows)
             {
@@ -1021,11 +1021,11 @@ namespace bankprov
 
             DataTable dt = new DataTable();
 
-            GridViewRow row = GridView1.SelectedRow;
-            int prov_id = 0;
+            int row = GridView1.SelectedIndex;
+            int prov_id = Convert.ToInt32(GridView1.DataKeys[row].Value);
 
-            prov_id = Convert.ToInt32(row.Cells[2].Text);
-              
+
+
             string sql = "SELECT facit FROM u4_prov WHERE prov_id= " + prov_id;
             string sql2 = "SELECT svarxml FROM u4_prov WHERE prov_id = " + prov_id;
 

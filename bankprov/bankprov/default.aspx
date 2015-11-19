@@ -37,9 +37,8 @@
 
                     <div class="sektion">
                         <div class="sektioncentrera <%--poster--%>">
-                             <asp:GridView ID="GridView1" CssClass="grid" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateColumns="false" rowstyle-cssclass="rowHover">
+                             <asp:GridView ID="GridView1" CssClass="grid" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateColumns="false" rowstyle-cssclass="rowHover" DataKeyNames="id">
                                 <Columns>
-                                    <asp:BoundField DataField="id" HeaderText="ID" Visible="false" />
                                     <asp:BoundField DataField="fornamn" HeaderText="Förnamn" Visible="false" />
                                     <asp:BoundField DataField="efternamn" HeaderText="Efternamn" Visible="false" />
                                     <asp:BoundField DataField="datum" HeaderText="Datum" Visible="true" />
