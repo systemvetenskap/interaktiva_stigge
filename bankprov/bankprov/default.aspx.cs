@@ -1022,8 +1022,10 @@ namespace bankprov
             DataTable dt = new DataTable();
 
             GridViewRow row = GridView1.SelectedRow;
-            int prov_id = Convert.ToInt32(row.Cells[3].Text);
+            int prov_id = 0;
 
+            prov_id = Convert.ToInt32(row.Cells[2].Text);
+              
             string sql = "SELECT facit FROM u4_prov WHERE prov_id= " + prov_id;
             string sql2 = "SELECT svarxml FROM u4_prov WHERE prov_id = " + prov_id;
 
