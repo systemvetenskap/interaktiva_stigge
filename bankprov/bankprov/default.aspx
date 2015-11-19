@@ -14,19 +14,21 @@
 
         </head>
     <body>
-        <form id ="form1" runat="server">
        <div class="container">
+           
+            <form id ="form1" runat="server">
             <div class="header">
-                <img src="jebanken.jpg" alt="JE-Banken logo" />
+                <a href="default.aspx"><img src="jebanken.jpg" alt="JE-Banken logo" /></a>
             </div>
+
             <div class="nav">
                 <ul class="clearfix">
                     <asp:Label ID="LabelInloggad" runat="server" Text=""></asp:Label>       <!-- Namnet på den som är inloggad skrivs i en label -->
-                    <li>    <asp:LinkButton ID="LinkButtonLoggaut" runat="server" OnClick="LinkButtonLoggaut_Click">Logga Ut</asp:LinkButton></li>
+                    <asp:HiddenField ID="InloggadPersonId" runat="server" Value="" />
+                    <li><a href="#">Logga ut</a></li>
                 </ul>
             </div>
            
-            
                 <div class="sektioner clearfix">    <!-- klassen sektioner ger vit bakgrundsfärg -->
                     <h1>Kompetensportal</h1>        <!--  h1 är centrerad med en mörkgrå färg -->
                     <div class="infotext">          <!-- klassen infotext fyller 70% av bredden, texten centrerad -->
@@ -35,24 +37,18 @@
                     </div>
 
 
-                    <div class="sektion">
-                        <div class="sektioncentrera <%--poster--%>">
-                             <asp:GridView ID="GridView1" CssClass="grid" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AutoGenerateColumns="false" rowstyle-cssclass="rowHover" DataKeyNames="id">
-                                <Columns>
-                                    <asp:BoundField DataField="fornamn" HeaderText="Förnamn" Visible="false" />
-                                    <asp:BoundField DataField="efternamn" HeaderText="Efternamn" Visible="false" />
-                                    <asp:BoundField DataField="datum" HeaderText="Datum" Visible="true" />
-                                    <asp:BoundField DataField="poang" HeaderText="Poäng" Visible="true" />
-                                    <asp:BoundField DataField="resultat" HeaderText="Godkänt" Visible="true" />
-                                </Columns>
-                            </asp:GridView>
-                        </div>       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
+                    <div class="sektion">       <!-- klassen sektion fyller 90 % av bredden , vit bakgrundsfärg, flyter från vänster -->
                         <div class="sektioncentrera">   <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->
                             <asp:Button ID="btnGorProv" runat="server" Text="Gör Provet" onclick="btnGorProv_Click" />  
                             <!-- när man klickar på knappen "Gör provet" så körs metoden btnGorProv_Click i "default.aspx.cs"-->
                             <asp:Button ID="btnStartaprov" runat="server" Text="Starta Provet" onclick="btnStartaprov_Click" />
-                            <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>                                                    <!--  VAD GÖR DENNA??? -->
-                            <asp:Label ID="Labelfornam" runat="server" Text="Välj användare"></asp:Label>
+                            <asp:Label ID="LabelEjInloggad" runat="server" Text="Label"></asp:Label>    <!--  VAD GÖR DENNA??? -->
+                            <br />
+                            <asp:ListBox ID="ListBoxAnvandare" runat="server" Height="213px" AutoPostBack="true" Width="212px" OnSelectedIndexChanged="ListBoxAnvandare_SelectedIndexChanged"></asp:ListBox>
+                            <asp:Label ID="Labelfornam" runat="server" Text="Förnamn på den anställda"></asp:Label>
+                            <asp:TextBox ID="TextBoxanvandare" runat="server" Height="16px" Width="76px"></asp:TextBox>
+                            <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateSelectButton="true" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" ></asp:GridView>
                             <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
                         </div>
                         
@@ -72,11 +68,6 @@
                                         <tr>
                                             <td>
                                                 <p><%# Eval("fragestallning") %></p>    <!-- Eval hämtar upp innehållet i "fragestallning" från klassen fragor.cs. Dvs själva frågan -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>                                               
-                                                 <asp:Label ID="LabelKategori" runat="server"><%#Eval ("kategori") %></asp:Label>  <!-- på rad två hämtas info om hur frågan skall besvaras som lagrats i "Info" i klassen "fragor.cs" -->
                                             </td>
                                         </tr>
                                         <tr>
@@ -111,8 +102,7 @@
                         </div>
                         <div class="info"></div>        <!-- VAD HÄNDER I DEN HÄR DIV'en??? -->    
                         <div class="sektioncentrera sektionprovlamnain">         <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->  
-                            <asp:ListBox ID="ListBoxanvandare" runat="server"></asp:ListBox>
-                                
+                                                
                             <asp:Button ID="btnSeResultat" runat="server" Text="Se dina tidigare resultat" OnClick="btnSeResultat_Click" />
                             
                             <asp:Button ID="btnLamnain" runat="server" Text="Lämna in"  onclick="btnLamnain_Click" />   <!-- När man är klar med provet så klickar man påknappen och då körs metoden "btnLamnain_Click" i default.aspx.cs -->
@@ -123,15 +113,11 @@
                     <div class="sektion">
                         <div class="sektioncentrera">                        <!--  klass sektioncentrera visar innehållet som ett centrerat block med viss marginal -->            
                             <asp:Button ID="btnSeResultatAnstallda" runat="server" Text="Se anställdas resultat" OnClick="btnSeResultatAnstallda_Click" />
-                            <asp:Button ID="btnOk" runat="server" Text="OK" onclick="btnOK_Click" />    <!-- Kör metoden "btnOK_Click i default.aspx.cs-->
-                            
-                            <asp:GridView ID="GridView2" runat="server"></asp:GridView>
-                            <asp:Button ID="btnStart" runat="server" Text="Åter till start" OnClick="btnStart_Click" />
                         </div>
                     </div>
 
                 </div>
-             
+             </form>
 
             <div class="footer">        <!-- Sidfot på websidan -->
                 <table>
@@ -150,6 +136,5 @@
             </div>
 
             </div>
-            </form>
     </body>
 </html>

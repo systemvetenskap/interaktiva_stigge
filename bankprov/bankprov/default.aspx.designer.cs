@@ -31,13 +31,13 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelInloggad;
         
         /// <summary>
-        /// LinkButtonLoggaut control.
+        /// InloggadPersonId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButtonLoggaut;
+        protected global::System.Web.UI.WebControls.HiddenField InloggadPersonId;
         
         /// <summary>
         /// LabelKompetensportal control.
@@ -47,15 +47,6 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelKompetensportal;
-        
-        /// <summary>
-        /// GridView1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
         /// btnGorProv control.
@@ -85,6 +76,15 @@ namespace bankprov {
         protected global::System.Web.UI.WebControls.Label LabelEjInloggad;
         
         /// <summary>
+        /// ListBoxAnvandare control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox ListBoxAnvandare;
+        
+        /// <summary>
         /// Labelfornam control.
         /// </summary>
         /// <remarks>
@@ -92,6 +92,33 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Labelfornam;
+        
+        /// <summary>
+        /// TextBoxanvandare control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxanvandare;
+        
+        /// <summary>
+        /// btnOk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOk;
+        
+        /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
         /// ObjectDataSource1 control.
@@ -110,15 +137,6 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
-        
-        /// <summary>
-        /// ListBoxanvandare control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBoxanvandare;
         
         /// <summary>
         /// btnSeResultat control.
@@ -146,32 +164,5 @@ namespace bankprov {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSeResultatAnstallda;
-        
-        /// <summary>
-        /// btnOk control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOk;
-        
-        /// <summary>
-        /// GridView2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
-        
-        /// <summary>
-        /// btnStart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStart;
     }
 }
