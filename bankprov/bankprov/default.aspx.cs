@@ -28,7 +28,7 @@ namespace bankprov
             btnStartaprov.Visible = false;
             GridView1.Visible = false;
 
-            //Ladda in använder
+            //Nu laddas användare 
 
             if(Page.IsPostBack == false) {
                 HamtaAnvandare();

@@ -55,7 +55,7 @@
                     </div>
 
 
-                    <asp:Repeater ID="Repeater1" runat="server">      <%-- Repeater som läser in frågor och ritar upp frågeformuläret. Se metod HamtaFragor() i "default.aspx.cs"--%>
+                    <asp:Repeater ID="Repeater1" runat="server" OnItemCommand="Repeater1_ItemCommand">      <%-- Repeater som läser in frågor och ritar upp frågeformuläret. Se metod HamtaFragor() i "default.aspx.cs"--%>
 
 
                         <HeaderTemplate>                                        <!-- rubriken i repeatern -->
