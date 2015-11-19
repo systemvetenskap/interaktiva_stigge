@@ -185,7 +185,8 @@ namespace bankprov
         public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
             DataTable dt = new DataTable();
-            DateTime senasteprov = new DateTime();
+            DateTime senaste = new DateTime();
+
             string senasteprovstring;
 
             string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
@@ -207,9 +208,10 @@ namespace bankprov
                    {                       
                        if (i == 0)
                        {
-                           senasteprov = Convert.ToDateTime(senasteprovstring);
-                           DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
-                           LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
+                           senaste = Convert.ToDateTime(senasteprovstring);
+                           string senasteprov = (senaste.ToString("dd/MM/yyyy"));
+                           string nastaprov = (senaste.AddYears(1).ToString("dd/MM/yyyy"));
+                           LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
                            LabelKompetensportal.Visible = true;
                            btnSeResultat.Visible = true;
                        }
@@ -909,7 +911,6 @@ namespace bankprov
            // btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;
             btnStart.Visible = true;
-
         }
 
         public List<gjordaprov> HamtaGjordaProv()
@@ -933,7 +934,9 @@ namespace bankprov
             {
                 gjordaprov gjortprov = new gjordaprov();
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
+                DateTime datum = Convert.ToDateTime(dr["datum"]);
+                string datumstring = (datum.ToString("dd/MM/yyyy"));
+                gjortprov.datum = datumstring;
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
@@ -1116,6 +1119,7 @@ namespace bankprov
             //btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;       // Döljer allt utom griden
             btnStart.Visible = true;
+            SnartProv();
         }
 
         protected void btnStart_Click(object sender, EventArgs e)
@@ -1182,8 +1186,9 @@ namespace bankprov
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
                 gjortprov.fornamn = Convert.ToString(dr["fnamn"]);
                 gjortprov.efternamn = Convert.ToString(dr["enamn"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
-                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                DateTime datum = Convert.ToDateTime(dr["datum"]);
+                string datumstring = (datum.ToString("dd/MM/yyyy"));
+                gjortprov.datum = datumstring; resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
                 gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
@@ -1216,6 +1221,20 @@ namespace bankprov
             }
 
             return lista;   //Returnerar listan av objekt
+        }
+
+        public void SnartProv()
+        {
+            for (int i = 0; i < GridView1.Rows.Count; i++)
+            {
+                DateTime senaste = DateTime.ParseExact(this.GridView1.Rows[i].Cells[3].Text, "dd/MM/yyyy", null);               
+
+                if (senaste.AddMonths(11) < DateTime.Today)
+                {
+                    GridView1.Rows[i].CssClass = "GridViewSnart";
+                }
+
+            }     
         }
 
         protected void LinkButtonLoggaut_Click(object sender, EventArgs e)

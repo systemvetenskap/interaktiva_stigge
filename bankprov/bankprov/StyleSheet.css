@@ -139,6 +139,11 @@ div.sektion input {
     margin-bottom: 30px;
 }
 
+div.sektion option:hover
+{
+    background-color:#d7d7d7;
+}
+
 div.sektion select{
     width: 40%;
     min-height: 110px;
@@ -157,7 +162,16 @@ div.sektion input:hover {
     width: 100%;
 }
 
-#GridView1 tr.rowHover:hover{
+.GridViewSnart
+{
+    color: red;
+}
+
+#GridViewSnart tr.rowHover:hover{
+    background-color: #d7d7d7;
+}
+
+#GridView1 tr:hover{
     background-color: #d7d7d7;
 }
 
