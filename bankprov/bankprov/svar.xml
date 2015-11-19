@@ -2,7 +2,7 @@
 <prov xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
     <nr>1</nr>
-    <svarsalternativa>En terrängversion</svarsalternativa>
+    <svarsalternativd>En dieselversion</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
@@ -18,7 +18,7 @@
   </fraga>
   <fraga>
     <nr>4</nr>
-    <svarsalternativc>Volvo P1800</svarsalternativc>
+    <svarsalternativd>Volvo C30 Polestar</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
@@ -29,9 +29,10 @@
   <fraga>
     <nr>6</nr>
     <svarsalternativa>Ja</svarsalternativa>
+    <svarsalternativb>Absolut</svarsalternativb>
     <svarsalternativc>Definitivt</svarsalternativc>
     <svarsalternativd>Har påven en lustig hatt?</svarsalternativd>
-    <info>3</info>
+    <info>4</info>
   </fraga>
   <fraga>
     <nr>7</nr>
@@ -102,7 +103,7 @@
   </fraga>
   <fraga>
     <nr>20</nr>
-    <svarsalternativd>Spaghetti och köttfärssås klocka</svarsalternativd>
+    <svarsalternativb>Mat och sov klocka</svarsalternativb>
     <info>1</info>
   </fraga>
   <fraga>
@@ -119,7 +120,7 @@
   </fraga>
   <fraga>
     <nr>23</nr>
-    <svarsalternativc>Pannkakor</svarsalternativc>
+    <svarsalternativa>Köttbullar</svarsalternativa>
     <info>1</info>
   </fraga>
   <fraga>
@@ -129,7 +130,7 @@
   </fraga>
   <fraga>
     <nr>25</nr>
-    <svarsalternativb>Världens starkaste björn</svarsalternativb>
+    <svarsalternativd>Världens svettigaste cyklist</svarsalternativd>
     <info>1</info>
   </fraga>
 </prov>
