@@ -10,7 +10,7 @@ namespace bankprov
         public string fornamn { get; set; }
         public string efternamn { get; set; }
         public int id { get; set; }
-        public string datum { get; set; }
+        public DateTime datum { get; set; }
         public string poang { get; set; }
         public string resultat { get; set; }
 

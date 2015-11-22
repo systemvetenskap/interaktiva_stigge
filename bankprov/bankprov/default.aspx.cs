@@ -20,53 +20,70 @@ namespace bankprov
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            HideAll();
+            btnOk.Visible = true;
+            ListBoxanvandare.Visible = true;
+            LabelKompetensportal.Visible = true;
+
+            if (!IsPostBack)
+            {
+                ListBoxanvandare.Items.Clear();
+                LaddaAnvandare();
+            }
+            
+
+        }
+
+        public void HideAll()   // Döljer alla element
+        {
             btnLamnain.Visible = false;     // Dessa element är dolda vid start. 
-            LabelEjInloggad.Visible = false;     
+            LabelEjInloggad.Visible = false;
             btnSeResultat.Visible = false;
             btnSeResultatAnstallda.Visible = false;
+            btnStart.Visible = false;
             btnGorProv.Visible = false;
             btnStartaprov.Visible = false;
             GridView1.Visible = false;
+            btnOk.Visible = false;
+            ListBoxanvandare.Visible = false;
+            Repeater1.Visible = false;
+            LabelKompetensportal.Visible = false;
 
-            //här skall alla användare hämtas till listan
-
-            if(Page.IsPostBack == false) {
-                HamtaAnvandare();
-            }
         }
-        public void HamtaAnvandare()
+
+        public void LaddaAnvandare()
         {
-            string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            string sql = "SELECT anvandarnamn FROM u4_konto ORDER by anvandarnamn ASC";
 
-            ListBoxAnvandare.Items.Clear();
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
 
-            try {
-                string sql = "SELECT id, fnamn, enamn FROM u4_konto ";
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(sql, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())      // Loopar så länge det finns rader att läsa i databasen
-                {
-                    string namn = dr["fnamn"].ToString() + " " + dr["enamn"].ToString();
-                    string varde = dr["id"].ToString();
-                    
-                    ListBoxAnvandare.Items.Add(new ListItem(namn, varde));               // Fyller i listan med den inhämtade posten    
-                }
-                conn.Close();
-            }
-            catch(Exception e)
+            List<string> lista = new List<string>();
+
+            con.Open();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            con.Close();
+
+            while (dr.Read())
             {
-                ListBoxAnvandare.Items.Add("Något blev fel!");
+                string anvandarnamn = (string)dr["anvandarnamn"];
+                lista.Add(anvandarnamn);               
             }
 
+            ListBoxanvandare.DataSource = lista;
+            ListBoxanvandare.DataBind();
         }
 
-        public int GetPersonId(string anvandare)    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
+
+        public int GetPersonId()    // Det namn man skriver i textrutan är parametern "anvandare". Metoden returnerar id-nummer för användaren.
         {
+
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             int person_id = 0;
+            string anvandare = ListBoxanvandare.SelectedValue.ToString();
+
+
             try
             {
                 conn.Open();
@@ -98,41 +115,47 @@ namespace bankprov
 
         public void btnOK_Click(object sender, EventArgs e)     // Kollar vilken behörighet angiven användare har samt öppnar upp startsidan
         {
-            /*
-            //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
-            string anvandare = TextBoxanvandare.Text;
-            int person_id = 1;
-            person_id = GetPersonId(anvandare);         // Returnerar användarens id-nummer
-
-            //ListBoxAnvandare
-            if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
-            {                                           // om så är fallet så visas följande element på skärmen
-                btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
-                LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;             
-                
-            }
-            else 
+            if (ListBoxanvandare.SelectedIndex != -1)
             {
-                //öppna sidan för licensiering.    
-                //här skall man hämta frågor för licensiering
-                //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
-                btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
-                LabelInloggad.Visible = true;
-                LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;
-            }*/
+                //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
+                string anvandare = ListBoxanvandare.Text;
+                int person_id = 1;
+                person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
+
+                if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
+                {                                           // om så är fallet så visas följande element på skärmen
+                    btnGorProv.Visible = true;
+                    LabelEjInloggad.Visible = false;
+                    ListBoxanvandare.Visible = false;
+                    LabelKompetensportal.Visible = true;
+                    Labelfornam.Visible = false;
+                    btnLamnain.Visible = false;
+                    LabelInloggad.Visible = true;
+                    LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                    btnOk.Visible = false;             
+                
+                }
+                else 
+                {
+                    //öppna sidan för licensiering.    
+                    //här skall man hämta frågor för licensiering
+                    //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
+                    btnGorProv.Visible = true;
+                    LabelEjInloggad.Visible = false;
+                    ListBoxanvandare.Visible = false;
+                    LabelKompetensportal.Visible = true;
+                    Labelfornam.Visible = false;
+                    btnLamnain.Visible = false;
+                    LabelInloggad.Visible = true;
+                    LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
+                    btnOk.Visible = false;
+                }
+            }
+
+            else
+                {
+                    Labelfornam.CssClass = "felsvar";
+                }
         }
 
         public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
@@ -161,68 +184,77 @@ namespace bankprov
 
         public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
+            DataTable dt = new DataTable();
             DateTime senasteprov = new DateTime();
             string senasteprovstring;
-            bool godkand;
 
             string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
-            string sql2 = "SELECT godkant from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Vet att detta är en sunkig lösning men min reader krånglade
+            string sql2 = "SELECT godkant from u4_prov WHERE person_id = " + id + "ORDER BY datum DESC";
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
 
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-            NpgsqlCommand cmd2 = new NpgsqlCommand(sql2, con);
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql2, con);
 
             con.Open();
             senasteprovstring = Convert.ToString(cmd.ExecuteScalar());
-            godkand = Convert.ToBoolean(cmd2.ExecuteScalar());
+            da.Fill(dt);
             con.Close();
 
-            if (senasteprovstring != "")
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                senasteprov = Convert.ToDateTime(senasteprovstring);
-                DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
-                LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
-                LabelKompetensportal.Visible = true;
-                btnSeResultat.Visible = true;
+               if (Convert.ToBoolean(dt.Rows[i][0]) == true)
+                   {                       
+                       if (i == 0)
+                       {
+                           senasteprov = Convert.ToDateTime(senasteprovstring);
+                           DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
+                           LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
+                           LabelKompetensportal.Visible = true;
+                           btnSeResultat.Visible = true;
+                       }
+
+                       else
+                       {
+                           LabelKompetensportal.Visible = true;
+                           LabelKompetensportal.Text = "Ditt senaste prov var tyvärr inte godkänt och du måste göra ett nytt snarast!";
+                           btnSeResultat.Visible = true;
+                       }
+
+                       return true;
+                   }
             }
 
-            else
-            {
-                LabelKompetensportal.Visible = false;
-                btnSeResultat.Visible = false;
-            }
+            LabelKompetensportal.Visible = false;
+            btnSeResultat.Visible = false;
 
-            if (godkand)
-            {
-                return true;
-            }
-
-            else
-            {
-                return false;
-            }
+            return false;     
 
         }
 
         protected void btnGorProv_Click(object sender, EventArgs e)
         {
-            btnGorProv.Visible = false;                 // Gömmer undan en massa saker ur formuläret
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
-            LabelEjInloggad.Visible = false;
-            TextBoxanvandare.Visible = false;
-            ListBoxAnvandare.Visible = false;
+            HideAll();
+
+            //btnGorProv.Visible = false;       
+            //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
+            //LabelEjInloggad.Visible = false;
+            //TextBoxanvandare.Visible = false;
             LabelKompetensportal.Visible = true;
             LabelKompetensportal.Text = "Tryck på knappen för att starta testet. Det finns ingen tidsgräns så ta de piano och gör dig noggrann!";
-            Labelfornam.Visible = false;
-            btnLamnain.Visible = false;
+            //Labelfornam.Visible = false;
+            //btnLamnain.Visible = false;
             LabelInloggad.Visible = true;
             btnStartaprov.Visible = true;
+
         }
 
-        protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Gör Provet". 
+        protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Starta provet". 
         {
+
+            
+
             string xmlpath = Server.MapPath("fragor.xml");
 
             string xml;
@@ -231,9 +263,8 @@ namespace bankprov
                 xml = reader.ReadLine();
             }
 
-            btnLamnain.Visible = true;
-
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
+            
+            int person_id = HamtaID2();
             prov prov = new prov();
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare.  Om man gjort prov tidigare så är satsen true
@@ -250,16 +281,21 @@ namespace bankprov
                 Repeater1.DataBind();
             }
 
-                btnStartaprov.Visible = false;                 // Gömmer undan en massa saker ur formuläret      
+            HideAll();
+            btnLamnain.Visible = true;
+            Repeater1.Visible = true;
+
+            //    btnStartaprov.Visible = false;                 // Gömmer undan Starta Prov-knappen 
+            //btnSeResultat.Visible = false;                      // Gömmer "Visa tidigare"-knappen
         }
         
-        public prov HamtaFragorLicensierad()
+        public prov HamtaFragorLicensierad()    //Returnerar en lista med 15 frågeobjekt av utvald kategori
         {
-            string xml = Server.MapPath("fragor.xml");
+            string xml = Server.MapPath("fragor.xml");  // xml filen läses in till en textsträng
 
             XmlSerializer deserializer = new XmlSerializer(typeof(prov));
             TextReader reader = new StreamReader(xml);
-            object obj = deserializer.Deserialize(reader);
+            object obj = deserializer.Deserialize(reader);  // Xml-filen läses in och deserialiseras till en lista av fråge objekt i enlighet med klassen "fragor.cs"
             prov XmlData = (prov)obj;
             reader.Close();
 
@@ -267,14 +303,14 @@ namespace bankprov
             int antal = 0;
             prov listafragor = new prov();
            
-            foreach (object objekt in XmlData.fragelista)
+            foreach (object objekt in XmlData.fragelista)       //Loopar igenom frågorna
             {
-                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")
+                if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")     // Väljer ut frågor av en viss kategori
                 {
                     if (antal <= 4)
                     {
                         antal++;
-                        listafragor.fragelista.Add(XmlData.fragelista[i]);
+                        listafragor.fragelista.Add(XmlData.fragelista[i]);      // De första 5 frågorna i provet skall tillhöra den valda kategorin
         }
                 }
 
@@ -305,7 +341,7 @@ namespace bankprov
         protected void btnLamnain_Click(object sender, EventArgs e)
         {
             string xml = Server.MapPath("fragor.xml");
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
+            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
             bool visagammalt = false; //Hade gjort så att funktionen RattaProv slutar vid 15 frågor om man gjort prov tidigare. Problemet är att om man kör den via visa gamla prov så stannar den ju vid 15 fast det gamla provet kan ha 25 frågor. Alltså skickar jag bara in en variabel också och gör det enkelt för mig
 
 
@@ -314,7 +350,7 @@ namespace bankprov
             
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare
             {
-                provet = HamtaFragorLicensierad();
+                provet = HamtaFragorLicensierad();    //Skapar ett prov bestående av 15 frågeobjekt av utvald kategori
             }
 
             else
@@ -358,15 +394,17 @@ namespace bankprov
                 LabelKompetensportal.Text = "Du har tyvärr inte klarat kompetenstestet. Ditt resultat är " + resultat + " av " + totalt + ". " + produkterochhanteringavkundensaffärer + " av " + totaltkategori1 + " inom kategorin Produkter och hantering av kundens affärer. " + ekonominationalekonomifinansiellekonomiochprivatekonomi + " av " + totaltkategori2 + " inom Ekonomi - Nationalekonomi, finansiell enkonomi och privatekonomi. " + etikochregelverk + " av " + totaltkategori3 + " i kategorin Etik och regelverk";
             }
 
-            SparaTest(resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
+            SparaTest(resultat, totalt, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk, godkand);
 
+            HideAll();
 
-
-            btnGorProv.Visible = false;
-            btnLamnain.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
+            //btnGorProv.Visible = false;
+            //btnLamnain.Visible = false;
+            //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
             LabelKompetensportal.Visible = true;
+            btnStart.Visible = true;
+            Repeater1.Visible = true;
         }
 
         public prov HamtaFragor()
@@ -398,15 +436,16 @@ namespace bankprov
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
                 {
                     var checkBoxA = (CheckBox)item.FindControl("CheckBoxA"); 
-                    if (checkBoxA.Checked == true)
+                    if (checkBoxA.Checked == true)      // Kollar om checkbox A är markerad för gällande fråga
                     {
-                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa;
+                        fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa; // Skapar ett frågeobjekt med endast valda svarsalternativ
                         fragaobj.nr = provet.fragelista[i].nr;
 
                         checkboxkontroll++;
 
-                        var LabelA = (Label)item.FindControl("LabelA"); // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
-                        LabelA.CssClass = "felsvar";
+                        var LabelA = (Label)item.FindControl("LabelA");     
+                        LabelA.CssClass = "felsvar";        // Om svar A är valt så blir det röd-färgat
+                        // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
                     }
 
                     var checkBoxB = (CheckBox)item.FindControl("CheckBoxB");
@@ -478,7 +517,7 @@ namespace bankprov
             int ekonominationalekonomifinansiellekonomiochprivatekonomi = 0;
             int etikochregelverk = 0;
 
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
+            int person_id = HamtaID2();
 
             if (SenasteProv(person_id))     //Returnerar en boolean som berättar om man gjort provet tidigare
             {
@@ -515,7 +554,7 @@ namespace bankprov
                 }
 
                 else
-                {
+                {                
                     if (gjortprov.fragelista[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov.fragelista[i].svarsalternativa != null)
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
@@ -732,7 +771,7 @@ namespace bankprov
             int i = -1;
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
-            {
+            {                
                 i++;
                 if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
                 {
@@ -768,7 +807,7 @@ namespace bankprov
             int totaltkategori2 = 8;
             int totaltkategori3 = 9;
 
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
+            int person_id = HamtaID2();
             if (SenasteProv(person_id))
             {
                 totalt = 15;
@@ -789,9 +828,9 @@ namespace bankprov
 
         }
 
-        public void SparaTest(int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk, bool godkand)
+        public void SparaTest(int resultat, int totalt, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk, bool godkand)
         {
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
+            int person_id = HamtaID2();   // Returnerar id-nummer på användaren som är inloggad
 
             DateTime dagens = DateTime.Today;
 
@@ -802,7 +841,7 @@ namespace bankprov
             string svarxml = File.ReadAllText(xml);
 
             string connectionString = "Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require";
-            string sql = "INSERT INTO u4_prov (person_id, datum, facit, ressek1, ressek2, ressek3, godkant, svarxml) VALUES (@person_id, @datum, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml)";
+            string sql = "INSERT INTO u4_prov (person_id, datum, facit, ressek1, ressek2, ressek3, godkant, svarxml, antalfragor) VALUES (@person_id, @datum, @facit, @ressek1, @ressek2, @ressek3, @godkant, @svarxml, @antalfragor)";
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -817,6 +856,7 @@ namespace bankprov
             cmd.Parameters.AddWithValue("ressek2", ekonominationalekonomifinansiellekonomiochprivatekonomi);
             cmd.Parameters.AddWithValue("ressek3", etikochregelverk);
             cmd.Parameters.AddWithValue("godkant", godkand);
+            cmd.Parameters.AddWithValue("antalfragor", totalt);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -863,22 +903,25 @@ namespace bankprov
         protected void btnSeResultat_Click(object sender, EventArgs e)
         {
             HamtaGjordaProv();
-            btnGorProv.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
+            HideAll();
+           // btnGorProv.Visible = false;
+           // btnSeResultat.Visible = false;
+           // btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;
+            btnStart.Visible = true;
+
         }
 
         public List<gjordaprov> HamtaGjordaProv()
         {
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
+            int person_id = HamtaID2();
             List<gjordaprov> lista = new List<gjordaprov>();
             int resultatdel1;
             int resultatdel2;
             int resultatdel3;
             bool godkand;
 
-            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant FROM u4_prov WHERE person_id= " + person_id;
+            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant, antalfragor FROM u4_prov WHERE person_id= " + person_id;
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -894,17 +937,18 @@ namespace bankprov
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.resultat = resultatdel1 + resultatdel2 + resultatdel3;
+                gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
                 godkand = Convert.ToBoolean(dr["godkant"]);
+ 
 
                 if (godkand == true)
                 {
-                    gjortprov.godkand = "Godkänt";
+                    gjortprov.resultat = "Godkänt";
                 }
 
                 if (godkand == false)
                 {
-                    gjortprov.godkand = "Icke Godkänt";
+                    gjortprov.resultat = "Icke Godkänt";
                 }
 
                 lista.Add(gjortprov);
@@ -914,6 +958,14 @@ namespace bankprov
 
             GridView1.DataSource = lista;
             GridView1.DataBind();
+            //GridView1.Columns[1].Visible = false;
+            //GridView1.Columns[2].Visible = false;
+
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                LinkButton lb = (LinkButton)row.Cells[0].Controls[0];
+                lb.Text = "Visa Provet";
+            }
 
             return lista;
 
@@ -955,8 +1007,11 @@ namespace bankprov
 
            VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
 
-           btnSeResultatAnstallda.Visible = false;
-           btnSeResultat.Visible = false;
+            HideAll();
+            btnStart.Visible = true;
+            Repeater1.Visible = true;
+           //btnSeResultatAnstallda.Visible = false;
+           //btnSeResultat.Visible = false;
         }
 
         public Tuple<string, string> HamtaFragorDB()
@@ -966,8 +1021,10 @@ namespace bankprov
 
             DataTable dt = new DataTable();
 
-            GridViewRow row = GridView1.SelectedRow;
-            int prov_id = Convert.ToInt32(row.Cells[3].Text);
+            int row = GridView1.SelectedIndex;
+            int prov_id = Convert.ToInt32(GridView1.DataKeys[row].Value);
+
+
 
             string sql = "SELECT facit FROM u4_prov WHERE prov_id= " + prov_id;
             string sql2 = "SELECT svarxml FROM u4_prov WHERE prov_id = " + prov_id;
@@ -1052,90 +1109,37 @@ namespace bankprov
 
         protected void btnSeResultatAnstallda_Click(object sender, EventArgs e)
         {
-            HamtaProvAnstallda();
-            btnGorProv.Visible = false;
-            btnSeResultat.Visible = false;
-            btnSeResultatAnstallda.Visible = false;
-            GridView1.Visible = true;
+            HamtaProvAnstallda();   //Returnerar listan av objekt med provresultat för den inloggades anställda och fyller på dessa i griden
+            HideAll();
+            //btnGorProv.Visible = false;
+            //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
+            GridView1.Visible = true;       // Döljer allt utom griden
+            btnStart.Visible = true;
         }
 
-        public List<gjordaprov> HamtaProvAnstallda()
+        protected void btnStart_Click(object sender, EventArgs e)
         {
-            int person_id = int.Parse(InloggadPersonId.Value); // HamtaID2();
-            List<gjordaprov> lista = new List<gjordaprov>();
-            int resultatdel1;
-            int resultatdel2;
-            int resultatdel3;
-            bool godkand;
+           
+            //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
+            string anvandare =  HittaNamn();
+            int person_id = 1;
+              HideAll();
+            person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
 
-            string sql = "SELECT prov_id, fnamn, enamn, datum, ressek1, ressek2, ressek3, godkant FROM u4_konto k INNER JOIN u4_prov p ON k.id = p.person_id WHERE k.chef = " + person_id;
+                      
 
-            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
-            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
-
-            con.Open();
-            NpgsqlDataReader dr = cmd.ExecuteReader();
-
-            int i = 0;
-            while (dr.Read())
-            {
-                gjordaprov gjortprov = new gjordaprov();
-                gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.fnamn = Convert.ToString(dr["fnamn"]);
-                gjortprov.enamn = Convert.ToString(dr["enamn"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
-                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
-                resultatdel2 = Convert.ToInt32(dr["ressek2"]);
-                resultatdel3 = Convert.ToInt32(dr["ressek3"]);
-                gjortprov.resultat = resultatdel1 + resultatdel2 + resultatdel3;
-                godkand = Convert.ToBoolean(dr["godkant"]);
-
-                if (godkand == true)
-                {
-                    gjortprov.godkand = "Godkänt";
-                }
-
-                if (godkand == false)
-                {
-                    gjortprov.godkand = "Icke Godkänt";
-                }
-
-                lista.Add(gjortprov);
-            }
-
-            con.Close();
-
-            GridView1.DataSource = lista;
-            GridView1.DataBind();
-
-            return lista;
-
-        }
-
-        protected void ListBoxAnvandare_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string anvandare = ListBoxAnvandare.SelectedItem.Text;
-            int person_id = int.Parse(ListBoxAnvandare.SelectedValue);
-
-
-            InloggadPersonId.Value = person_id.ToString();
-
-            SenasteProv(person_id);                // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
-            Chef(person_id);                    // Om användaren är chef så visas knappen för att se de anställdas resultat
-
-            //ListBoxAnvandare
             if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
             {                                           // om så är fallet så visas följande element på skärmen
                 btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                ListBoxAnvandare.Visible = false;
+              //  LabelEjInloggad.Visible = false;
+               // TextBoxanvandare.Visible = false;
                 LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
+                //    Labelfornam.Visible = false;
+                //    btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;
+                                                                     //      btnOk.Visible = false;
 
             }
             else
@@ -1144,17 +1148,85 @@ namespace bankprov
                 //här skall man hämta frågor för licensiering
                 //öppna sidan för licensiering den skall inehålla (""""25 frågor"""")
                 btnGorProv.Visible = true;
-                LabelEjInloggad.Visible = false;
-                TextBoxanvandare.Visible = false;
-                ListBoxAnvandare.Visible = false;
+                //     LabelEjInloggad.Visible = false;
+                //      TextBoxanvandare.Visible = false;
                 LabelKompetensportal.Visible = true;
-                Labelfornam.Visible = false;
-                btnLamnain.Visible = false;
+                //       Labelfornam.Visible = false;
+                //      btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                btnOk.Visible = false;
+                                                                     //      btnOk.Visible = false;
             }
         }
+
+        public List<gjordaprov> HamtaProvAnstallda()   //Returnerar listan av objekt med provresultat för den inloggades anställda och fyller på dessa i griden
+        {
+            int person_id = HamtaID2();         // Hämtar konto-id för den inloggade
+            List<gjordaprov> lista = new List<gjordaprov>();
+            int resultatdel1;
+            int resultatdel2;
+            int resultatdel3;
+            bool godkand;
+
+            string sql = "SELECT a.*, b.* FROM u4_konto a INNER JOIN u4_prov b ON a.id = b.person_id INNER JOIN (SELECT person_id, MAX(datum) maxdatum FROM u4_prov GROUP BY person_id) c ON b.person_id = c.person_id AND b.datum = c.maxdatum WHERE chef = 1";
+
+            NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
+            NpgsqlCommand cmd = new NpgsqlCommand(sql, con);    // Hämtar resultat för den línloggades anställdas prov
+
+            con.Open();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                gjordaprov gjortprov = new gjordaprov();        // Läser in resultatet till ett objekt av klassen "gjordaprov.cs"
+                gjortprov.id = Convert.ToInt32(dr["prov_id"]);
+                gjortprov.fornamn = Convert.ToString(dr["fnamn"]);
+                gjortprov.efternamn = Convert.ToString(dr["enamn"]);
+                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
+                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                resultatdel2 = Convert.ToInt32(dr["ressek2"]);
+                resultatdel3 = Convert.ToInt32(dr["ressek3"]);
+                gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
+                godkand = Convert.ToBoolean(dr["godkant"]);
+
+                if (godkand == true)    // Ändrar texten i Resultatkolumnen
+                {
+                    gjortprov.resultat = "Godkänt";
+                }
+
+                if (godkand == false)
+                {
+                    gjortprov.resultat = "Icke Godkänt";    
+                }
+
+                lista.Add(gjortprov);   //Lägger till objektet i listan som sedan skall presenteras
+            }
+
+            con.Close();
+
+            GridView1.Columns[1].Visible = true;
+            GridView1.Columns[2].Visible = true;
+            GridView1.DataSource = lista;   // Visar listan i griden
+            GridView1.DataBind();
+
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                LinkButton lb = (LinkButton)row.Cells[0].Controls[0];
+                lb.Text = "Visa Provet";
+            }
+
+            return lista;   //Returnerar listan av objekt
+        }
+
+        protected void LinkButtonLoggaut_Click(object sender, EventArgs e)
+        {
+            HideAll();
+            LabelInloggad.Text = "";
+            btnOk.Visible = true;
+            LabelKompetensportal.Visible = true;
+            LabelKompetensportal.Text = "Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden.";
+            ListBoxanvandare.Visible = true;
+        }        
     }
 }
 
