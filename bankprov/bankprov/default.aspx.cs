@@ -16,7 +16,7 @@ namespace bankprov
 {
     public partial class index : System.Web.UI.Page
     {
-        
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +30,7 @@ namespace bankprov
                 ListBoxanvandare.Items.Clear();
                 LaddaAnvandare();
             }
-            
+
 
         }
 
@@ -67,7 +67,7 @@ namespace bankprov
             while (dr.Read())
             {
                 string anvandarnamn = (string)dr["anvandarnamn"];
-                lista.Add(anvandarnamn);               
+                lista.Add(anvandarnamn);
             }
 
             ListBoxanvandare.DataSource = lista;
@@ -132,10 +132,10 @@ namespace bankprov
                     btnLamnain.Visible = false;
                     LabelInloggad.Visible = true;
                     LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                    btnOk.Visible = false;             
-                
+                    btnOk.Visible = false;
+
                 }
-                else 
+                else
                 {
                     //öppna sidan för licensiering.    
                     //här skall man hämta frågor för licensiering
@@ -153,9 +153,9 @@ namespace bankprov
             }
 
             else
-                {
-                    Labelfornam.CssClass = "felsvar";
-                }
+            {
+                Labelfornam.CssClass = "felsvar";
+            }
         }
 
         public void Chef(int id)      // Om användaren är chef så visas knappen för att se de anställdas resultat
@@ -185,7 +185,8 @@ namespace bankprov
         public bool SenasteProv(int id)     // Skriver ut när användaren senast skrev ett prov och när nästa prov måste skrivas. Returnerar en boolean som berättar om man gjort provet tidigare
         {
             DataTable dt = new DataTable();
-            DateTime senasteprov = new DateTime();
+            DateTime senaste = new DateTime();
+
             string senasteprovstring;
 
             string sql = "SELECT datum from u4_prov WHERE person_id = " + id + " ORDER BY datum DESC LIMIT 1";      // Tar ut datum för användarens senaste prov
@@ -203,32 +204,33 @@ namespace bankprov
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-               if (Convert.ToBoolean(dt.Rows[i][0]) == true)
-                   {                       
-                       if (i == 0)
-                       {
-                           senasteprov = Convert.ToDateTime(senasteprovstring);
-                           DateTime nastaprov = senasteprov.AddYears(1);   //  Nästa prov skall skrivas senaste ett år efter det första
-                           LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov.Date + ". Du måste göra provet igen innan " + nastaprov.Date + ".";
-                           LabelKompetensportal.Visible = true;
-                           btnSeResultat.Visible = true;
-                       }
+                if (Convert.ToBoolean(dt.Rows[i][0]) == true)
+                {
+                    if (i == 0)
+                    {
+                        senaste = Convert.ToDateTime(senasteprovstring);
+                        string senasteprov = (senaste.ToString("dd/MM/yyyy"));
+                        string nastaprov = (senaste.AddYears(1).ToString("dd/MM/yyyy"));
+                        LabelKompetensportal.Text = "Ditt senaste prov gjordes " + senasteprov + ". Du måste göra provet igen innan " + nastaprov + ".";
+                        LabelKompetensportal.Visible = true;
+                        btnSeResultat.Visible = true;
+                    }
 
-                       else
-                       {
-                           LabelKompetensportal.Visible = true;
-                           LabelKompetensportal.Text = "Ditt senaste prov var tyvärr inte godkänt och du måste göra ett nytt snarast!";
-                           btnSeResultat.Visible = true;
-                       }
+                    else
+                    {
+                        LabelKompetensportal.Visible = true;
+                        LabelKompetensportal.Text = "Ditt senaste prov var tyvärr inte godkänt och du måste göra ett nytt snarast!";
+                        btnSeResultat.Visible = true;
+                    }
 
-                       return true;
-                   }
+                    return true;
+                }
             }
 
             LabelKompetensportal.Visible = false;
             btnSeResultat.Visible = false;
 
-            return false;     
+            return false;
 
         }
 
@@ -253,7 +255,7 @@ namespace bankprov
         protected void btnStartaprov_Click(object sender, EventArgs e)     //  När man klickar på "Starta provet". 
         {
 
-            
+
 
             string xmlpath = Server.MapPath("fragor.xml");
 
@@ -263,10 +265,10 @@ namespace bankprov
                 xml = reader.ReadLine();
             }
 
-            
+
             int person_id = HamtaID2();
             prov prov = new prov();
-            
+
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare.  Om man gjort prov tidigare så är satsen true
             {
                 prov = HamtaFragorLicensierad();
@@ -288,7 +290,7 @@ namespace bankprov
             //    btnStartaprov.Visible = false;                 // Gömmer undan Starta Prov-knappen 
             //btnSeResultat.Visible = false;                      // Gömmer "Visa tidigare"-knappen
         }
-        
+
         public prov HamtaFragorLicensierad()    //Returnerar en lista med 15 frågeobjekt av utvald kategori
         {
             string xml = Server.MapPath("fragor.xml");  // xml filen läses in till en textsträng
@@ -302,7 +304,7 @@ namespace bankprov
             int i = 0;
             int antal = 0;
             prov listafragor = new prov();
-           
+
             foreach (object objekt in XmlData.fragelista)       //Loopar igenom frågorna
             {
                 if (XmlData.fragelista[i].kategori == "Produkter och hantering av kundens affärer")     // Väljer ut frågor av en viss kategori
@@ -311,11 +313,11 @@ namespace bankprov
                     {
                         antal++;
                         listafragor.fragelista.Add(XmlData.fragelista[i]);      // De första 5 frågorna i provet skall tillhöra den valda kategorin
-        }
+                    }
                 }
 
                 if (XmlData.fragelista[i].kategori == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
-                {                    
+                {
                     if (antal >= 5 && antal <= 9)
                     {
                         antal++;
@@ -324,7 +326,7 @@ namespace bankprov
                 }
 
                 if (XmlData.fragelista[i].kategori == "Etik och regelverk.")
-                {                    
+                {
                     if (antal <= 14 && antal >= 10)
                     {
                         antal++;
@@ -347,7 +349,7 @@ namespace bankprov
 
             prov provet = new prov();
 
-            
+
             if (SenasteProv(person_id))     // Returnerar en boolean som berättar om man gjort provet tidigare
             {
                 provet = HamtaFragorLicensierad();    //Skapar ett prov bestående av 15 frågeobjekt av utvald kategori
@@ -360,7 +362,7 @@ namespace bankprov
 
             prov gjortprov = HittaSvar(provet);
             SerializaSvar(gjortprov);
-            
+
             var tuple = RattaProv(gjortprov, visagammalt);
             prov facit = tuple.Item1;
             int resultat = tuple.Item2;
@@ -433,9 +435,9 @@ namespace bankprov
                 checkboxkontroll = 0;
 
                 fraga fragaobj = new fraga();
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
-                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA"); 
+                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA");
                     if (checkBoxA.Checked == true)      // Kollar om checkbox A är markerad för gällande fråga
                     {
                         fragaobj.svarsalternativa = provet.fragelista[i].svarsalternativa; // Skapar ett frågeobjekt med endast valda svarsalternativ
@@ -443,7 +445,7 @@ namespace bankprov
 
                         checkboxkontroll++;
 
-                        var LabelA = (Label)item.FindControl("LabelA");     
+                        var LabelA = (Label)item.FindControl("LabelA");
                         LabelA.CssClass = "felsvar";        // Om svar A är valt så blir det röd-färgat
                         // Alla svar som man svarat blir röda, de korrekta ändras sedan till gröna i VisaSvar()
                     }
@@ -491,7 +493,7 @@ namespace bankprov
                         fragaobj.nr = provet.fragelista[i].nr;
                     }
                 }
-                fragaobj.info = checkboxkontroll.ToString(); 
+                fragaobj.info = checkboxkontroll.ToString();
                 gjortprov.fragelista.Add(fragaobj); // lägger till svaret i en lista
             }
 
@@ -522,7 +524,7 @@ namespace bankprov
             if (SenasteProv(person_id))     //Returnerar en boolean som berättar om man gjort provet tidigare
             {
                 prov nyfacit = new prov();
-                
+
                 foreach (object objektobjekt in facit.fragelista)
                 {
                     k++;
@@ -544,7 +546,7 @@ namespace bankprov
 
 
             foreach (object objekt in gjortprov.fragelista)
-            {   
+            {
                 flersvarsfraga = 0;
                 i++;
 
@@ -554,16 +556,16 @@ namespace bankprov
                 }
 
                 else
-                {                
+                {
                     if (gjortprov.fragelista[i].svarsalternativa == facit.fragelista[i].svarsalternativa && gjortprov.fragelista[i].svarsalternativa != null)
                     {
                         if (Convert.ToInt32(facit.fragelista[i].info) == 1)
                         {
                             if (facit.fragelista[i].kategori.ToString() == "Produkter och hantering av kundens affärer")
-                            {                                
-                            resultat++;
+                            {
+                                resultat++;
                                 produkterochhanteringavkundensaffärer++;
-                        }
+                            }
 
                             if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                             {
@@ -618,11 +620,11 @@ namespace bankprov
 
                             if (facit.fragelista[i].kategori.ToString() == "Etik och regelverk")
                             {
-                            resultat++;
+                                resultat++;
                                 etikochregelverk++;
                             }
                         }
-    
+
                         else if (Convert.ToInt32(facit.fragelista[i].info) > 1)
                         {
                             flersvarsfraga++;
@@ -638,7 +640,7 @@ namespace bankprov
 
                             if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                             {
-                            resultat++;
+                                resultat++;
                                 ekonominationalekonomifinansiellekonomiochprivatekonomi++;
                             }
 
@@ -662,7 +664,7 @@ namespace bankprov
 
                             if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                             {
-                            resultat++;
+                                resultat++;
                                 ekonominationalekonomifinansiellekonomiochprivatekonomi++;
                             }
 
@@ -688,7 +690,7 @@ namespace bankprov
 
                             if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                             {
-                            resultat++;
+                                resultat++;
                                 ekonominationalekonomifinansiellekonomiochprivatekonomi++;
                             }
 
@@ -712,7 +714,7 @@ namespace bankprov
 
                             if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                             {
-                            resultat++;
+                                resultat++;
                                 ekonominationalekonomifinansiellekonomiochprivatekonomi++;
                             }
 
@@ -738,7 +740,7 @@ namespace bankprov
 
                             if (facit.fragelista[i].kategori.ToString() == "Ekonomi – nationalekonomi, finansiell ekonomi och privatekonomi")
                             {
-                            resultat++;
+                                resultat++;
                                 ekonominationalekonomifinansiellekonomiochprivatekonomi++;
                             }
 
@@ -746,11 +748,11 @@ namespace bankprov
                             {
                                 resultat++;
                                 etikochregelverk++;
+                            }
                         }
                     }
                 }
             }
-        }
             return Tuple.Create(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
         }
 
@@ -760,27 +762,26 @@ namespace bankprov
 
             XmlSerializer serializer = new XmlSerializer(typeof(prov));
             using (TextWriter writer = new StreamWriter(directory))
-
             {
                 serializer.Serialize(writer, svar);
             }
-        }      
+        }
 
         public bool VisaSvar(prov facit, int resultat, int produkterochhanteringavkundensaffärer, int ekonominationalekonomifinansiellekonomiochprivatekonomi, int etikochregelverk)
         {
             int i = -1;
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
-            {                
+            {
                 i++;
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
                     if (facit.fragelista[i].svarsalternativa != null)
                     {
                         var LabelA = (Label)item.FindControl("LabelA");
                         LabelA.CssClass = "korrektsvar";
                     }
-                    
+
                     if (facit.fragelista[i].svarsalternativb != null)
                     {
                         var LabelB = (Label)item.FindControl("LabelB");
@@ -800,7 +801,7 @@ namespace bankprov
                     }
                 }
 
-                }
+            }
 
             int totalt = 25;
             int totaltkategori1 = 8;
@@ -890,7 +891,7 @@ namespace bankprov
             {
                 if (inloggadtext[i] == ':')
                 {
-                    for(int j = i + 2 ; j < inloggadtext.Length; j++)
+                    for (int j = i + 2; j < inloggadtext.Length; j++)
                     {
                         anvandare = anvandare + inloggadtext[j];
                     }
@@ -899,17 +900,16 @@ namespace bankprov
 
             return anvandare;
         }
-    
+
         protected void btnSeResultat_Click(object sender, EventArgs e)
         {
             HamtaGjordaProv();
             HideAll();
-           // btnGorProv.Visible = false;
-           // btnSeResultat.Visible = false;
-           // btnSeResultatAnstallda.Visible = false;
+            // btnGorProv.Visible = false;
+            // btnSeResultat.Visible = false;
+            // btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;
             btnStart.Visible = true;
-
         }
 
         public List<gjordaprov> HamtaGjordaProv()
@@ -933,13 +933,15 @@ namespace bankprov
             {
                 gjordaprov gjortprov = new gjordaprov();
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
+                DateTime datum = Convert.ToDateTime(dr["datum"]);
+                string datumstring = (datum.ToString("dd/MM/yyyy"));
+                gjortprov.datum = datumstring;
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
                 gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
                 godkand = Convert.ToBoolean(dr["godkant"]);
- 
+
 
                 if (godkand == true)
                 {
@@ -1005,13 +1007,13 @@ namespace bankprov
             int ekonominationalekonomifinansiellekonomiochprivatekonomi = tuple2.Item4;
             int etikochregelverk = tuple2.Item5;
 
-           VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
+            VisaSvar(facit, resultat, produkterochhanteringavkundensaffärer, ekonominationalekonomifinansiellekonomiochprivatekonomi, etikochregelverk);
 
             HideAll();
             btnStart.Visible = true;
             Repeater1.Visible = true;
-           //btnSeResultatAnstallda.Visible = false;
-           //btnSeResultat.Visible = false;
+            //btnSeResultatAnstallda.Visible = false;
+            //btnSeResultat.Visible = false;
         }
 
         public Tuple<string, string> HamtaFragorDB()
@@ -1075,11 +1077,11 @@ namespace bankprov
 
             foreach (RepeaterItem item in Repeater1.Items) // loopar genom alla objekt i repeatern
             {
-                
+
                 fraga fragaobj = new fraga();
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) 
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                 {
-                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA");                   
+                    var checkBoxA = (CheckBox)item.FindControl("CheckBoxA");
                     if (svar.fragelista[i].svarsalternativa != null)
                     {
                         checkBoxA.Checked = true;
@@ -1116,30 +1118,31 @@ namespace bankprov
             //btnSeResultatAnstallda.Visible = false;
             GridView1.Visible = true;       // Döljer allt utom griden
             btnStart.Visible = true;
+            SnartProv();
         }
 
         protected void btnStart_Click(object sender, EventArgs e)
         {
-           
+
             //här skall det hämtas frågor för kunskapstest, som skall innehålla (""15 frågor"")
-            string anvandare =  HittaNamn();
+            string anvandare = HittaNamn();
             int person_id = 1;
-              HideAll();
+            HideAll();
             person_id = GetPersonId();         // Returnerar användarens id-nummer samt visar "Se anställdas resultat" om personen är chef
 
-                      
+
 
             if (SenasteProv(person_id))       // Tar reda på om användaren har ett giltigt provresultat. Dvs. är licensierad. 
             {                                           // om så är fallet så visas följande element på skärmen
                 btnGorProv.Visible = true;
-              //  LabelEjInloggad.Visible = false;
-               // TextBoxanvandare.Visible = false;
+                //  LabelEjInloggad.Visible = false;
+                // TextBoxanvandare.Visible = false;
                 LabelKompetensportal.Visible = true;
                 //    Labelfornam.Visible = false;
                 //    btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                                                                     //      btnOk.Visible = false;
+                //      btnOk.Visible = false;
 
             }
             else
@@ -1155,7 +1158,7 @@ namespace bankprov
                 //      btnLamnain.Visible = false;
                 LabelInloggad.Visible = true;
                 LabelInloggad.Text = "Inloggad som: " + anvandare;   // Skriver ut namnet på inloggad användare. Denna label används sedan i metoden HittaNamn()
-                                                                     //      btnOk.Visible = false;
+                //      btnOk.Visible = false;
             }
         }
 
@@ -1182,8 +1185,9 @@ namespace bankprov
                 gjortprov.id = Convert.ToInt32(dr["prov_id"]);
                 gjortprov.fornamn = Convert.ToString(dr["fnamn"]);
                 gjortprov.efternamn = Convert.ToString(dr["enamn"]);
-                gjortprov.datum = Convert.ToDateTime(dr["datum"]);
-                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                DateTime datum = Convert.ToDateTime(dr["datum"]);
+                string datumstring = (datum.ToString("dd/MM/yyyy"));
+                gjortprov.datum = datumstring; resultatdel1 = Convert.ToInt32(dr["ressek1"]);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
                 gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
@@ -1196,7 +1200,7 @@ namespace bankprov
 
                 if (godkand == false)
                 {
-                    gjortprov.resultat = "Icke Godkänt";    
+                    gjortprov.resultat = "Icke Godkänt";
                 }
 
                 lista.Add(gjortprov);   //Lägger till objektet i listan som sedan skall presenteras
@@ -1218,6 +1222,20 @@ namespace bankprov
             return lista;   //Returnerar listan av objekt
         }
 
+        public void SnartProv()
+        {
+            for (int i = 0; i < GridView1.Rows.Count; i++)
+            {
+                DateTime senaste = DateTime.ParseExact(this.GridView1.Rows[i].Cells[3].Text, "dd/MM/yyyy", null);
+
+                if (senaste.AddMonths(11) < DateTime.Today)
+                {
+                    GridView1.Rows[i].CssClass = "GridViewSnart";
+                }
+
+            }
+        }
+
         protected void LinkButtonLoggaut_Click(object sender, EventArgs e)
         {
             HideAll();
@@ -1226,7 +1244,7 @@ namespace bankprov
             LabelKompetensportal.Visible = true;
             LabelKompetensportal.Text = "Välkommen till JE-Bankens kompetensportal. Här kan du enkelt svara på frågor om Volvobilar, skidåkning och Bamsetidningar och på ett snabbt och smidigt sätt erhålla ett bevis på din kompetens inom dessa områden.";
             ListBoxanvandare.Visible = true;
-        }        
+        }
     }
 }
 
