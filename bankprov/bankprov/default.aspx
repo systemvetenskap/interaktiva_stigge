@@ -9,7 +9,9 @@
             <title>JE-Banken - Kompetensportal</title>
 
             <link rel ="stylesheet" href="StyleSheet.css" />    <!-- css-design ligger i StyleSheet.css-->
-                    <link rel="stylesheet" media="screen and (max-width: 900px)" href="responsiv.css" />
+            <link rel="stylesheet" media="screen and (max-width: 900px)" href="responsiv.css" />
+            <link rel="stylesheet" media="screen and (max-width: 640px)" href="responsiv2.css" />
+
             <!-- om vi använder en skärm som är mindre än 900 pixlar så läses designstruktur från responsiv.css -->
 
         </head>

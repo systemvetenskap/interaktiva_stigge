@@ -125,9 +125,8 @@ div.sektioncentrera {
 
 div.sektion input {
     height: 60px;
-    width: 500px;
+    width: 300px;
     cursor:pointer;
-    padding:5px 25px; 
     background:#7c94bf;
     border:1px solid #636363;
     border-radius: 30px;
@@ -137,6 +136,7 @@ div.sektion input {
     color:#f3f3f3;
     font-size:1.1em;
     margin-bottom: 30px;
+
 }
 
 div.sektion select{
@@ -151,6 +151,11 @@ div.sektion input:hover {
     -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
     -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
     box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
+div.sektion table{
+    width: 90%;
+    margin: 5%;
 }
 
 .grid{

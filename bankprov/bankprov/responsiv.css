@@ -2,13 +2,14 @@ body {
 }
 
 div.container{
-    max-width: 450px;
+    max-width: 700px;
     min-width: 350px;
 }
 
 div.sektion{
-    width: 98%;
+    width: 100%;
     float: none;
+    margin: 0;
 }
 
 div.header img{
@@ -26,8 +27,8 @@ div.sektionkontakt{
 div.sektioncentrera {
     display:block;
     text-align: center;
-    padding-left: 2%;
-    padding-right: 2%
+    padding-left: 0%;
+    padding-right: 0%
 }
 
 div.infotext {
@@ -41,4 +42,7 @@ div.infotext {
 
 div.sektion input {
 height: 40px;
+width: 200px;
+font-size: 16px;
+
 }

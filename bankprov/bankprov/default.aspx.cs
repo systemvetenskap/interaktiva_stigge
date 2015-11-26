@@ -960,8 +960,8 @@ namespace bankprov
 
             GridView1.DataSource = lista;
             GridView1.DataBind();
-            //GridView1.Columns[1].Visible = false;
-            //GridView1.Columns[2].Visible = false;
+            GridView1.Columns[0].Visible = false;
+            GridView1.Columns[1].Visible = false;
 
             foreach (GridViewRow row in GridView1.Rows)
             {
@@ -1208,8 +1208,8 @@ namespace bankprov
 
             con.Close();
 
+            GridView1.Columns[0].Visible = true;
             GridView1.Columns[1].Visible = true;
-            GridView1.Columns[2].Visible = true;
             GridView1.DataSource = lista;   // Visar listan i griden
             GridView1.DataBind();
 
