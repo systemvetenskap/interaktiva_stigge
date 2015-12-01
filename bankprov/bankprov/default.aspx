@@ -45,6 +45,9 @@
                                     <asp:BoundField DataField="efternamn" HeaderText="Efternamn" Visible="false" />
                                     <asp:BoundField DataField="datum" HeaderText="Datum" Visible="true" />
                                     <asp:BoundField DataField="poang" HeaderText="Poäng" Visible="true" />
+                                    <asp:BoundField DataField="del1" HeaderText="Del 1" Visible="true" />
+                                    <asp:BoundField DataField="del2" HeaderText="Del 2" Visible="true" />
+                                    <asp:BoundField DataField="del3" HeaderText="Del 3" Visible="true" />
                                     <asp:BoundField DataField="resultat" HeaderText="Godkänt" Visible="true" />
                                 </Columns>
                             </asp:GridView>

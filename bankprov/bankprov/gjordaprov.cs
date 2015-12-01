@@ -13,6 +13,9 @@ namespace bankprov
         public string datum { get; set; }
         public string poang { get; set; }
         public string resultat { get; set; }
+        public string del1 { get; set; }
+        public string del2 { get; set; }
+        public string del3 { get; set; }
 
     }
 }

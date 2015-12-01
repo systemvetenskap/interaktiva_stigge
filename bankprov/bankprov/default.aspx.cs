@@ -1190,9 +1190,13 @@ namespace bankprov
                 gjortprov.efternamn = Convert.ToString(dr["enamn"]);
                 DateTime datum = Convert.ToDateTime(dr["datum"]);
                 string datumstring = (datum.ToString("dd/MM/yyyy"));
-                gjortprov.datum = datumstring; resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                gjortprov.datum = datumstring; 
+                resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                gjortprov.del1 = Convert.ToString(resultatdel1);
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
+                gjortprov.del2 = Convert.ToString(resultatdel2);
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
+                gjortprov.del3 = Convert.ToString(resultatdel3);
                 gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
@@ -1231,14 +1235,14 @@ namespace bankprov
             {
                 DateTime senaste = DateTime.ParseExact(this.GridView1.Rows[i].Cells[3].Text, "dd/MM/yyyy", null);
 
-                if (senaste.AddMonths(11) < DateTime.Today)
-                {
-                    GridView1.Rows[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#fefc9e");
-                }
-
-                else if (Convert.ToString(this.GridView1.Rows[i].Cells[5].Text) == "Icke Godk&#228;nt")
+                if (Convert.ToString(this.GridView1.Rows[i].Cells[5].Text) == "Icke Godk&#228;nt")
                 {
                     GridView1.Rows[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#FFb2b2");                                        
+                }
+
+                else if (senaste.AddMonths(11) < DateTime.Today)
+                {
+                    GridView1.Rows[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#fefc9e");
                 }
 
             }
