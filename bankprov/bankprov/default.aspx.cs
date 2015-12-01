@@ -63,15 +63,18 @@ namespace bankprov
             con.Open();
             NpgsqlDataReader dr = cmd.ExecuteReader();
             con.Close();
+            int rakna = 0;
 
             while (dr.Read())
             {
                 string anvandarnamn = (string)dr["anvandarnamn"];
                 lista.Add(anvandarnamn);
+                rakna++;
             }
 
             ListBoxanvandare.DataSource = lista;
             ListBoxanvandare.DataBind();
+            ListBoxanvandare.Rows = rakna;
         }
 
 
@@ -1230,7 +1233,12 @@ namespace bankprov
 
                 if (senaste.AddMonths(11) < DateTime.Today)
                 {
-                    GridView1.Rows[i].CssClass = "GridViewSnart";
+                    GridView1.Rows[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#fefc9e");
+                }
+
+                else if (Convert.ToString(this.GridView1.Rows[i].Cells[5].Text) == "Icke Godk&#228;nt")
+                {
+                    GridView1.Rows[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#FFb2b2");                                        
                 }
 
             }

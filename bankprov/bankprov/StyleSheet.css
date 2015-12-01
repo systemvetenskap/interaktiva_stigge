@@ -141,7 +141,6 @@ div.sektion input {
 
 div.sektion select{
     width: 40%;
-    min-height: 110px;
     display: block;
     margin: 10px 30%;
 }
@@ -158,12 +157,12 @@ div.sektion table{
     margin: 5%;
 }
 
-.grid{
-    width: 100%;
+.grid td{
+    border:1px solid grey;
 }
 
-#GridView1 tr.rowHover:hover{
-    background-color: #d7d7d7;
+.grid tr:hover td{
+    border: 1px solid black;
 }
 
 div.poster {
