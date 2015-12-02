@@ -2,7 +2,7 @@
 <prov xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <fraga>
     <nr>1</nr>
-    <svarsalternativb>En sportversion</svarsalternativb>
+    <svarsalternativd>En dieselversion</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
@@ -27,6 +27,24 @@
     <info>1</info>
   </fraga>
   <fraga>
+    <nr>6</nr>
+    <svarsalternativa>Ja</svarsalternativa>
+    <svarsalternativb>Absolut</svarsalternativb>
+    <svarsalternativc>Definitivt</svarsalternativc>
+    <svarsalternativd>Har påven en lustig hatt?</svarsalternativd>
+    <info>4</info>
+  </fraga>
+  <fraga>
+    <nr>7</nr>
+    <svarsalternativc>Vanlig bandy</svarsalternativc>
+    <info>1</info>
+  </fraga>
+  <fraga>
+    <nr>8</nr>
+    <svarsalternativc>Ferrari 250 GT California</svarsalternativc>
+    <info>1</info>
+  </fraga>
+  <fraga>
     <nr>9</nr>
     <svarsalternativa>Sammy Carlsson</svarsalternativa>
     <info>1</info>
@@ -39,17 +57,33 @@
   </fraga>
   <fraga>
     <nr>11</nr>
-    <svarsalternativc>2012</svarsalternativc>
+    <svarsalternativd>2010</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>12</nr>
-    <svarsalternativc>Surface Blanks</svarsalternativc>
+    <svarsalternativd>Salomon 1080</svarsalternativd>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>13</nr>
     <svarsalternativc>1440</svarsalternativc>
+    <info>1</info>
+  </fraga>
+  <fraga>
+    <nr>14</nr>
+    <svarsalternativb>Ja</svarsalternativb>
+    <svarsalternativc>Var är PWhite?</svarsalternativc>
+    <info>2</info>
+  </fraga>
+  <fraga>
+    <nr>15</nr>
+    <svarsalternativb>Skiboards/Snowblades</svarsalternativb>
+    <info>1</info>
+  </fraga>
+  <fraga>
+    <nr>16</nr>
+    <svarsalternativb>Session 1242</svarsalternativb>
     <info>1</info>
   </fraga>
   <fraga>
@@ -59,12 +93,12 @@
   </fraga>
   <fraga>
     <nr>18</nr>
-    <svarsalternativc>Rune Andreasson</svarsalternativc>
+    <svarsalternativa>Rune Andréason</svarsalternativa>
     <info>1</info>
   </fraga>
   <fraga>
     <nr>19</nr>
-    <svarsalternativb>Flodhäst</svarsalternativb>
+    <svarsalternativc>Sköldpadda</svarsalternativc>
     <info>1</info>
   </fraga>
   <fraga>
@@ -74,9 +108,29 @@
   </fraga>
   <fraga>
     <nr>21</nr>
+    <svarsalternativa>Spenat</svarsalternativa>
     <svarsalternativb>Proteinpulver</svarsalternativb>
     <svarsalternativc>Köttbullar</svarsalternativc>
-    <svarsalternativd>Dunderhonung</svarsalternativd>
     <info>3</info>
+  </fraga>
+  <fraga>
+    <nr>22</nr>
+    <svarsalternativd>Varg</svarsalternativd>
+    <info>1</info>
+  </fraga>
+  <fraga>
+    <nr>23</nr>
+    <svarsalternativa>Köttbullar</svarsalternativa>
+    <info>1</info>
+  </fraga>
+  <fraga>
+    <nr>24</nr>
+    <svarsalternativd>4</svarsalternativd>
+    <info>1</info>
+  </fraga>
+  <fraga>
+    <nr>25</nr>
+    <svarsalternativb>Världens starkaste björn</svarsalternativb>
+    <info>1</info>
   </fraga>
 </prov>

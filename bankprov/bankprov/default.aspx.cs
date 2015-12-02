@@ -228,6 +228,15 @@ namespace bankprov
 
                     return true;
                 }
+
+                if (Convert.ToBoolean(dt.Rows[i][0]) == false)
+                {
+                    LabelKompetensportal.Visible = true;
+                    LabelKompetensportal.Text = "Ditt senaste prov var tyvärr inte godkänt och du måste göra ett nytt snarast!";
+                    btnSeResultat.Visible = true;
+
+                    return false;
+                }
             }
 
             LabelKompetensportal.Visible = false;
@@ -924,7 +933,7 @@ namespace bankprov
             int resultatdel3;
             bool godkand;
 
-            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant, antalfragor FROM u4_prov WHERE person_id= " + person_id;
+            string sql = "SELECT prov_id, datum, ressek1, ressek2, ressek3, godkant, antalfragor FROM u4_prov WHERE person_id= " + person_id + "ORDER BY datum DESC";
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
@@ -940,8 +949,11 @@ namespace bankprov
                 string datumstring = (datum.ToString("dd/MM/yyyy"));
                 gjortprov.datum = datumstring;
                 resultatdel1 = Convert.ToInt32(dr["ressek1"]);
+                gjortprov.del1 = resultatdel1.ToString();
                 resultatdel2 = Convert.ToInt32(dr["ressek2"]);
+                gjortprov.del1 = resultatdel2.ToString();
                 resultatdel3 = Convert.ToInt32(dr["ressek3"]);
+                gjortprov.del1 = resultatdel3.ToString();
                 gjortprov.poang = Convert.ToString(resultatdel1 + resultatdel2 + resultatdel3) + "/" + Convert.ToString(dr["antalfragor"]);
                 godkand = Convert.ToBoolean(dr["godkant"]);
 
@@ -1174,7 +1186,7 @@ namespace bankprov
             int resultatdel3;
             bool godkand;
 
-            string sql = "SELECT a.*, b.* FROM u4_konto a INNER JOIN u4_prov b ON a.id = b.person_id INNER JOIN (SELECT person_id, MAX(datum) maxdatum FROM u4_prov GROUP BY person_id) c ON b.person_id = c.person_id AND b.datum = c.maxdatum WHERE chef = 1";
+            string sql = "SELECT a.*, b.* FROM u4_konto a INNER JOIN u4_prov b ON a.id = b.person_id INNER JOIN (SELECT person_id, MAX(datum) maxdatum FROM u4_prov GROUP BY person_id) c ON b.person_id = c.person_id AND b.datum = c.maxdatum WHERE chef = " + person_id;
 
             NpgsqlConnection con = new NpgsqlConnection("Server=webblabb.miun.se; Port=5432; Database=pgmvaru_g8; User Id=pgmvaru_g8; Password=rockring; SslMode=Require");
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);    // Hämtar resultat för den línloggades anställdas prov
@@ -1235,7 +1247,7 @@ namespace bankprov
             {
                 DateTime senaste = DateTime.ParseExact(this.GridView1.Rows[i].Cells[3].Text, "dd/MM/yyyy", null);
 
-                if (Convert.ToString(this.GridView1.Rows[i].Cells[5].Text) == "Icke Godk&#228;nt")
+                if (Convert.ToString(this.GridView1.Rows[i].Cells[8].Text) == "Icke Godk&#228;nt")
                 {
                     GridView1.Rows[i].BackColor = System.Drawing.ColorTranslator.FromHtml("#FFb2b2");                                        
                 }
